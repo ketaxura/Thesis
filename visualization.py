@@ -16,12 +16,12 @@ from matplotlib.patches import Ellipse
 from params import *
 
 
-
+""""""
 def visualize(ref_traj, x_history, y_history, theta_history, obs_pos_hist):
         
     # ---- PLOTTING (single animation loop)
     plt.ion()
-    fig, ax = plt.subplots(figsize=(10, 12))
+    fig, ax = plt.subplots(figsize=(8, 10))
 
     # --- Reference path (static) ---
     ref_line, = ax.plot(
