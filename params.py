@@ -23,11 +23,11 @@ nr = 2
 # -----------------------------
 # Reference trajectory
 # -----------------------------
-t_ref = np.arange(0, 2 * np.pi, dt)
+t_ref = np.arange(0, 4 * np.pi, dt)
 x_ref = t_ref
 y_ref = np.sin(t_ref)
 
-t_ref_xy = np.arange(0, 10, dt)
+t_ref_xy = np.arange(0, 20, dt)
 x_straight_ref = t_ref_xy
 y_straight_ref = t_ref_xy
 
@@ -66,10 +66,10 @@ r_robot = 0.25   # meters (example)
 # -----------------------------
 # Obstacle
 # -----------------------------
-num_obs = 8
-obs_pos = np.zeros((num_obs, 2))
-obs_vel = np.zeros((num_obs, 2))
-change_timer = np.zeros(num_obs, dtype=int)
+num_dyn_obs = 4
+obs_pos = np.zeros((num_dyn_obs, 2))
+obs_vel = np.zeros((num_dyn_obs, 2))
+change_timer = np.zeros(num_dyn_obs, dtype=int)
 change_horizon = 40
 
 #Ellipse obs semi-principal axis def
@@ -119,12 +119,14 @@ X0 = ca.SX.sym("X0", nx)
 R = ca.SX.sym("R", nr, N + 1)
 
 # Obstacle parameters (as CasADi symbols, because they are in p)
-obs_x = ca.SX.sym("obs_x", num_obs, N)
-obs_y = ca.SX.sym("obs_y", num_obs, N)
+obs_x = ca.SX.sym("obs_x", num_dyn_obs, N)
+obs_y = ca.SX.sym("obs_y", num_dyn_obs, N)
 
-S = ca.SX.sym("S", num_obs, N)
+S = ca.SX.sym("S", num_dyn_obs, N)
 u_prev = ca.SX.sym("u_prev", nu)
 X_goal = ca.SX.sym("X_goal", nx)
+
+mu_prev = ca.SX.sym("mu_prev")
 
 
 
@@ -134,3 +136,32 @@ X_goal = ca.SX.sym("X_goal", nx)
 # -----------------------------
 WALL_Y_MIN = -2.75   # bottom wall
 WALL_Y_MAX =  2.75   # top wall
+
+
+
+
+
+
+#PSEUDO RANDOM NUMBER GENERATOR
+
+#23123123
+#31231230
+#2312312
+#3012831
+#45165165
+#389999 here the robot tries to speed up to catch up to the path, by accelerating aggresively
+#3123125 cool circle behavior, but again speeds up to get back on the path
+#821113 weird and unnecsarry circle?
+#11101012 actual obs collision
+
+
+
+rng = np.random.default_rng(389999)
+
+
+# Each rectangle: (cx, cy, hx, hy)
+STATIC_RECTS = [
+    (6.0,  0.0, 0.6, 1.2),
+    (10.0, 0.0, 0.5, 0.5),
+]
+

@@ -30,7 +30,7 @@ cost += ca.mtimes([eN.T, Q_terminal, eN])
 rho_slack = 1e5
 rho_slack_lin = 1e3
 
-for i in range(num_obs):
+for i in range(num_dyn_obs):
     for k in range(N):
         cost += rho_slack * S[i, k]**2
         cost += rho_slack_lin * S[i, k]
@@ -80,7 +80,7 @@ for k in range(N):
     ubg.append(ca.inf)
 
 
-    for i in range(num_obs):
+    for i in range(num_dyn_obs):
         dx = X[0, k+1] - obs_x[i, k]        #checking each 
         dy = X[1, k+1] - obs_y[i, k]
 
@@ -91,6 +91,25 @@ for k in range(N):
         )
         lbg.append(0.0)
         ubg.append(ca.inf)
+
+
+    # -----------------------------
+    # Static rectangular obstacles
+    # -----------------------------
+    for (cx, cy, hx, hy) in STATIC_RECTS:
+
+        hx_eff = hx + r_robot + safety_buffer
+        hy_eff = hy + r_robot + safety_buffer
+
+        dx = X[0, k+1] - cx
+        dy = X[1, k+1] - cy
+
+        g_list.append(
+            dx**2 / hx_eff**2 + dy**2 / hy_eff**2 - 1
+        )
+        lbg.append(0.0)
+        ubg.append(ca.inf)
+
         
     
 
@@ -158,12 +177,10 @@ for _ in range(N):
     ubx += [ v_max,  omega_max]
 
 
-
 # Slack bounds (S >= 0) 
-for _ in range(num_obs * N):
+for _ in range(num_dyn_obs * N):
     lbx.append(0.0)
     ubx.append(ca.inf)
-
 
 # -----------------------------
 # Decision variables + NLP

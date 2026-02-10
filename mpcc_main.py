@@ -6,17 +6,40 @@ import time
 
 from params import *
 from dynamics import *
-from mpc import *
+import mpc
+import mpcc
 from obstacles import *
 
 from matplotlib.patches import Ellipse
 from s_curve_env import generate_s_curve_ref
 from visualization import visualize
 
+import sys
 
+log_file = open("mpcc_main_run_log.txt", "w")
+sys.stdout = log_file
+sys.stderr = log_file   # optional: capture errors too
 
 
 USE_S_CURVE = True
+
+mpcc_run = True
+
+if mpcc_run:
+    solver = mpcc.solver
+    lbx = mpcc.lbx
+    ubx = mpcc.ubx
+    lbg = mpcc.lbg
+    ubg = mpcc.ubg
+    print("Running MPCC")
+else:
+    solver = mpc.solver
+    lbx = mpc.lbx
+    ubx = mpc.ubx
+    lbg = mpc.lbg
+    ubg = mpc.ubg
+    print("Running standard MPC")
+
 
     
 if USE_S_CURVE:
@@ -33,6 +56,10 @@ else:
     pass
 
 
+dv_max = 0.25
+dw_max = 0.6
+
+s_prev = 0.0
 
 
 
@@ -120,7 +147,11 @@ max_steps = min(5000, ref_traj.shape[1] - 1)
 for k in range(max_steps):
 
     # Path-tracking reference window (2 x (N+1))
-    R_horizon = ref_traj[:, k : k + N + 1]
+    # R_horizon = ref_traj[:, k : k + N + 1]
+
+    k_ref = int(np.floor(s_prev))
+    R_horizon = ref_traj[:, k_ref : k_ref + N + 1]
+
 
     # If we're near the end of ref_traj, pad with the last point
     if R_horizon.shape[1] < N + 1:
@@ -139,11 +170,14 @@ for k in range(max_steps):
     p = np.concatenate([
         x_current,
         u_prev,
-        R_horizon.flatten(order="F"),
-        obsx_h.flatten(order="F"),
-        obsy_h.flatten(order="F"),
+        np.array([s_prev]),
+        R_horizon.flatten(),
+        obsx_h.flatten(),
+        obsy_h.flatten(),
         X_goal_val
     ])
+
+
 
 
     print("x_current:", x_current.shape)
@@ -151,15 +185,6 @@ for k in range(max_steps):
     print("obsx_h:", obsx_h.shape)
     print("obsy_h:", obsy_h.shape)
     print("X_goal_val:", X_goal_val.shape)
-
-    p = np.concatenate([
-        x_current,                       # X0 (nx,)
-        u_prev,                          # u_prev (nu,)  <-- REQUIRED
-        R_horizon.flatten(order="F"),    # (2*(N+1),) so this is what causes the time and geometry coupling
-        obsx_h.flatten(order="F"),       # (num_dyn_obs*N,)
-        obsy_h.flatten(order="F"),       # (num_dyn_obs*N,)
-        X_goal_val                       # (nx,)
-    ])
 
 
 
@@ -199,18 +224,50 @@ for k in range(max_steps):
 
 
 
-    z_opt = sol["x"].full().flatten()
-    offset = nx * (N + 1)
-    v, omega = z_opt[offset: offset + nu]
+    # z_opt = sol["x"].full().flatten()
+    # offset = nx * (N + 1)
+    # v, omega = z_opt[offset: offset + nu]
     
     
-    # decision vector layout
-    x_block = nx * (N + 1)
-    u_block = nu * N
-    s_start = x_block + u_block
+    # # decision vector layout
+    # x_block = nx * (N + 1)
+    # u_block = nu * N
+    # s_start = x_block + u_block
 
-    S_opt = z_opt[s_start:].reshape(num_dyn_obs, N)
-    
+
+
+    # S_opt = z_opt[s_start:].reshape(num_dyn_obs, N)
+    z_opt = sol["x"].full().flatten()
+    nx = 3          # state dimension
+    nu = 2          # control dimension
+
+    nX = nx * (N + 1)
+    nU = nu * N
+    nS = num_dyn_obs * N
+    z_opt = sol["x"].full().flatten()
+
+    nX = mpcc.nX
+    nU = mpcc.nU
+    nS = mpcc.nS
+    nProg = mpcc.nProg
+    nVs = mpcc.nVs
+
+    offset = 0
+    X_opt = z_opt[offset:offset+nX].reshape(nx, N+1); offset += nX
+    U_opt = z_opt[offset:offset+nU].reshape(nu, N);   offset += nU
+    S_opt = z_opt[offset:offset+nS].reshape(num_dyn_obs, N); offset += nS
+
+    s_opt  = z_opt[offset:offset+nProg]               ; offset += nProg
+    vs_opt = z_opt[offset:offset+nVs]                 ; offset += nVs
+
+    # Update progress for next iteration (use the next step)
+    s_prev = max(s_prev, float(s_opt[1]))
+
+
+
+    # First control to apply
+    v, omega = U_opt[:, 0]
+
     
     eps = 1e-6  # numerical threshold
 
@@ -248,9 +305,8 @@ for k in range(max_steps):
     
     
     for i in range(num_dyn_obs):
-        dx = x_current[0] - obs_pos[i, 0]
-        dy = x_current[1] - obs_pos[i, 1]
-
+        dx = x_current[0] - obstacles.pos[i, 0]
+        dy = x_current[1] - obstacles.pos[i, 1]
         a_eff = a_obs + r_robot
         b_eff = b_obs + r_robot
 
@@ -303,6 +359,7 @@ print(f"Total slack used: {slack_sum:.4f}")
 print(f"Max slack value: {slack_max:.4f}")
 
 
-
+log_file.close()
 
 visualize(ref_traj, x_history, y_history, theta_history, obs_pos_hist)
+

@@ -13,6 +13,7 @@ import sys
 import time
 
 from matplotlib.patches import Ellipse
+from matplotlib.patches import Rectangle
 from params import *
 
 
@@ -21,7 +22,7 @@ def visualize(ref_traj, x_history, y_history, theta_history, obs_pos_hist):
         
     # ---- PLOTTING (single animation loop)
     plt.ion()
-    fig, ax = plt.subplots(figsize=(8, 10))
+    fig, ax = plt.subplots(figsize=(10, 8))
 
     # --- Reference path (static) ---
     ref_line, = ax.plot(
@@ -50,15 +51,14 @@ def visualize(ref_traj, x_history, y_history, theta_history, obs_pos_hist):
         linewidth=2
     )
     ax.add_patch(robot_circle)
-
     path_line,  = ax.plot([], [], "b-", lw=2, label="Trajectory")
     obs_plot,   = ax.plot([], [], "ro", markersize=8    )
 
 
     ellipses = []
-    for i in range(num_obs):
+    for i in range(num_dyn_obs):
         e = Ellipse(
-            xy=obs_pos[i],
+            xy=obs_pos_hist[0][i],
             width=2*a_obs,
             height=2*b_obs,
             edgecolor="r",
@@ -68,7 +68,24 @@ def visualize(ref_traj, x_history, y_history, theta_history, obs_pos_hist):
         )
         ax.add_patch(e)
         ellipses.append(e)
-        
+
+
+    # -----------------------------
+    # Draw static rectangles
+    # -----------------------------
+    for (cx, cy, hx, hy) in STATIC_RECTS:
+        rect = Rectangle(
+            (cx - hx, cy - hy),
+            2*hx,
+            2*hy,
+            linewidth=2,
+            edgecolor="orange",
+            facecolor="none",
+            # linestyle="--",
+            label="Static obstacle"
+        )
+        ax.add_patch(rect)
+            
         
         
     robot_buffer = plt.Circle(
@@ -84,8 +101,8 @@ def visualize(ref_traj, x_history, y_history, theta_history, obs_pos_hist):
     ax.add_patch(robot_buffer)
 
     # safe bounds (no min() crash)
-    ax.set_xlim(-5, 12)
-    ax.set_ylim(-5, 12)
+    ax.set_xlim(-5, 24)
+    ax.set_ylim(-8, 8)
     
     
     # -----------------------------
@@ -122,7 +139,7 @@ def visualize(ref_traj, x_history, y_history, theta_history, obs_pos_hist):
 
         path_line.set_data(x_history[:k+1], y_history[:k+1])
         # obs_plot.set_data([obs_x_hist[k]], [obs_y_hist[k]])
-        for i in range(num_obs):
+        for i in range(num_dyn_obs):
             ellipses[i].center = (
                 obs_pos_hist[k][i, 0],
                 obs_pos_hist[k][i, 1]

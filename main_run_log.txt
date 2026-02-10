@@ -1,0 +1,695 @@
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+k=0, solve_time = 16.77 ms
+k=0, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=1, solve_time = 12.32 ms
+du = [0.04999839 0.19996261]  | limits = [0.05, 0.2]
+k=1, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=2, solve_time = 11.32 ms
+du = [0.04999841 0.19995196]  | limits = [0.05, 0.2]
+k=2, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=3, solve_time = 11.17 ms
+du = [0.04999841 0.1999325 ]  | limits = [0.05, 0.2]
+k=3, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=4, solve_time = 12.23 ms
+du = [0.04999838 0.19989165]  | limits = [0.05, 0.2]
+k=4, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=5, solve_time = 12.01 ms
+du = [0.04999973 0.20000001]  | limits = [0.05, 0.2]
+k=5, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=6, solve_time = 11.30 ms
+du = [0.04999825 0.19902697]  | limits = [0.05, 0.2]
+k=6, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=7, solve_time = 11.04 ms
+du = [ 0.04999814 -0.19776079]  | limits = [0.05, 0.2]
+k=7, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=8, solve_time = 12.07 ms
+du = [ 0.04999799 -0.19721074]  | limits = [0.05, 0.2]
+k=8, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=9, solve_time = 11.49 ms
+du = [ 0.04999778 -0.19679128]  | limits = [0.05, 0.2]
+k=9, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=10, solve_time = 12.28 ms
+du = [ 0.04999744 -0.18954501]  | limits = [0.05, 0.2]
+k=10, progress index=4
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=11, solve_time = 12.17 ms
+du = [ 0.04999701 -0.19297602]  | limits = [0.05, 0.2]
+k=11, progress index=5
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=12, solve_time = 17.76 ms
+du = [ 0.04999992 -0.19366502]  | limits = [0.05, 0.2]
+k=12, progress index=5
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=13, solve_time = 12.16 ms
+du = [ 0.04999225 -0.17874713]  | limits = [0.05, 0.2]
+k=13, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=14, solve_time = 23.72 ms
+du = [0.04999871 0.13380237]  | limits = [0.05, 0.2]
+k=14, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=15, solve_time = 13.57 ms
+du = [ 0.04997439 -0.19970845]  | limits = [0.05, 0.2]
+k=15, progress index=8
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=16, solve_time = 15.21 ms
+du = [ 0.04994941 -0.18521637]  | limits = [0.05, 0.2]
+k=16, progress index=9
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=17, solve_time = 14.26 ms
+du = [-0.01501483 -0.19998681]  | limits = [0.05, 0.2]
+k=17, progress index=11
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=18, solve_time = 13.12 ms
+du = [-0.01861003 -0.19973475]  | limits = [0.05, 0.2]
+k=18, progress index=12
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=19, solve_time = 18.98 ms
+du = [-0.0499993  -0.19998954]  | limits = [0.05, 0.2]
+k=19, progress index=13
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=20, solve_time = 16.89 ms
+du = [-0.04999444 -0.19987244]  | limits = [0.05, 0.2]
+k=20, progress index=14
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=21, solve_time = 20.09 ms
+du = [-0.05       -0.19999914]  | limits = [0.05, 0.2]
+k=21, progress index=14
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=22, solve_time = 13.30 ms
+du = [-0.04169381  0.12348203]  | limits = [0.05, 0.2]
+k=22, progress index=15
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=23, solve_time = 21.92 ms
+du = [-0.05       -0.11618004]  | limits = [0.05, 0.2]
+k=23, progress index=16
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=24, solve_time = 16.68 ms
+du = [-0.04999995  0.1999999 ]  | limits = [0.05, 0.2]
+k=24, progress index=17
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=25, solve_time = 16.27 ms
+du = [-0.04263194  0.19999984]  | limits = [0.05, 0.2]
+k=25, progress index=17
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=26, solve_time = 17.75 ms
+du = [-0.03423338  0.19999985]  | limits = [0.05, 0.2]
+k=26, progress index=18
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=27, solve_time = 13.59 ms
+du = [0.0499999  0.19999982]  | limits = [0.05, 0.2]
+k=27, progress index=18
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=28, solve_time = 13.36 ms
+du = [0.04999988 0.19999981]  | limits = [0.05, 0.2]
+k=28, progress index=19
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=29, solve_time = 12.62 ms
+du = [0.04999455 0.19999106]  | limits = [0.05, 0.2]
+k=29, progress index=20
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=30, solve_time = 17.61 ms
+du = [0.04999384 0.19998791]  | limits = [0.05, 0.2]
+k=30, progress index=20
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=31, solve_time = 12.71 ms
+du = [0.04999272 0.19998361]  | limits = [0.05, 0.2]
+k=31, progress index=21
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=32, solve_time = 12.17 ms
+du = [0.0499915  0.19997602]  | limits = [0.05, 0.2]
+k=32, progress index=22
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=33, solve_time = 11.29 ms
+du = [0.04998995 0.19996378]  | limits = [0.05, 0.2]
+k=33, progress index=23
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=34, solve_time = 12.26 ms
+du = [0.04998731 0.19993536]  | limits = [0.05, 0.2]
+k=34, progress index=24
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=35, solve_time = 12.27 ms
+du = [0.04998352 0.19984288]  | limits = [0.05, 0.2]
+k=35, progress index=26
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=36, solve_time = 12.91 ms
+du = [0.04999559 0.03441077]  | limits = [0.05, 0.2]
+k=36, progress index=27
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=37, solve_time = 14.96 ms
+du = [ 0.0499993 -0.196253 ]  | limits = [0.05, 0.2]
+k=37, progress index=29
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=38, solve_time = 36.24 ms
+du = [-0.04999947 -0.19999999]  | limits = [0.05, 0.2]
+k=38, progress index=31
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=39, solve_time = 20.74 ms
+du = [-0.04999998 -0.20000001]  | limits = [0.05, 0.2]
+k=39, progress index=33
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=40, solve_time = 43.66 ms
+du = [-0.04999996 -0.20000001]  | limits = [0.05, 0.2]
+k=40, progress index=34
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=41, solve_time = 19.96 ms
+du = [-0.04999988 -0.2       ]  | limits = [0.05, 0.2]
+k=41, progress index=36
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=42, solve_time = 14.63 ms
+du = [ 0.05000001 -0.19997198]  | limits = [0.05, 0.2]
+k=42, progress index=38
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=43, solve_time = 13.00 ms
+du = [ 0.04998862 -0.0714769 ]  | limits = [0.05, 0.2]
+k=43, progress index=39
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=44, solve_time = 13.46 ms
+du = [ 0.04976218 -0.19996755]  | limits = [0.05, 0.2]
+k=44, progress index=41
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=45, solve_time = 10.85 ms
+du = [ 0.04843809 -0.13177736]  | limits = [0.05, 0.2]
+k=45, progress index=43
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=46, solve_time = 9.83 ms
+du = [-0.04967021 -0.19650025]  | limits = [0.05, 0.2]
+k=46, progress index=45
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=47, solve_time = 9.75 ms
+du = [-0.04976915 -0.19645688]  | limits = [0.05, 0.2]
+k=47, progress index=46
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=48, solve_time = 9.68 ms
+du = [-0.04981579 -0.19624931]  | limits = [0.05, 0.2]
+k=48, progress index=48
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=49, solve_time = 9.45 ms
+du = [-0.04982259 -0.19530059]  | limits = [0.05, 0.2]
+k=49, progress index=49
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=50, solve_time = 9.61 ms
+du = [-0.0498082  -0.19299175]  | limits = [0.05, 0.2]
+k=50, progress index=51
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=51, solve_time = 8.75 ms
+du = [-0.04976292 -0.1853542 ]  | limits = [0.05, 0.2]
+k=51, progress index=52
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=52, solve_time = 8.61 ms
+du = [-0.04967508  0.09307579]  | limits = [0.05, 0.2]
+k=52, progress index=53
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=53, solve_time = 8.87 ms
+du = [-0.04989189  0.18316306]  | limits = [0.05, 0.2]
+k=53, progress index=55
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=54, solve_time = 8.62 ms
+du = [-0.04978909  0.18678382]  | limits = [0.05, 0.2]
+k=54, progress index=56
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=55, solve_time = 8.55 ms
+du = [-0.04948625  0.18704122]  | limits = [0.05, 0.2]
+k=55, progress index=57
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=56, solve_time = 8.48 ms
+du = [-0.04829922  0.18518578]  | limits = [0.05, 0.2]
+k=56, progress index=57
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=57, solve_time = 6.96 ms
+du = [-0.03321927  0.17528084]  | limits = [0.05, 0.2]
+k=57, progress index=58
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=58, solve_time = 6.84 ms
+du = [0.03292175 0.16696378]  | limits = [0.05, 0.2]
+k=58, progress index=59
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=59, solve_time = 6.97 ms
+du = [0.03389648 0.146309  ]  | limits = [0.05, 0.2]
+k=59, progress index=60
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=60, solve_time = 7.03 ms
+du = [0.02789331 0.09648745]  | limits = [0.05, 0.2]
+k=60, progress index=61
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=61, solve_time = 7.15 ms
+du = [0.01683972 0.02032575]  | limits = [0.05, 0.2]
+k=61, progress index=62
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=62, solve_time = 7.06 ms
+du = [ 0.00705071 -0.03005775]  | limits = [0.05, 0.2]
+k=62, progress index=63
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=63, solve_time = 7.06 ms
+du = [ 0.00397082 -0.04166793]  | limits = [0.05, 0.2]
+k=63, progress index=64
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=64, solve_time = 7.01 ms
+du = [ 0.00467034 -0.03732466]  | limits = [0.05, 0.2]
+k=64, progress index=65
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=65, solve_time = 7.15 ms
+du = [ 0.00592645 -0.02825954]  | limits = [0.05, 0.2]
+k=65, progress index=66
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=66, solve_time = 6.98 ms
+du = [ 0.00685049 -0.01808508]  | limits = [0.05, 0.2]
+k=66, progress index=67
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=67, solve_time = 7.00 ms
+du = [ 0.00743821 -0.00866154]  | limits = [0.05, 0.2]
+k=67, progress index=68
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=68, solve_time = 6.97 ms
+du = [ 0.00781511 -0.00091419]  | limits = [0.05, 0.2]
+k=68, progress index=69
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=69, solve_time = 6.97 ms
+du = [0.00806287 0.00484496]  | limits = [0.05, 0.2]
+k=69, progress index=70
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=70, solve_time = 6.91 ms
+du = [0.00822504 0.00870462]  | limits = [0.05, 0.2]
+k=70, progress index=71
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=71, solve_time = 7.01 ms
+du = [0.00832816 0.01095718]  | limits = [0.05, 0.2]
+k=71, progress index=72
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=72, solve_time = 7.21 ms
+du = [0.00839141 0.01197327]  | limits = [0.05, 0.2]
+k=72, progress index=73
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=73, solve_time = 7.06 ms
+du = [0.00842661 0.01212117]  | limits = [0.05, 0.2]
+k=73, progress index=74
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=74, solve_time = 7.01 ms
+du = [0.00843953 0.01172253]  | limits = [0.05, 0.2]
+k=74, progress index=75
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 210
+k=75, solve_time = 6.84 ms
+du = [0.00843196 0.01103406]  | limits = [0.05, 0.2]
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\PythonWork\Omen\Thesis\main.py", line 266, in <module>
+      File "C:\Users\GOD\AppData\Local\Python\pythoncore-3.14-64\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 0-1: character maps to <undefined>
