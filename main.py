@@ -16,11 +16,13 @@ from visualization import visualize
 
 
 
+# To keep our simulation environment variable 
+# We have a curved S shaped path and also a straight variable
 USE_S_CURVE = True
 
-    
+
 if USE_S_CURVE:
-    ref_traj = generate_s_curve_ref(
+    ref_traj = generate_s_curve_ref(    #Using this function we are generating a sine wave
         x_start=0.0,
         x_end=20.0,
         num_points=401,   # more points = smoother
@@ -28,7 +30,8 @@ if USE_S_CURVE:
         frequency=0.6
     )
 else:
-    # keep your old straight path definition here
+    # This is where the old ref traj assignment is supposed to take place
+    # The old ref traj being a straight line from the origin to some point
     # ref_traj = ...
     pass
 
@@ -117,40 +120,83 @@ prev_z = None
 
 max_steps = min(5000, ref_traj.shape[1] - 1)
 
-for k in range(max_steps):
+# print(ref_traj)
+# time.sleep(312312312)
 
-    # Path-tracking reference window (2 x (N+1))
-    R_horizon = ref_traj[:, k : k + N + 1]
+# This function outputs the receding horizon
+def receding_horizon(k, ref_traj):
+    # Path-tracking reference window, (2 x (N+1)) matrix
+    # Remember that I am defining my ref traj as just a series of x and y points 
+    # That is why it is a 2 row and N column matrix. If we had x and y and heading values to track, then that would mean our row would now have to be 3
+    # This window moves along the ref path as the simulation steps forward, as k goes towards the max_steps
+    R_horizon = ref_traj[:, k : k + N + 1]      #we are doing some slicing here
+    # so consider all rows, but for the columns we are going to only take the columns starting from k all the way to k+N+1, so basically if k is at 100 right now and we set N(our horizon length) to 20. Then we consider the x/y ref points starting at 100 all the way to 111.
 
     # If we're near the end of ref_traj, pad with the last point
     if R_horizon.shape[1] < N + 1:
         last = ref_traj[:, -1].reshape(2, 1)
         pad = np.repeat(last, N + 1 - R_horizon.shape[1], axis=1)
         R_horizon = np.hstack([R_horizon, pad])
-        
+
+    return R_horizon
+
+# This function constructs the NLP and actually solves it
+# Then it outputs the solution and updates the prev_z for warmstart
+def nlp_solve(lbx, ubx, lbg, ubg, p):
+    global prev_z
+
+    #what is being done here?
+    kwargs = dict(lbx=lbx, ubx=ubx, lbg=lbg, ubg=ubg, p=p) #Defining a dictionary of arguments that will be passed to the NLP
+
+    if prev_z is not None:
+        kwargs["x0"] = prev_z   # warm start
+
+    # Performance metrics, we are timing how long it takes to solve this nlp once
+    t_solve_start = time.perf_counter()
+    
+    sol = solver(**kwargs)
+    
+    t_solve_end = time.perf_counter()
+
+    solve_time = t_solve_end - t_solve_start
+    print(f"k={k}, solve_time = {solve_time*1000:.2f} ms")
+
+    st = solver.stats()
+
+    if sol is None:
+        print("Solver returned None:", st["return_status"])
+
+
+    if st["return_status"] not in {
+        "Solve_Succeeded",
+        "Solved_To_Acceptable_Level",
+        "Maximum_Iterations_Exceeded"
+    }:
+        print("Bad solve:", st["return_status"])
+
+
+    # Save solution for warm start next iteration
+    prev_z = sol["x"]
+    print(prev_z)
+
+
+    return sol, solve_time
+
+
+
+#ACTUAL SIMULATION STEPPING
+for k in range(max_steps):
+
+    R_horizon = receding_horizon(k, ref_traj)
+    
     # Optional: make terminal goal consistent with the horizon end
     X_goal_val = np.array([R_horizon[0, -1], R_horizon[1, -1], 0.0])
 
     obstacles.step()
+
     obsx_h, obsy_h = obstacles.predict_horizon()
     
     obs_pos_hist.append(obstacles.pos.copy())
-
-    p = np.concatenate([
-        x_current,
-        u_prev,
-        R_horizon.flatten(order="F"),
-        obsx_h.flatten(order="F"),
-        obsy_h.flatten(order="F"),
-        X_goal_val
-    ])
-
-
-    print("x_current:", x_current.shape)
-    print("R_horizon:", R_horizon.shape)
-    print("obsx_h:", obsx_h.shape)
-    print("obsy_h:", obsy_h.shape)
-    print("X_goal_val:", X_goal_val.shape)
 
     p = np.concatenate([
         x_current,                       # X0 (nx,)
@@ -161,42 +207,46 @@ for k in range(max_steps):
         X_goal_val                       # (nx,)
     ])
 
+    # print("x_current:", x_current.shape)
+    # print("R_horizon:", R_horizon.shape)
+    # print("obsx_h:", obsx_h.shape)
+    # print("obsy_h:", obsy_h.shape)
+    # print("X_goal_val:", X_goal_val.shape)
+    # print("p length:", p.shape[0])
 
 
-    print("p length:", p.shape[0])
+    # #what is being done here?
+    # kwargs = dict(lbx=lbx, ubx=ubx, lbg=lbg, ubg=ubg, p=p) #Defining a dictionary of arguments that will be passed to the NLP
 
+    # if prev_z is not None:
+    #     kwargs["x0"] = prev_z   # warm start
 
-    #what is being done here?
-    kwargs = dict(lbx=lbx, ubx=ubx, lbg=lbg, ubg=ubg, p=p) 
-
-    if prev_z is not None:
-        kwargs["x0"] = prev_z   # warm start
-
+    # # sol = solver(**kwargs)
+    # t_solve_start = time.perf_counter()
     # sol = solver(**kwargs)
-    t_solve_start = time.perf_counter()
-    sol = solver(**kwargs)
-    t_solve_end = time.perf_counter()
+    # t_solve_end = time.perf_counter()
 
-    solve_time = t_solve_end - t_solve_start
-    print(f"k={k}, solve_time = {solve_time*1000:.2f} ms")
+    # solve_time = t_solve_end - t_solve_start
+    # print(f"k={k}, solve_time = {solve_time*1000:.2f} ms")
 
-    st = solver.stats()
+    # st = solver.stats()
 
-    if sol is None:
-        print("Solver returned None:", st["return_status"])
-        break
+    # if sol is None:
+    #     print("Solver returned None:", st["return_status"])
+    #     break
 
-    if st["return_status"] not in {
-        "Solve_Succeeded",
-        "Solved_To_Acceptable_Level",
-        "Maximum_Iterations_Exceeded"
-    }:
-        print("Bad solve:", st["return_status"])
-        break
+    # if st["return_status"] not in {
+    #     "Solve_Succeeded",
+    #     "Solved_To_Acceptable_Level",
+    #     "Maximum_Iterations_Exceeded"
+    # }:
+    #     print("Bad solve:", st["return_status"])
+    #     break
 
-    # Save solution for warm start next iteration
-    prev_z = sol["x"]
-
+    # # Save solution for warm start next iteration
+    # prev_z = sol["x"]
+    
+    sol, solve_time = nlp_solve(lbx, ubx, lbg, ubg, p)
 
 
     z_opt = sol["x"].full().flatten()
@@ -257,7 +307,7 @@ for k in range(max_steps):
         if (dx**2 / a_eff**2 + dy**2 / b_eff**2) <= 1.0:
             collision_count += 1
             collision_log.append((k, i))
-            print(f"⚠️ PHYSICAL COLLISION with obstacle {i} at step {k}")
+            print(f" PHYSICAL COLLISION with obstacle {i} at step {k}")
 
 
 
@@ -283,6 +333,8 @@ for k in range(max_steps):
 
 solve_times = np.array(solve_times)
 
+
+#DEBUG AND PERFORMANCE PRINTS
 print("\n=== MPC TIMING SUMMARY ===")
 print(f"Mean solve time: {solve_times.mean()*1000:.2f} ms")
 print(f"Median solve time: {np.median(solve_times)*1000:.2f} ms")
@@ -304,5 +356,5 @@ print(f"Max slack value: {slack_max:.4f}")
 
 
 
-
+#MATPLOTLIB OF THE SIMULATION
 visualize(ref_traj, x_history, y_history, theta_history, obs_pos_hist)

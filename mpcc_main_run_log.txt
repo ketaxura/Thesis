@@ -1,0 +1,3229 @@
+Running MPCC
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+k=0, solve_time = 28.11 ms
+k=0, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=1, solve_time = 12.73 ms
+du = [ 2.23372897e-03 -5.33021343e-08]  | limits = [0.25, 0.6]
+k=1, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=2, solve_time = 11.32 ms
+du = [-8.43014032e-04 -9.46627571e-09]  | limits = [0.25, 0.6]
+k=2, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=3, solve_time = 11.22 ms
+du = [-8.46034305e-04 -1.17289290e-08]  | limits = [0.25, 0.6]
+k=3, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=4, solve_time = 11.42 ms
+du = [-8.59082128e-04 -1.15810684e-08]  | limits = [0.25, 0.6]
+k=4, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=5, solve_time = 11.44 ms
+du = [-8.87143475e-04 -1.14819402e-08]  | limits = [0.25, 0.6]
+k=5, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=6, solve_time = 9.95 ms
+du = [-9.30123009e-04 -1.03630396e-08]  | limits = [0.25, 0.6]
+k=6, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=7, solve_time = 10.12 ms
+du = [-9.85226057e-04 -1.17860883e-08]  | limits = [0.25, 0.6]
+k=7, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=8, solve_time = 10.10 ms
+du = [-1.05311096e-03 -1.14461596e-08]  | limits = [0.25, 0.6]
+k=8, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=9, solve_time = 11.25 ms
+du = [-1.13093692e-03 -1.14318111e-08]  | limits = [0.25, 0.6]
+k=9, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=10, solve_time = 11.30 ms
+du = [-1.21714254e-03 -1.15202311e-08]  | limits = [0.25, 0.6]
+k=10, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=11, solve_time = 11.32 ms
+du = [-1.31007289e-03 -1.16142080e-08]  | limits = [0.25, 0.6]
+k=11, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=12, solve_time = 14.10 ms
+du = [-1.40851889e-03 -1.17233954e-08]  | limits = [0.25, 0.6]
+k=12, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=13, solve_time = 12.45 ms
+du = [-1.51175375e-03 -1.18427604e-08]  | limits = [0.25, 0.6]
+k=13, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=14, solve_time = 11.89 ms
+du = [-1.62097543e-03 -1.19113201e-08]  | limits = [0.25, 0.6]
+k=14, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=15, solve_time = 13.41 ms
+du = [-1.73466991e-03 -1.39651631e-08]  | limits = [0.25, 0.6]
+k=15, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=16, solve_time = 14.69 ms
+du = [-1.96137052e-03 -1.44295981e-08]  | limits = [0.25, 0.6]
+k=16, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=17, solve_time = 11.42 ms
+du = [ 0.00722751 -0.00344745]  | limits = [0.25, 0.6]
+k=17, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=18, solve_time = 11.29 ms
+du = [-2.54883063e-03 -1.23990477e-08]  | limits = [0.25, 0.6]
+k=18, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=19, solve_time = 12.52 ms
+du = [-1.53397412e-03 -3.39527984e-09]  | limits = [0.25, 0.6]
+k=19, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=20, solve_time = 11.28 ms
+du = [-2.34410711e-04  4.97540842e-09]  | limits = [0.25, 0.6]
+k=20, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=21, solve_time = 13.23 ms
+du = [6.04208556e-04 6.62570154e-09]  | limits = [0.25, 0.6]
+k=21, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=22, solve_time = 15.07 ms
+du = [1.85800048e-03 1.35277208e-08]  | limits = [0.25, 0.6]
+k=22, progress index=4
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=23, solve_time = 16.34 ms
+du = [6.53050951e-04 2.40149711e-09]  | limits = [0.25, 0.6]
+k=23, progress index=4
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=24, solve_time = 15.27 ms
+du = [ 3.72461698e-04 -8.44461667e-10]  | limits = [0.25, 0.6]
+k=24, progress index=4
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=25, solve_time = 17.82 ms
+du = [ 5.59902744e-04 -5.04686681e-10]  | limits = [0.25, 0.6]
+k=25, progress index=4
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=26, solve_time = 16.22 ms
+du = [7.76515394e-04 3.83719223e-10]  | limits = [0.25, 0.6]
+k=26, progress index=4
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=27, solve_time = 16.85 ms
+du = [8.98682662e-04 7.71030129e-10]  | limits = [0.25, 0.6]
+k=27, progress index=5
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=28, solve_time = 15.00 ms
+du = [1.11591680e-03 2.41951709e-09]  | limits = [0.25, 0.6]
+k=28, progress index=5
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=29, solve_time = 14.95 ms
+du = [1.14925845e-03 3.24724747e-09]  | limits = [0.25, 0.6]
+k=29, progress index=5
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=30, solve_time = 15.28 ms
+du = [1.22221342e-03 5.09958842e-09]  | limits = [0.25, 0.6]
+k=30, progress index=5
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=31, solve_time = 14.91 ms
+du = [1.18513708e-03 7.03367248e-09]  | limits = [0.25, 0.6]
+k=31, progress index=5
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=32, solve_time = 15.20 ms
+du = [9.83238436e-04 8.44196318e-09]  | limits = [0.25, 0.6]
+k=32, progress index=5
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=33, solve_time = 13.92 ms
+du = [ 0.00537643 -0.00356012]  | limits = [0.25, 0.6]
+k=33, progress index=5
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=34, solve_time = 12.53 ms
+du = [-1.14606655e-03  2.46472717e-08]  | limits = [0.25, 0.6]
+k=34, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=35, solve_time = 12.65 ms
+du = [-1.49823773e-03  3.04390278e-08]  | limits = [0.25, 0.6]
+k=35, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=36, solve_time = 11.48 ms
+du = [-1.84767268e-03  4.51922922e-08]  | limits = [0.25, 0.6]
+k=36, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=37, solve_time = 11.43 ms
+du = [-2.21622864e-03  4.82582845e-08]  | limits = [0.25, 0.6]
+k=37, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=38, solve_time = 11.70 ms
+du = [-2.60461485e-03  6.31984163e-08]  | limits = [0.25, 0.6]
+k=38, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=39, solve_time = 9.99 ms
+du = [-3.00942243e-03  8.11651498e-08]  | limits = [0.25, 0.6]
+k=39, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=40, solve_time = 11.35 ms
+du = [-3.75660702e-03  1.34859553e-07]  | limits = [0.25, 0.6]
+k=40, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=41, solve_time = 11.37 ms
+du = [-4.78773704e-03  2.48344546e-07]  | limits = [0.25, 0.6]
+k=41, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=42, solve_time = 11.35 ms
+du = [-5.95671966e-03  6.78136375e-07]  | limits = [0.25, 0.6]
+k=42, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=43, solve_time = 13.76 ms
+du = [-7.68094119e-03  1.53420574e-06]  | limits = [0.25, 0.6]
+k=43, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=44, solve_time = 13.67 ms
+du = [-8.41736083e-03  8.16626996e-06]  | limits = [0.25, 0.6]
+k=44, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=45, solve_time = 12.54 ms
+du = [-7.61592841e-03  3.98548034e-05]  | limits = [0.25, 0.6]
+k=45, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=46, solve_time = 13.65 ms
+du = [-7.86947754e-03 -3.22243097e-05]  | limits = [0.25, 0.6]
+k=46, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=47, solve_time = 14.35 ms
+du = [-8.35842144e-03  4.17912829e-06]  | limits = [0.25, 0.6]
+k=47, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=48, solve_time = 13.66 ms
+du = [-9.02410048e-03 -1.40217287e-05]  | limits = [0.25, 0.6]
+k=48, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=49, solve_time = 14.88 ms
+du = [-9.01931587e-03 -2.51307795e-06]  | limits = [0.25, 0.6]
+k=49, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=50, solve_time = 14.81 ms
+du = [-9.02674519e-03 -1.74658636e-06]  | limits = [0.25, 0.6]
+k=50, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=51, solve_time = 14.79 ms
+du = [-8.91211105e-03 -9.70647679e-07]  | limits = [0.25, 0.6]
+k=51, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=52, solve_time = 15.98 ms
+du = [-8.68292100e-03 -6.96658547e-07]  | limits = [0.25, 0.6]
+k=52, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=53, solve_time = 14.77 ms
+du = [-8.26560178e-03 -5.80953694e-07]  | limits = [0.25, 0.6]
+k=53, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=54, solve_time = 16.12 ms
+du = [-0.00870501  0.14908238]  | limits = [0.25, 0.6]
+k=54, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=55, solve_time = 14.85 ms
+du = [-1.18436078e-07 -1.06976440e-01]  | limits = [0.25, 0.6]
+k=55, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=56, solve_time = 16.29 ms
+du = [-1.50881967e-08 -3.43959160e-03]  | limits = [0.25, 0.6]
+k=56, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=57, solve_time = 16.27 ms
+du = [-1.44732773e-08 -4.12857532e-02]  | limits = [0.25, 0.6]
+k=57, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=58, solve_time = 16.25 ms
+du = [-7.41255700e-09 -1.02677124e-03]  | limits = [0.25, 0.6]
+k=58, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=59, solve_time = 16.14 ms
+du = [-7.01687201e-09 -1.03690469e-05]  | limits = [0.25, 0.6]
+k=59, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=60, solve_time = 15.05 ms
+du = [-6.38172830e-09 -2.85416963e-06]  | limits = [0.25, 0.6]
+k=60, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=61, solve_time = 15.37 ms
+du = [-6.83479470e-09 -1.58573142e-06]  | limits = [0.25, 0.6]
+k=61, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=62, solve_time = 15.21 ms
+du = [ 2.32584400e-07 -4.64431191e-03]  | limits = [0.25, 0.6]
+k=62, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=63, solve_time = 37.42 ms
+du = [ 0.24999998 -0.32149187]  | limits = [0.25, 0.6]
+k=63, progress index=7
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=64, solve_time = 21.33 ms
+du = [0.24999991 0.24164948]  | limits = [0.25, 0.6]
+k=64, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=65, solve_time = 20.18 ms
+du = [-0.10748102  0.04641182]  | limits = [0.25, 0.6]
+k=65, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=66, solve_time = 22.25 ms
+du = [0.2499998  0.07059554]  | limits = [0.25, 0.6]
+k=66, progress index=6
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=67, solve_time = 20.11 ms
+du = [ 0.12075335 -0.02599555]  | limits = [0.25, 0.6]
+k=67, progress index=5
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=68, solve_time = 20.29 ms
+du = [0.21421009 0.04312471]  | limits = [0.25, 0.6]
+k=68, progress index=4
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=69, solve_time = 22.16 ms
+du = [-0.24999988 -0.10252253]  | limits = [0.25, 0.6]
+k=69, progress index=4
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=70, solve_time = 19.88 ms
+du = [-0.25        0.02385882]  | limits = [0.25, 0.6]
+k=70, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=71, solve_time = 24.01 ms
+du = [-0.24999984 -0.07379079]  | limits = [0.25, 0.6]
+k=71, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=72, solve_time = 22.35 ms
+du = [-0.00235269  0.09574307]  | limits = [0.25, 0.6]
+k=72, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=73, solve_time = 19.63 ms
+du = [-0.22512981 -0.14183185]  | limits = [0.25, 0.6]
+k=73, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=74, solve_time = 20.05 ms
+du = [0.02354811 0.00398212]  | limits = [0.25, 0.6]
+k=74, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=75, solve_time = 18.48 ms
+du = [-0.0235481  -0.00950711]  | limits = [0.25, 0.6]
+k=75, progress index=3
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=76, solve_time = 19.65 ms
+du = [ 0.24999996 -0.02339366]  | limits = [0.25, 0.6]
+k=76, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=77, solve_time = 18.55 ms
+du = [ 1.74526975e-01 -1.47617836e-05]  | limits = [0.25, 0.6]
+k=77, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=78, solve_time = 18.04 ms
+du = [-2.38796056e-01 -4.26405132e-06]  | limits = [0.25, 0.6]
+k=78, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=79, solve_time = 16.81 ms
+du = [-4.44336592e-02 -2.75005834e-07]  | limits = [0.25, 0.6]
+k=79, progress index=2
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=80, solve_time = 19.74 ms
+du = [1.90172817e-01 2.10434599e-08]  | limits = [0.25, 0.6]
+k=80, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=81, solve_time = 19.29 ms
+du = [ 2.61018829e-02 -3.51044256e-08]  | limits = [0.25, 0.6]
+k=81, progress index=1
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=82, solve_time = 17.95 ms
+du = [ 2.07755707e-02 -4.65108173e-08]  | limits = [0.25, 0.6]
+k=82, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=83, solve_time = 20.90 ms
+du = [2.49999978e-01 9.08948536e-08]  | limits = [0.25, 0.6]
+k=83, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=84, solve_time = 20.48 ms
+du = [-2.49999929e-01 -2.19681279e-07]  | limits = [0.25, 0.6]
+k=84, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=85, solve_time = 18.80 ms
+du = [-0.24999993 -0.02250931]  | limits = [0.25, 0.6]
+k=85, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=86, solve_time = 18.48 ms
+du = [0.09402781 0.01772792]  | limits = [0.25, 0.6]
+k=86, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=87, solve_time = 21.95 ms
+du = [0.20723974 0.00477848]  | limits = [0.25, 0.6]
+k=87, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=88, solve_time = 19.39 ms
+du = [-0.24999995 -0.02251401]  | limits = [0.25, 0.6]
+k=88, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=89, solve_time = 20.09 ms
+du = [-0.17961542 -0.00602321]  | limits = [0.25, 0.6]
+k=89, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=90, solve_time = 19.94 ms
+du = [-1.43601312e-08 -1.46000080e-01]  | limits = [0.25, 0.6]
+k=90, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=91, solve_time = 20.02 ms
+du = [-2.06387824e-08  9.98656305e-02]  | limits = [0.25, 0.6]
+k=91, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=92, solve_time = 20.05 ms
+du = [-4.02909996e-09 -1.75324246e-01]  | limits = [0.25, 0.6]
+k=92, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=93, solve_time = 21.39 ms
+du = [1.22765517e-10 1.68497929e-01]  | limits = [0.25, 0.6]
+k=93, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=94, solve_time = 18.75 ms
+du = [ 9.52601748e-09 -1.68498477e-01]  | limits = [0.25, 0.6]
+k=94, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=95, solve_time = 26.99 ms
+du = [8.75805651e-08 2.07149886e-01]  | limits = [0.25, 0.6]
+k=95, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=96, solve_time = 22.08 ms
+du = [ 0.11707248 -0.20714999]  | limits = [0.25, 0.6]
+k=96, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=97, solve_time = 21.78 ms
+du = [0.24999998 0.22748229]  | limits = [0.25, 0.6]
+k=97, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=98, solve_time = 23.76 ms
+du = [-0.1748746  -0.22748238]  | limits = [0.25, 0.6]
+k=98, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=99, solve_time = 22.68 ms
+du = [-0.19219775  0.05156014]  | limits = [0.25, 0.6]
+k=99, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=100, solve_time = 19.05 ms
+du = [-2.31541876e-07 -5.15597967e-02]  | limits = [0.25, 0.6]
+k=100, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=101, solve_time = 17.42 ms
+du = [2.46825638e-08 2.90200876e-03]  | limits = [0.25, 0.6]
+k=101, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=102, solve_time = 17.61 ms
+du = [ 1.34628738e-08 -2.89224620e-03]  | limits = [0.25, 0.6]
+k=102, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=103, solve_time = 20.62 ms
+du = [-3.13047146e-08 -3.23166666e-06]  | limits = [0.25, 0.6]
+k=103, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=104, solve_time = 20.39 ms
+du = [ 2.70225488e-10 -2.90889603e-06]  | limits = [0.25, 0.6]
+k=104, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=105, solve_time = 20.37 ms
+du = [-7.48985505e-09 -1.21132758e-06]  | limits = [0.25, 0.6]
+k=105, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=106, solve_time = 20.42 ms
+du = [-5.11995270e-09 -6.73328018e-07]  | limits = [0.25, 0.6]
+k=106, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=107, solve_time = 17.45 ms
+du = [2.94766344e-08 2.71610275e-06]  | limits = [0.25, 0.6]
+k=107, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=108, solve_time = 16.41 ms
+du = [-3.17806676e-08 -3.43907991e-06]  | limits = [0.25, 0.6]
+k=108, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=109, solve_time = 16.37 ms
+du = [-5.10551601e-11 -2.15979122e-07]  | limits = [0.25, 0.6]
+k=109, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=110, solve_time = 16.42 ms
+du = [-5.04523784e-11 -1.65349652e-07]  | limits = [0.25, 0.6]
+k=110, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=111, solve_time = 16.41 ms
+du = [-4.98672145e-11 -1.30500746e-07]  | limits = [0.25, 0.6]
+k=111, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=112, solve_time = 16.39 ms
+du = [-4.93010979e-11 -1.05611752e-07]  | limits = [0.25, 0.6]
+k=112, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=113, solve_time = 16.30 ms
+du = [-4.87542090e-11 -8.72179314e-08]  | limits = [0.25, 0.6]
+k=113, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=114, solve_time = 16.72 ms
+du = [-4.82277412e-11 -7.32400455e-08]  | limits = [0.25, 0.6]
+k=114, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=115, solve_time = 16.67 ms
+du = [-4.77240018e-11 -6.23612285e-08]  | limits = [0.25, 0.6]
+k=115, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=116, solve_time = 16.44 ms
+du = [-4.72043932e-11 -5.38625350e-08]  | limits = [0.25, 0.6]
+k=116, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=117, solve_time = 16.51 ms
+du = [-4.60016851e-11 -4.91327167e-08]  | limits = [0.25, 0.6]
+k=117, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=118, solve_time = 16.43 ms
+du = [-4.51636332e-11 -4.38438399e-08]  | limits = [0.25, 0.6]
+k=118, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=119, solve_time = 16.28 ms
+du = [-4.47470706e-11 -3.83891737e-08]  | limits = [0.25, 0.6]
+k=119, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=120, solve_time = 16.57 ms
+du = [-4.43506967e-11 -3.38994903e-08]  | limits = [0.25, 0.6]
+k=120, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=121, solve_time = 16.34 ms
+du = [-4.39762289e-11 -3.01571814e-08]  | limits = [0.25, 0.6]
+k=121, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=122, solve_time = 17.45 ms
+du = [-4.36262346e-11 -2.70042868e-08]  | limits = [0.25, 0.6]
+k=122, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=123, solve_time = 16.49 ms
+du = [-4.32924252e-11 -2.43223532e-08]  | limits = [0.25, 0.6]
+k=123, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=124, solve_time = 16.03 ms
+du = [-4.29861216e-11 -2.20233818e-08]  | limits = [0.25, 0.6]
+k=124, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=125, solve_time = 16.03 ms
+du = [-4.26995939e-11 -2.00369532e-08]  | limits = [0.25, 0.6]
+k=125, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=126, solve_time = 17.38 ms
+du = [-4.24359298e-11 -1.83087260e-08]  | limits = [0.25, 0.6]
+k=126, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=127, solve_time = 17.42 ms
+du = [-4.21933842e-11 -1.67967756e-08]  | limits = [0.25, 0.6]
+k=127, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=128, solve_time = 19.13 ms
+du = [-4.19792534e-11 -1.54654821e-08]  | limits = [0.25, 0.6]
+k=128, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=129, solve_time = 18.02 ms
+du = [-4.17575488e-11 -1.42878672e-08]  | limits = [0.25, 0.6]
+k=129, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=130, solve_time = 20.14 ms
+du = [-2.46853223e-09 -1.32404854e-08]  | limits = [0.25, 0.6]
+k=130, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=131, solve_time = 21.46 ms
+du = [-4.22545366e-09 -1.23055191e-08]  | limits = [0.25, 0.6]
+k=131, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=132, solve_time = 21.51 ms
+du = [-4.61793227e-09  1.99812624e-07]  | limits = [0.25, 0.6]
+k=132, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=133, solve_time = 18.35 ms
+du = [ 2.77522821e-09 -2.22039953e-07]  | limits = [0.25, 0.6]
+k=133, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=134, solve_time = 18.48 ms
+du = [2.45155130e-09 4.03095652e-07]  | limits = [0.25, 0.6]
+k=134, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=135, solve_time = 18.42 ms
+du = [-8.5665210e-09 -4.2252839e-07]  | limits = [0.25, 0.6]
+k=135, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=136, solve_time = 17.75 ms
+du = [-4.14158215e-10 -8.89841770e-09]  | limits = [0.25, 0.6]
+k=136, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=137, solve_time = 19.42 ms
+du = [ 2.01216613e-11 -8.25017540e-09]  | limits = [0.25, 0.6]
+k=137, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=138, solve_time = 19.53 ms
+du = [-4.44046192e-10 -7.86838516e-09]  | limits = [0.25, 0.6]
+k=138, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=139, solve_time = 20.29 ms
+du = [ 1.43585831e-10 -7.43848842e-09]  | limits = [0.25, 0.6]
+k=139, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=140, solve_time = 20.25 ms
+du = [ 7.63527148e-10 -7.04327139e-09]  | limits = [0.25, 0.6]
+k=140, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=141, solve_time = 19.14 ms
+du = [ 3.41890145e-10 -6.67893613e-09]  | limits = [0.25, 0.6]
+k=141, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=142, solve_time = 20.17 ms
+du = [ 7.98797972e-10 -6.34255577e-09]  | limits = [0.25, 0.6]
+k=142, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=143, solve_time = 18.89 ms
+du = [ 1.18763258e-09 -6.03140491e-09]  | limits = [0.25, 0.6]
+k=143, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=144, solve_time = 19.84 ms
+du = [ 3.42076157e-09 -5.74432074e-09]  | limits = [0.25, 0.6]
+k=144, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=145, solve_time = 18.00 ms
+du = [ 4.21756184e-09 -5.86576963e-09]  | limits = [0.25, 0.6]
+k=145, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=146, solve_time = 17.10 ms
+du = [ 2.50251411e-09 -4.57653787e-09]  | limits = [0.25, 0.6]
+k=146, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=147, solve_time = 16.32 ms
+du = [1.39760943e-08 1.41605905e-07]  | limits = [0.25, 0.6]
+k=147, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=148, solve_time = 16.43 ms
+du = [-1.26428922e-08 -1.50897538e-07]  | limits = [0.25, 0.6]
+k=148, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=149, solve_time = 16.18 ms
+du = [-4.19361282e-11 -4.38590973e-09]  | limits = [0.25, 0.6]
+k=149, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=150, solve_time = 16.24 ms
+du = [-4.19497943e-11 -4.21543281e-09]  | limits = [0.25, 0.6]
+k=150, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=151, solve_time = 16.26 ms
+du = [-4.19600153e-11 -4.05436604e-09]  | limits = [0.25, 0.6]
+k=151, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=152, solve_time = 16.53 ms
+du = [-4.19657607e-11 -3.90214815e-09]  | limits = [0.25, 0.6]
+k=152, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=153, solve_time = 16.36 ms
+du = [-4.19658752e-11 -3.75812300e-09]  | limits = [0.25, 0.6]
+k=153, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=154, solve_time = 16.44 ms
+du = [-0.00018747 -0.00018738]  | limits = [0.25, 0.6]
+k=154, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=155, solve_time = 16.29 ms
+du = [-6.59424598e-12 -9.67913473e-09]  | limits = [0.25, 0.6]
+k=155, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=156, solve_time = 16.32 ms
+du = [-5.29548280e-12 -9.40482256e-09]  | limits = [0.25, 0.6]
+k=156, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=157, solve_time = 15.81 ms
+du = [-5.43052062e-12 -8.72466469e-09]  | limits = [0.25, 0.6]
+k=157, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=158, solve_time = 15.00 ms
+du = [-5.57308019e-12 -8.11709797e-09]  | limits = [0.25, 0.6]
+k=158, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=159, solve_time = 14.90 ms
+du = [-5.70321221e-12 -7.57195786e-09]  | limits = [0.25, 0.6]
+k=159, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=160, solve_time = 16.30 ms
+du = [-5.82018114e-12 -7.08079659e-09]  | limits = [0.25, 0.6]
+k=160, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=161, solve_time = 16.35 ms
+du = [-5.92323413e-12 -6.63672594e-09]  | limits = [0.25, 0.6]
+k=161, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=162, solve_time = 16.52 ms
+du = [-6.01175706e-12 -6.23376377e-09]  | limits = [0.25, 0.6]
+k=162, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=163, solve_time = 16.22 ms
+du = [-6.08515668e-12 -5.86694487e-09]  | limits = [0.25, 0.6]
+k=163, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=164, solve_time = 16.33 ms
+du = [-6.14288481e-12 -5.53201113e-09]  | limits = [0.25, 0.6]
+k=164, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=165, solve_time = 16.41 ms
+du = [-6.18450777e-12 -5.22531394e-09]  | limits = [0.25, 0.6]
+k=165, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=166, solve_time = 16.28 ms
+du = [-6.20959881e-12 -4.94371833e-09]  | limits = [0.25, 0.6]
+k=166, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=167, solve_time = 16.50 ms
+du = [-6.21782834e-12 -4.68450876e-09]  | limits = [0.25, 0.6]
+k=167, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=168, solve_time = 16.43 ms
+du = [-6.20895002e-12 -4.44533226e-09]  | limits = [0.25, 0.6]
+k=168, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=169, solve_time = 16.63 ms
+du = [-5.11545320e-12 -4.21247041e-09]  | limits = [0.25, 0.6]
+k=169, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=170, solve_time = 16.61 ms
+du = [-4.99353683e-12 -4.00717665e-09]  | limits = [0.25, 0.6]
+k=170, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=171, solve_time = 16.38 ms
+du = [-4.93810895e-12 -3.81739152e-09]  | limits = [0.25, 0.6]
+k=171, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=172, solve_time = 16.05 ms
+du = [-4.86537893e-12 -3.64078306e-09]  | limits = [0.25, 0.6]
+k=172, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=173, solve_time = 15.95 ms
+du = [-4.77625925e-12 -3.47600708e-09]  | limits = [0.25, 0.6]
+k=173, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=174, solve_time = 16.11 ms
+du = [-4.71385431e-12 -3.31594285e-09]  | limits = [0.25, 0.6]
+k=174, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=175, solve_time = 16.02 ms
+du = [-4.89251695e-12 -3.13151389e-09]  | limits = [0.25, 0.6]
+k=175, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=176, solve_time = 16.46 ms
+du = [-4.85769064e-12 -2.98638336e-09]  | limits = [0.25, 0.6]
+k=176, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=177, solve_time = 16.53 ms
+du = [-4.68313929e-12 -2.86624003e-09]  | limits = [0.25, 0.6]
+k=177, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=178, solve_time = 16.25 ms
+du = [-4.48891965e-12 -2.75353804e-09]  | limits = [0.25, 0.6]
+k=178, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=179, solve_time = 16.26 ms
+du = [-4.27870586e-12 -2.64730846e-09]  | limits = [0.25, 0.6]
+k=179, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=180, solve_time = 16.20 ms
+du = [-4.05325773e-12 -2.54704548e-09]  | limits = [0.25, 0.6]
+k=180, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=181, solve_time = 16.25 ms
+du = [-3.81328302e-12 -2.45230426e-09]  | limits = [0.25, 0.6]
+k=181, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=182, solve_time = 16.33 ms
+du = [-3.55947910e-12 -2.36268761e-09]  | limits = [0.25, 0.6]
+k=182, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=183, solve_time = 16.43 ms
+du = [-3.29261618e-12 -2.27783300e-09]  | limits = [0.25, 0.6]
+k=183, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=184, solve_time = 19.65 ms
+du = [-3.01350264e-12 -2.19741356e-09]  | limits = [0.25, 0.6]
+k=184, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=185, solve_time = 17.29 ms
+du = [-2.72298850e-12 -2.12112635e-09]  | limits = [0.25, 0.6]
+k=185, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=186, solve_time = 19.94 ms
+du = [-2.42197234e-12 -2.04870515e-09]  | limits = [0.25, 0.6]
+k=186, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=187, solve_time = 17.77 ms
+du = [-2.11135276e-12 -1.97989286e-09]  | limits = [0.25, 0.6]
+k=187, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=188, solve_time = 17.91 ms
+du = [-1.79212895e-12 -1.91446662e-09]  | limits = [0.25, 0.6]
+k=188, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=189, solve_time = 17.81 ms
+du = [-1.46526541e-12 -1.85221332e-09]  | limits = [0.25, 0.6]
+k=189, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=190, solve_time = 17.82 ms
+du = [-1.13179258e-12 -1.79294048e-09]  | limits = [0.25, 0.6]
+k=190, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=191, solve_time = 17.88 ms
+du = [-7.92740873e-13 -1.73647041e-09]  | limits = [0.25, 0.6]
+k=191, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=192, solve_time = 17.64 ms
+du = [-4.49185827e-13 -1.68263933e-09]  | limits = [0.25, 0.6]
+k=192, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=193, solve_time = 17.92 ms
+du = [-1.02185621e-13 -1.63129561e-09]  | limits = [0.25, 0.6]
+k=193, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=194, solve_time = 17.72 ms
+du = [ 2.47146054e-13 -1.58229869e-09]  | limits = [0.25, 0.6]
+k=194, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=195, solve_time = 17.85 ms
+du = [ 5.97751015e-13 -1.53551867e-09]  | limits = [0.25, 0.6]
+k=195, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=196, solve_time = 17.87 ms
+du = [ 9.48491286e-13 -1.49083473e-09]  | limits = [0.25, 0.6]
+k=196, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=197, solve_time = 17.90 ms
+du = [ 1.29827746e-12 -1.44813477e-09]  | limits = [0.25, 0.6]
+k=197, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=198, solve_time = 17.82 ms
+du = [ 1.64603400e-12 -1.40731402e-09]  | limits = [0.25, 0.6]
+k=198, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=199, solve_time = 17.82 ms
+du = [ 1.99065070e-12 -1.36827485e-09]  | limits = [0.25, 0.6]
+k=199, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=200, solve_time = 17.82 ms
+du = [ 2.33104508e-12 -1.33092604e-09]  | limits = [0.25, 0.6]
+k=200, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=201, solve_time = 17.77 ms
+du = [ 2.66617284e-12 -1.29518225e-09]  | limits = [0.25, 0.6]
+k=201, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=202, solve_time = 17.75 ms
+du = [ 2.99497926e-12 -1.26096302e-09]  | limits = [0.25, 0.6]
+k=202, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=203, solve_time = 17.88 ms
+du = [ 3.31645128e-12 -1.22819321e-09]  | limits = [0.25, 0.6]
+k=203, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=204, solve_time = 17.86 ms
+du = [ 3.62955499e-12 -1.19680216e-09]  | limits = [0.25, 0.6]
+k=204, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=205, solve_time = 17.93 ms
+du = [ 3.93336405e-12 -1.16672330e-09]  | limits = [0.25, 0.6]
+k=205, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=206, solve_time = 17.90 ms
+du = [ 4.22693477e-12 -1.13789360e-09]  | limits = [0.25, 0.6]
+k=206, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=207, solve_time = 17.88 ms
+du = [ 4.50933735e-12 -1.11025282e-09]  | limits = [0.25, 0.6]
+k=207, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=208, solve_time = 17.93 ms
+du = [ 4.77974257e-12 -1.08374558e-09]  | limits = [0.25, 0.6]
+k=208, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=209, solve_time = 17.93 ms
+du = [ 5.03729697e-12 -1.05831811e-09]  | limits = [0.25, 0.6]
+k=209, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=210, solve_time = 17.94 ms
+du = [ 5.28126848e-12 -1.03391955e-09]  | limits = [0.25, 0.6]
+k=210, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=211, solve_time = 17.97 ms
+du = [ 5.51088342e-12 -1.01050166e-09]  | limits = [0.25, 0.6]
+k=211, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=212, solve_time = 17.88 ms
+du = [ 5.72549300e-12 -9.88018237e-10]  | limits = [0.25, 0.6]
+k=212, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=213, solve_time = 17.82 ms
+du = [ 5.92441721e-12 -9.66425526e-10]  | limits = [0.25, 0.6]
+k=213, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=214, solve_time = 17.65 ms
+du = [ 6.10713563e-12 -9.45680360e-10]  | limits = [0.25, 0.6]
+k=214, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=215, solve_time = 17.97 ms
+du = [ 6.27308275e-12 -9.25740925e-10]  | limits = [0.25, 0.6]
+k=215, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=216, solve_time = 17.77 ms
+du = [ 6.42175202e-12 -9.06563477e-10]  | limits = [0.25, 0.6]
+k=216, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=217, solve_time = 17.85 ms
+du = [ 6.55248425e-12 -8.88085470e-10]  | limits = [0.25, 0.6]
+k=217, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=218, solve_time = 17.77 ms
+du = [ 6.66281613e-12 -8.70025867e-10]  | limits = [0.25, 0.6]
+k=218, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=219, solve_time = 18.32 ms
+du = [ 4.31545424e-12 -5.58489349e-10]  | limits = [0.25, 0.6]
+k=219, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=220, solve_time = 18.02 ms
+du = [-4.99166680e-13 -1.62380536e-10]  | limits = [0.25, 0.6]
+k=220, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=221, solve_time = 17.69 ms
+du = [-2.30059027e-14 -2.33808018e-10]  | limits = [0.25, 0.6]
+k=221, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=222, solve_time = 17.66 ms
+du = [ 4.82398149e-12 -2.97426812e-10]  | limits = [0.25, 0.6]
+k=222, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=223, solve_time = 17.87 ms
+du = [ 6.92441937e-12 -2.86466038e-10]  | limits = [0.25, 0.6]
+k=223, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=224, solve_time = 17.97 ms
+du = [ 6.93043539e-12 -2.85954753e-10]  | limits = [0.25, 0.6]
+k=224, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=225, solve_time = 17.95 ms
+du = [ 6.91560004e-12 -2.85540525e-10]  | limits = [0.25, 0.6]
+k=225, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=226, solve_time = 17.72 ms
+du = [ 6.88244600e-12 -2.85211976e-10]  | limits = [0.25, 0.6]
+k=226, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=227, solve_time = 18.05 ms
+du = [ 6.83150758e-12 -2.84962314e-10]  | limits = [0.25, 0.6]
+k=227, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=228, solve_time = 17.68 ms
+du = [ 6.76319764e-12 -2.84784269e-10]  | limits = [0.25, 0.6]
+k=228, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=229, solve_time = 17.94 ms
+du = [ 6.67801925e-12 -2.84670239e-10]  | limits = [0.25, 0.6]
+k=229, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=230, solve_time = 17.53 ms
+du = [ 6.57647201e-12 -2.84612466e-10]  | limits = [0.25, 0.6]
+k=230, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=231, solve_time = 18.00 ms
+du = [ 6.45915960e-12 -2.84602966e-10]  | limits = [0.25, 0.6]
+k=231, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=232, solve_time = 17.79 ms
+du = [ 6.32673428e-12 -2.84633740e-10]  | limits = [0.25, 0.6]
+k=232, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=233, solve_time = 17.91 ms
+du = [ 6.17995585e-12 -2.84696676e-10]  | limits = [0.25, 0.6]
+k=233, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=234, solve_time = 18.04 ms
+du = [ 6.01955638e-12 -2.84783686e-10]  | limits = [0.25, 0.6]
+k=234, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=235, solve_time = 17.86 ms
+du = [ 5.84641363e-12 -2.84886673e-10]  | limits = [0.25, 0.6]
+k=235, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=236, solve_time = 17.66 ms
+du = [ 5.66141578e-12 -2.84997678e-10]  | limits = [0.25, 0.6]
+k=236, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=237, solve_time = 16.65 ms
+du = [ 5.46554468e-12 -2.85108642e-10]  | limits = [0.25, 0.6]
+k=237, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=238, solve_time = 16.63 ms
+du = [ 5.25976138e-12 -2.85211844e-10]  | limits = [0.25, 0.6]
+k=238, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=239, solve_time = 16.90 ms
+du = [ 5.04512751e-12 -2.85299843e-10]  | limits = [0.25, 0.6]
+k=239, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=240, solve_time = 16.88 ms
+du = [ 4.82275331e-12 -2.85365030e-10]  | limits = [0.25, 0.6]
+k=240, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=241, solve_time = 16.62 ms
+du = [ 4.59375246e-12 -2.85400311e-10]  | limits = [0.25, 0.6]
+k=241, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=242, solve_time = 16.56 ms
+du = [ 4.35929765e-12 -2.85398784e-10]  | limits = [0.25, 0.6]
+k=242, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=243, solve_time = 16.47 ms
+du = [ 4.12055459e-12 -2.85353841e-10]  | limits = [0.25, 0.6]
+k=243, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=244, solve_time = 16.38 ms
+du = [ 3.87872720e-12 -2.85259198e-10]  | limits = [0.25, 0.6]
+k=244, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=245, solve_time = 16.40 ms
+du = [ 3.63504712e-12 -2.85108936e-10]  | limits = [0.25, 0.6]
+k=245, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=246, solve_time = 16.63 ms
+du = [ 3.39076336e-12 -2.84897477e-10]  | limits = [0.25, 0.6]
+k=246, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=247, solve_time = 16.23 ms
+du = [ 3.14707982e-12 -2.84619661e-10]  | limits = [0.25, 0.6]
+k=247, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=248, solve_time = 16.04 ms
+du = [ 2.90524896e-12 -2.84270704e-10]  | limits = [0.25, 0.6]
+k=248, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=249, solve_time = 16.19 ms
+du = [ 2.66649897e-12 -2.83846280e-10]  | limits = [0.25, 0.6]
+k=249, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=250, solve_time = 16.22 ms
+du = [ 2.43205109e-12 -2.83342499e-10]  | limits = [0.25, 0.6]
+k=250, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=251, solve_time = 16.16 ms
+du = [ 2.20307453e-12 -2.82756006e-10]  | limits = [0.25, 0.6]
+k=251, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=252, solve_time = 16.19 ms
+du = [ 1.9806691e-12 -2.8208420e-10]  | limits = [0.25, 0.6]
+k=252, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=253, solve_time = 16.31 ms
+du = [ 1.76498052e-12 -2.81330594e-10]  | limits = [0.25, 0.6]
+k=253, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=254, solve_time = 16.15 ms
+du = [-0.00019129 -0.00019128]  | limits = [0.25, 0.6]
+k=254, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=255, solve_time = 16.20 ms
+du = [ 1.65048530e-13 -2.91197212e-10]  | limits = [0.25, 0.6]
+k=255, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=256, solve_time = 16.26 ms
+du = [ 1.18145424e-12 -2.93219171e-10]  | limits = [0.25, 0.6]
+k=256, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=257, solve_time = 16.12 ms
+du = [ 1.04288800e-12 -2.91727864e-10]  | limits = [0.25, 0.6]
+k=257, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=258, solve_time = 16.21 ms
+du = [ 8.83643853e-13 -2.90287166e-10]  | limits = [0.25, 0.6]
+k=258, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=259, solve_time = 16.00 ms
+du = [ 7.39273226e-13 -2.88742037e-10]  | limits = [0.25, 0.6]
+k=259, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=260, solve_time = 16.38 ms
+du = [ 6.10622664e-13 -2.87093120e-10]  | limits = [0.25, 0.6]
+k=260, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=261, solve_time = 16.06 ms
+du = [ 4.98441566e-13 -2.85341514e-10]  | limits = [0.25, 0.6]
+k=261, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=262, solve_time = 14.78 ms
+du = [ 1.57769978e-12 -2.78387976e-10]  | limits = [0.25, 0.6]
+k=262, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=263, solve_time = 14.73 ms
+du = [ 1.65058939e-12 -2.75829349e-10]  | limits = [0.25, 0.6]
+k=263, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=264, solve_time = 14.80 ms
+du = [ 1.58803873e-12 -2.73843923e-10]  | limits = [0.25, 0.6]
+k=264, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=265, solve_time = 14.82 ms
+du = [ 1.54418839e-12 -2.71763910e-10]  | limits = [0.25, 0.6]
+k=265, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=266, solve_time = 15.18 ms
+du = [ 1.5194547e-12 -2.6959231e-10]  | limits = [0.25, 0.6]
+k=266, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=267, solve_time = 16.14 ms
+du = [ 1.51414992e-12 -2.67332337e-10]  | limits = [0.25, 0.6]
+k=267, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=268, solve_time = 16.05 ms
+du = [ 1.52850996e-12 -2.64988028e-10]  | limits = [0.25, 0.6]
+k=268, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=269, solve_time = 16.28 ms
+du = [ 1.56272217e-12 -2.62562895e-10]  | limits = [0.25, 0.6]
+k=269, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=270, solve_time = 16.24 ms
+du = [ 1.61684902e-12 -2.60061268e-10]  | limits = [0.25, 0.6]
+k=270, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=271, solve_time = 15.99 ms
+du = [ 1.69092518e-12 -2.57487542e-10]  | limits = [0.25, 0.6]
+k=271, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=272, solve_time = 16.12 ms
+du = [ 1.78486392e-12 -2.54846338e-10]  | limits = [0.25, 0.6]
+k=272, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=273, solve_time = 16.42 ms
+du = [ 1.89854035e-12 -2.52142470e-10]  | limits = [0.25, 0.6]
+k=273, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=274, solve_time = 17.07 ms
+du = [ 2.03172895e-12 -2.49380922e-10]  | limits = [0.25, 0.6]
+k=274, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=275, solve_time = 18.51 ms
+du = [ 2.18414870e-12 -2.46566788e-10]  | limits = [0.25, 0.6]
+k=275, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=276, solve_time = 15.90 ms
+du = [ 2.35541794e-12 -2.43705330e-10]  | limits = [0.25, 0.6]
+k=276, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=277, solve_time = 15.93 ms
+du = [ 2.54512036e-12 -2.40801830e-10]  | limits = [0.25, 0.6]
+k=277, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=278, solve_time = 16.01 ms
+du = [ 2.75270085e-12 -2.37861491e-10]  | limits = [0.25, 0.6]
+k=278, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=279, solve_time = 17.25 ms
+du = [ 2.97753142e-12 -2.34888893e-10]  | limits = [0.25, 0.6]
+k=279, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=280, solve_time = 16.50 ms
+du = [ 3.21838042e-12 -2.31883249e-10]  | limits = [0.25, 0.6]
+k=280, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=281, solve_time = 15.99 ms
+du = [ 3.22527421e-12 -2.25496382e-10]  | limits = [0.25, 0.6]
+k=281, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=282, solve_time = 16.99 ms
+du = [-3.03077702e-12 -1.38808610e-10]  | limits = [0.25, 0.6]
+k=282, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=283, solve_time = 16.34 ms
+du = [-8.86270224e-12 -1.57413756e-10]  | limits = [0.25, 0.6]
+k=283, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=284, solve_time = 16.11 ms
+du = [-8.88808818e-12 -1.56216144e-10]  | limits = [0.25, 0.6]
+k=284, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=285, solve_time = 16.24 ms
+du = [-8.71490727e-12 -1.54269451e-10]  | limits = [0.25, 0.6]
+k=285, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=286, solve_time = 16.16 ms
+du = [-8.53054433e-12 -1.52316607e-10]  | limits = [0.25, 0.6]
+k=286, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=287, solve_time = 18.16 ms
+du = [-8.33657796e-12 -1.50363454e-10]  | limits = [0.25, 0.6]
+k=287, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=288, solve_time = 20.56 ms
+du = [-8.13421552e-12 -1.48415558e-10]  | limits = [0.25, 0.6]
+k=288, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=289, solve_time = 20.79 ms
+du = [-7.92458807e-12 -1.46478621e-10]  | limits = [0.25, 0.6]
+k=289, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=290, solve_time = 17.33 ms
+du = [-7.70883010e-12 -1.44558414e-10]  | limits = [0.25, 0.6]
+k=290, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=291, solve_time = 17.28 ms
+du = [-7.48811430e-12 -1.42660703e-10]  | limits = [0.25, 0.6]
+k=291, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=292, solve_time = 17.35 ms
+du = [-7.26359944e-12 -1.40791229e-10]  | limits = [0.25, 0.6]
+k=292, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=293, solve_time = 17.51 ms
+du = [-7.03646516e-12 -1.38955670e-10]  | limits = [0.25, 0.6]
+k=293, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=294, solve_time = 17.51 ms
+du = [-6.80790840e-12 -1.37159697e-10]  | limits = [0.25, 0.6]
+k=294, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=295, solve_time = 17.34 ms
+du = [-6.57910185e-12 -1.35408913e-10]  | limits = [0.25, 0.6]
+k=295, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=296, solve_time = 17.74 ms
+du = [-6.35119388e-12 -1.33709155e-10]  | limits = [0.25, 0.6]
+k=296, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=297, solve_time = 17.38 ms
+du = [-6.12518022e-12 -1.32067544e-10]  | limits = [0.25, 0.6]
+k=297, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=298, solve_time = 17.44 ms
+du = [-5.90056129e-12 -1.30508580e-10]  | limits = [0.25, 0.6]
+k=298, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=299, solve_time = 17.41 ms
+du = [-2.45466147e-12 -1.71870587e-10]  | limits = [0.25, 0.6]
+k=299, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=300, solve_time = 17.53 ms
+du = [ 5.26313368e-12 -2.06016374e-10]  | limits = [0.25, 0.6]
+k=300, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=301, solve_time = 18.21 ms
+du = [ 9.96038668e-12 -1.86783391e-10]  | limits = [0.25, 0.6]
+k=301, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=302, solve_time = 19.19 ms
+du = [ 1.03235198e-11 -1.84424462e-10]  | limits = [0.25, 0.6]
+k=302, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=303, solve_time = 19.57 ms
+du = [ 1.06765083e-11 -1.82169092e-10]  | limits = [0.25, 0.6]
+k=303, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=304, solve_time = 18.93 ms
+du = [ 1.10206254e-11 -1.80013792e-10]  | limits = [0.25, 0.6]
+k=304, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=305, solve_time = 19.32 ms
+du = [ 1.13550246e-11 -1.77961080e-10]  | limits = [0.25, 0.6]
+k=305, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=306, solve_time = 18.93 ms
+du = [ 1.1678724e-11 -1.7601335e-10]  | limits = [0.25, 0.6]
+k=306, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=307, solve_time = 18.81 ms
+du = [ 1.19907105e-11 -1.74172683e-10]  | limits = [0.25, 0.6]
+k=307, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=308, solve_time = 18.54 ms
+du = [ 1.22900301e-11 -1.72440777e-10]  | limits = [0.25, 0.6]
+k=308, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=309, solve_time = 18.72 ms
+du = [ 1.25757564e-11 -1.70818980e-10]  | limits = [0.25, 0.6]
+k=309, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=310, solve_time = 18.96 ms
+du = [ 1.28469978e-11 -1.69308241e-10]  | limits = [0.25, 0.6]
+k=310, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=311, solve_time = 19.07 ms
+du = [ 1.31029389e-11 -1.67909100e-10]  | limits = [0.25, 0.6]
+k=311, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=312, solve_time = 19.01 ms
+du = [ 1.33427817e-11 -1.66621751e-10]  | limits = [0.25, 0.6]
+k=312, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=313, solve_time = 19.00 ms
+du = [ 1.35658013e-11 -1.65445924e-10]  | limits = [0.25, 0.6]
+k=313, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=314, solve_time = 18.74 ms
+du = [ 1.37713521e-11 -1.64380960e-10]  | limits = [0.25, 0.6]
+k=314, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=315, solve_time = 18.68 ms
+du = [ 1.39588133e-11 -1.63425811e-10]  | limits = [0.25, 0.6]
+k=315, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=316, solve_time = 19.39 ms
+du = [ 1.41276713e-11 -1.62579002e-10]  | limits = [0.25, 0.6]
+k=316, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=317, solve_time = 20.02 ms
+du = [ 1.42774403e-11 -1.61838664e-10]  | limits = [0.25, 0.6]
+k=317, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=318, solve_time = 18.91 ms
+du = [ 1.44077424e-11 -1.61202496e-10]  | limits = [0.25, 0.6]
+k=318, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=319, solve_time = 18.68 ms
+du = [ 1.45182512e-11 -1.60667847e-10]  | limits = [0.25, 0.6]
+k=319, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=320, solve_time = 18.66 ms
+du = [ 1.46087240e-11 -1.60231661e-10]  | limits = [0.25, 0.6]
+k=320, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=321, solve_time = 18.55 ms
+du = [ 1.46789941e-11 -1.59890524e-10]  | limits = [0.25, 0.6]
+k=321, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=322, solve_time = 18.70 ms
+du = [ 1.47289889e-11 -1.59640648e-10]  | limits = [0.25, 0.6]
+k=322, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=323, solve_time = 18.90 ms
+du = [ 1.47586804e-11 -1.59477914e-10]  | limits = [0.25, 0.6]
+k=323, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=324, solve_time = 18.80 ms
+du = [ 1.47681624e-11 -1.59397887e-10]  | limits = [0.25, 0.6]
+k=324, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=325, solve_time = 18.83 ms
+du = [ 1.47575910e-11 -1.59395833e-10]  | limits = [0.25, 0.6]
+k=325, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=326, solve_time = 18.99 ms
+du = [ 1.47271986e-11 -1.59466731e-10]  | limits = [0.25, 0.6]
+k=326, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=327, solve_time = 18.89 ms
+du = [ 1.46773253e-11 -1.59605291e-10]  | limits = [0.25, 0.6]
+k=327, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=328, solve_time = 18.61 ms
+du = [ 1.46083631e-11 -1.59806030e-10]  | limits = [0.25, 0.6]
+k=328, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=329, solve_time = 18.67 ms
+du = [ 1.45208151e-11 -1.60063237e-10]  | limits = [0.25, 0.6]
+k=329, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=330, solve_time = 18.84 ms
+du = [ 1.44152364e-11 -1.60371019e-10]  | limits = [0.25, 0.6]
+k=330, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=331, solve_time = 18.72 ms
+du = [ 1.42922896e-11 -1.60723372e-10]  | limits = [0.25, 0.6]
+k=331, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=332, solve_time = 18.52 ms
+du = [ 1.41526929e-11 -1.61114129e-10]  | limits = [0.25, 0.6]
+k=332, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=333, solve_time = 17.22 ms
+du = [ 1.39972374e-11 -1.61537075e-10]  | limits = [0.25, 0.6]
+k=333, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=334, solve_time = 17.46 ms
+du = [ 1.38268112e-11 -1.61985918e-10]  | limits = [0.25, 0.6]
+k=334, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=335, solve_time = 17.21 ms
+du = [ 1.36423442e-11 -1.62454352e-10]  | limits = [0.25, 0.6]
+k=335, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=336, solve_time = 17.35 ms
+du = [ 1.34448459e-11 -1.62936074e-10]  | limits = [0.25, 0.6]
+k=336, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=337, solve_time = 17.38 ms
+du = [ 1.32353885e-11 -1.63424812e-10]  | limits = [0.25, 0.6]
+k=337, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=338, solve_time = 16.62 ms
+du = [ 1.30150890e-11 -1.63914372e-10]  | limits = [0.25, 0.6]
+k=338, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=339, solve_time = 15.74 ms
+du = [ 1.27851237e-11 -1.64398651e-10]  | limits = [0.25, 0.6]
+k=339, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=340, solve_time = 15.88 ms
+du = [ 1.25467241e-11 -1.64871668e-10]  | limits = [0.25, 0.6]
+k=340, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=341, solve_time = 16.02 ms
+du = [ 1.23011497e-11 -1.65327592e-10]  | limits = [0.25, 0.6]
+k=341, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=342, solve_time = 15.61 ms
+du = [ 1.20497050e-11 -1.65760777e-10]  | limits = [0.25, 0.6]
+k=342, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=343, solve_time = 16.00 ms
+du = [ 1.17937222e-11 -1.66165786e-10]  | limits = [0.25, 0.6]
+k=343, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=344, solve_time = 15.68 ms
+du = [ 1.15345580e-11 -1.66537381e-10]  | limits = [0.25, 0.6]
+k=344, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=345, solve_time = 15.69 ms
+du = [ 1.12735932e-11 -1.66870604e-10]  | limits = [0.25, 0.6]
+k=345, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=346, solve_time = 15.68 ms
+du = [ 1.10122016e-11 -1.67160744e-10]  | limits = [0.25, 0.6]
+k=346, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=347, solve_time = 15.63 ms
+du = [ 1.07517918e-11 -1.67403400e-10]  | limits = [0.25, 0.6]
+k=347, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=348, solve_time = 15.58 ms
+du = [ 1.04937378e-11 -1.67594452e-10]  | limits = [0.25, 0.6]
+k=348, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=349, solve_time = 15.81 ms
+du = [ 1.02394100e-11 -1.67730205e-10]  | limits = [0.25, 0.6]
+k=349, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=350, solve_time = 15.69 ms
+du = [ 9.99007821e-12 -1.67807740e-10]  | limits = [0.25, 0.6]
+k=350, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=351, solve_time = 15.83 ms
+du = [ 9.74606507e-12 -1.67829743e-10]  | limits = [0.25, 0.6]
+k=351, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+k=352, solve_time = 15.78 ms
+du = [ 9.76746808e-12 -1.66996604e-10]  | limits = [0.25, 0.6]
+k=352, progress index=0
+x_current: (3,)
+R_horizon: (2, 21)
+obsx_h: (4, 20)
+obsy_h: (4, 20)
+X_goal_val: (3,)
+p length: 211
+CasADi - 2026-02-11 11:03:12 WARNING("KeyboardInterruptException") [.../casadi/interfaces/ipopt/ipopt_nlp.cpp:132]
+KeyboardInterrupt
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <function DM.<lambda> at 0x000001E751333D70> returned a result with an exception set
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <function DM.<lambda> at 0x000001E751333D70> returned a result with an exception set
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <function DM.<lambda> at 0x000001E751333D70> returned a result with an exception set
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <function DM.<lambda> at 0x000001E751333D70> returned a result with an exception set
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <function DM.<lambda> at 0x000001E751333D70> returned a result with an exception set
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <function DM.<lambda> at 0x000001E751333D70> returned a result with an exception set
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\PythonWork\Omen\Thesis\mpcc_main.py", line 202, in <module>
+    sol = solver(**kwargs)
+  File "C:\PythonWork\Omen\.venv\Lib\site-packages\casadi\casadi.py", line 24049, in __call__
+    return self.call(kwargs)
+           ~~~~~~~~~^^^^^^^^
+  File "C:\PythonWork\Omen\.venv\Lib\site-packages\casadi\casadi.py", line 20698, in call
+    return _casadi.Function_call(self, *args)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+SystemError: <built-in function Function_call> returned a result with an exception set
