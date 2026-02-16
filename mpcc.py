@@ -169,17 +169,17 @@ for k in range(N):
     ubg.append(0.0)
 
 
-    # --- compute average segment length (once per k) ---
-    ell_k = 0
-    for j in range(N):
-        dR = R[:, j + 1] - R[:, j]
-        ell_k += ca.sqrt(ca.dot(dR, dR))
-    ell_k = ell_k / N
+    # # --- compute average segment length (once per k) ---
+    # ell_k = 0
+    # for j in range(N):
+    #     dR = R[:, j + 1] - R[:, j]
+    #     ell_k += ca.sqrt(ca.dot(dR, dR))
+    # ell_k = ell_k / N
 
-    # --- vs coupling constraint ---
-    g_list.append(U[0, k] - ell_k * vs[k])
-    lbg.append(0.0)
-    ubg.append(ca.inf)
+    # # --- vs coupling constraint ---
+    # g_list.append(U[0, k] - ell_k * vs[k])
+    # lbg.append(0.0)
+    # ubg.append(ca.inf)
 
 
     # Corridor walls
@@ -189,7 +189,7 @@ for k in range(N):
 
     # Enforce forward progress
     g_list.append(vs[k])
-    lbg.append(0.1)    # minimum progress rate
+    lbg.append(0.05)    # minimum progress rate
     ubg.append(ca.inf)
 
 
@@ -256,18 +256,18 @@ for k in range(N):
     # Encourage forward progress
     cost += -q_vs * vs[k]
 
-    # Penalize oscillations in progress
-    if k == 0:
-        ds = vs[0]
-    else:
-        ds = vs[k] - vs[k-1]
+    # # Penalize oscillations in progress
+    # if k == 0:
+    #     ds = vs[0]
+    # else:
+    #     ds = vs[k] - vs[k-1]
 
-    cost += q_dvs * ds**2
+    # cost += q_dvs * ds**2
 
 
-    # Slack penalties
-    for i in range(num_dyn_obs):
-        cost += rho_slack * (S[i, k] ** 2) + rho_slack_lin * S[i, k]
+    # # Slack penalties
+    # for i in range(num_dyn_obs):
+    #     cost += rho_slack * (S[i, k] ** 2) + rho_slack_lin * S[i, k]
 
     # Smooth inputs (soft, in addition to hard slew constraints)
     if k == 0:
