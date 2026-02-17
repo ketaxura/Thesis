@@ -14,21 +14,35 @@ from dynamics import unicycle_dynamics
 # -----------------------------
 # MPCC tuning knobs (start here)
 # -----------------------------
-q_cont = 300.0          # contouring error weight (main path-following term)
-q_lag  = 200.0           # lag error weight (prevents weird orthogonal sticking)
-q_vs   = 1.0           # reward on progress rate vs (push forward)
-q_s_terminal = 1.0      # reward on terminal progress s_N
-
-q_du_v = 2.0            # smooth v changes
-q_du_w = 20.0            # smooth omega changes
-
-q_dvs = 50.0
+q_cont = 50.0          # contouring error weight (main path-following term)
+q_lag  = 1.0  # lag error weight (prevents falling behind)
+# q_vs   = 5.0  # Stronger reward on progress rate vs (push forward)
+q_s_terminal = 50.0      # reward on terminal progress s_N
 
 q_goal = 20.0           # terminal goal xy weight
 q_terminal_cont = 30.0  # terminal contouring weight
 
-rho_slack = 2e4
-rho_slack_lin = 200
+
+
+r_v = 0.01
+r_w = 0.01
+
+
+w_v = 0.1
+w_omega = 0.1
+
+
+
+
+
+r_dv = 2.0
+r_dw = 2.0
+
+
+rho_vs = 0.5  # Much smaller - don't over-penalize progress rate
+
+
+
 
 
 
@@ -44,7 +58,6 @@ def soft_ref_and_frames(R, s_scalar):
       r (2x1), t (2x1 unit), n (2x1 unit)
     """
     idx = ca.DM(np.arange(N + 1)).reshape((N + 1, 1))
-
 
     # w_j = exp(-kappa*(j - s)^2), normalized
     diff = idx - s_scalar
@@ -83,7 +96,6 @@ s = ca.SX.sym("s", N + 1, 1)                # progress
 X0 = ca.SX.sym("X0", nx)
 u_prev = ca.SX.sym("u_prev", nu)
 s_prev = ca.SX.sym("s_prev", 1)
-vs = ca.SX.sym("vs", N, 1)                  # progress rate
 
 
 R = ca.SX.sym("R", nr, N + 1)               # horizon ref points
@@ -184,11 +196,31 @@ for k in range(N):
     We are imbuing a state transtion progress, where future progress s[k+1] is a function of:
     current progress s[k] and current rate of progress vs[k] 
     """
-    # Progress dynamics
-    g_list.append(s[k + 1] - (s[k] + vs[k] * dt))
-    lbg.append(0.0)
-    ubg.append(0.0)
-    
+    # # Progress dynamics
+    # g_list.append(s[k + 1] - (s[k] + vs[k] * dt))
+    # lbg.append(0.0)
+    # ubg.append(0.0)
+
+
+    # Compute reference frames
+    r_k, t_k, n_k = soft_ref_and_frames(R, s[k])
+
+    theta_k = X[2, k]
+
+    # heading unit vector
+    heading_vec = ca.vertcat(ca.cos(theta_k), ca.sin(theta_k))
+
+    # tangential speed in m/s (can be negative if facing backward)
+    v_par_mps = U[0, k] * ca.dot(t_k, heading_vec)
+
+    # meters per waypoint-index (for your straight line it’s constant)
+    dR0 = R[:, 1] - R[:, 0]
+    ds_ref = ca.sqrt(ca.dot(dR0, dR0) + 1e-9)     # [m/index]
+
+    # convert to index/s
+    v_par_idx = v_par_mps / ds_ref               # [index/s]
+
+
     
     """
     Forward/positive progress soft constraint
@@ -197,10 +229,30 @@ for k in range(N):
     
     So this constraint keeps the solver from making negative or completely zero progress
     """
-    # Enforce forward progress
-    g_list.append(vs[k])
-    lbg.append(0.0)    # minimum progress rate
-    ubg.append(ca.inf)
+    # # Enforce forward progress
+    # g_list.append(vs[k])
+    # lbg.append(0.0)    # minimum progress rate
+    # ubg.append(ca.inf)
+
+    # # enforce: s[k+1] >= s[k] + dt * v_par_idx   (lower bound)
+    # g_list.append(s[k+1] - s[k] - dt * v_par_idx)
+    # lbg.append(0.0)
+    # ubg.append(ca.inf)
+
+    # # optional: also cap how fast progress can increase
+    # g_list.append(s[k+1] - s[k])
+    # lbg.append(0.0)
+    # ubg.append(dt * (v_max / ds_ref))
+
+
+    # Convert meters/sec to index/sec
+    v_par_idx = v_par_mps / ds_ref
+
+    g_list.append(s[k + 1] - (s[k] + dt * v_par_idx))
+    lbg.append(0.0)
+    ubg.append(0.0)
+
+
 
 
 
@@ -254,9 +306,6 @@ ubg += [ dv_max,  dw_max]
 So the NLP problem that we are trying to solve here doesnt accept a python list of constraint conditions, it requires 
 a single casadi object.  
 """
-g = ca.vertcat(*g_list)
-
-
 
 
 cost = 0
@@ -265,91 +314,50 @@ for k in range(N):
 
     p_xy = X[0:2, k]
 
+    # Compute tangent and heading
     r_k, t_k, n_k = soft_ref_and_frames(R, s[k])
 
+    theta_k = X[2, k]
+    heading_vec = ca.vertcat(ca.cos(theta_k), ca.sin(theta_k))
+
+    # Tangential velocity
+    v_par = U[0, k] * ca.dot(t_k, heading_vec)
+
+
     e = p_xy - r_k
+
     e_cont = ca.dot(n_k, e)
+
+
     e_lag  = ca.dot(t_k, e)
 
     cost += q_cont * (e_cont**2)
-    cost += 5.0 * (e_lag**2)      # small lag penalty
-    cost += -q_vs * vs[k]
+    cost += q_lag * (e_lag**2)  # Prevent falling behind
+    # cost += -q_vs * vs[k]
+
+    # cost += w_v * U[0, k]**2
+    # cost += w_omega * U[1, k]**2
+
+
+    cost += r_v * U[0,k]**2 + r_w * U[1,k]**2
+
+    if k > 0:
+        cost += r_dv * (U[0,k] - U[0,k-1])**2
+        cost += r_dw * (U[1,k] - U[1,k-1])**2
 
 
 
 
-# # -----------------------------
-# # Cost
-# # -----------------------------
-# cost = 0
+e_cont_fun = ca.Function(
+    'e_cont_fun',
+    [X, s, R],   # inputs
+    [e_cont]     # output
+)
 
-# # Stage costs
-# for k in range(N):
-    
-#     """
-#     p_xy is the x and y coordinates of the robot at step k
-#     """
-#     p_xy = X[0:2, k]                        # (2,)
-    
-    
-    
-#     """
-    
-#     """
-#     r_k, t_k, n_k = soft_ref_and_frames(R, s[k])
-
-#     e = p_xy - r_k                          # (2,1)
-#     e_lag = ca.dot(t_k, e)                  # scalar
-#     e_cont = ca.dot(n_k, e)                 # scalar
-
-#     cost += q_cont * (e_cont**2) + q_lag * (e_lag**2)
-
-#     # Control effort
-#     cost += ca.mtimes([U[:, k].T, R_u, U[:, k]])
-
-#     # # Encourage forward progress
-#     # cost += -q_vs * vs[k]
-
-#     # Penalize oscillations in progress
-#     if k == 0:
-#         ds = vs[0]
-#     else:
-#         ds = vs[k] - vs[k-1]
-
-#     cost += q_dvs * ds**2
+cost += -q_s_terminal * s[N]
 
 
-#     # # Slack penalties
-#     # for i in range(num_dyn_obs):
-#     #     cost += rho_slack * (S[i, k] ** 2) + rho_slack_lin * S[i, k]
-
-#     # Smooth inputs (soft, in addition to hard slew constraints)
-#     if k == 0:
-#         dv = U[0, 0] - u_prev[0]
-#         dw = U[1, 0] - u_prev[1]
-#     else:
-#         dv = U[0, k] - U[0, k - 1]
-#         dw = U[1, k] - U[1, k - 1]
-#     cost += q_du_v * (dv**2) + q_du_w * (dw**2)
-
-# # Terminal tracking / goal
-# pN = X[0:2, N]
-# rN, tN, nN = soft_ref_and_frames(R, s[N])
-# eN = pN - rN
-# eN_cont = ca.dot(nN, eN)
-
-# cost += q_terminal_cont * (eN_cont**2)
-
-# goal_err = pN - X_goal[0:2]
-# cost += q_goal * ca.dot(goal_err, goal_err)
-
-# # Reward being “far along” the horizon
-# cost += -q_s_terminal * s[N]
-
-
-cost += -10.0 * s[N]
-
-
+g = ca.vertcat(*g_list)
 
 
 # -----------------------------
@@ -367,29 +375,30 @@ for _ in range(N + 1):
 
 # U bounds
 for _ in range(N):
-    lbx += [-v_max, -omega_max]
+    lbx += [ 0.0, -omega_max]
     ubx += [ v_max,  omega_max]
 
-# S bounds (>=0)
-for _ in range(num_dyn_obs * N):
-    lbx.append(0.0)
-    ubx.append(ca.inf)
+# # S bounds (>=0)
+# for _ in range(num_dyn_obs * N):
+#     lbx.append(0.0)
+#     ubx.append(ca.inf)
 
-# s bounds
+# s bounds (LOCAL horizon index)
 for _ in range(N + 1):
-    lbx.append(s_min)
-    ubx.append(s_max)
-    
-    
+    lbx.append(0.0)
+    ubx.append(float(ref_traj.shape[1] - 1)) 
+
+
+
 # for _ in range(N + 1):
 #     lbx.append(0.0)
 #     ubx.append(N)
 
 
-# vs bounds
-for _ in range(N):
-    lbx.append(0.0)
-    ubx.append(vs_max)
+# # vs bounds
+# for _ in range(N):
+#     lbx.append(0.0)
+#     ubx.append(vs_max)
 
 
 
@@ -399,9 +408,8 @@ for _ in range(N):
 OPT_vars = ca.vertcat(
     ca.reshape(X, -1, 1),
     ca.reshape(U, -1, 1),
-    ca.reshape(S, -1, 1),
-    ca.reshape(s, -1, 1),
-    ca.reshape(vs, -1, 1),
+    # ca.reshape(S, -1, 1),
+    ca.reshape(s, -1, 1)
 )
 
 # -----------------------------
