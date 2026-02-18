@@ -147,6 +147,8 @@ for k in range(500):
 
     offset = 0
     offset += mpcc.nX
+    
+    X_opt = z[0:mpcc.nX].reshape(nx, N+1)
 
     U_opt = z[offset : offset + mpcc.nU].reshape(nu, N)
     offset += mpcc.nU
@@ -158,6 +160,52 @@ for k in range(500):
     offset += mpcc.nProg
     vs_opt = z[offset : offset + mpcc.nVs]
     print("k", k, "mu", mu, "s_local", s_local)
+    
+    s0_opt = float(s_opt[0])
+    sN_opt = float(s_opt[-1])
+
+    print("Predicted s0:", s0_opt)
+    print("Predicted sN:", sN_opt)
+    print("Predicted progress over horizon (sN - s0):", sN_opt - s0_opt)
+
+
+
+
+    k_debug = 0   # or any k you want to inspect
+
+    # Extract predicted values
+    xk = X_opt[:, k_debug]
+    uk = U_opt[:, k_debug]
+    sk = s_opt[k_debug]
+
+    R_ca = ca.DM(R_horizon)
+    sk_ca = ca.DM(s_opt[k_debug])
+
+    r_k, t_k, n_k = mpcc.ref_eval_fun(R_ca, sk_ca)
+
+    r_k = np.array(r_k.full()).flatten()
+    t_k = np.array(t_k.full()).flatten()
+    n_k = np.array(n_k.full()).flatten()
+
+
+    p_xy = xk[0:2]
+    e_vec = p_xy - r_k
+
+    e_cont = np.dot(n_k, e_vec)
+    e_lag  = np.dot(t_k, e_vec)
+
+    v = uk[0]
+    omega = uk[1]
+
+    running_cost = (
+        mpcc.q_cont * e_cont**2
+        + mpcc.q_lag * e_lag**2
+        + mpcc.r_v * v**2
+        + mpcc.r_w * omega**2
+    )
+
+    print(f"Running cost at k={k_debug}: {running_cost:.6f}")
+
 
 
 
@@ -190,6 +238,8 @@ for k in range(500):
 
     # keep mu from going backwards (optional but recommended)
     mu = max(mu, 0.0)
+    mu = min(mu, ref_traj.shape[1] - 1)
+
 
     mu_hist.append(mu)
 

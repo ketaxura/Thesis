@@ -17,34 +17,21 @@ from dynamics import unicycle_dynamics
 q_cont = 50.0          # contouring error weight (main path-following term)
 q_lag  = 1.0  # lag error weight (prevents falling behind)
 # q_vs   = 5.0  # Stronger reward on progress rate vs (push forward)
-q_s_terminal = 50.0      # reward on terminal progress s_N
+q_s_terminal = 75.0      # reward on terminal progress s_N
 
 q_goal = 20.0           # terminal goal xy weight
 q_terminal_cont = 30.0  # terminal contouring weight
 
-
-
 r_v = 0.01
 r_w = 0.01
-
 
 w_v = 0.1
 w_omega = 0.1
 
-
-
-
-
 r_dv = 2.0
 r_dw = 2.0
 
-
 rho_vs = 0.5  # Much smaller - don't over-penalize progress rate
-
-
-
-
-
 
 # -----------------------------
 # Helper: soft reference r(s), tangent t(s), normal n(s)
@@ -375,7 +362,8 @@ for _ in range(N + 1):
 
 # U bounds
 for _ in range(N):
-    lbx += [ 0.0, -omega_max]
+    # lbx += [ 0.0, -omega_max]
+    lbx += [ -v_max, -omega_max]
     ubx += [ v_max,  omega_max]
 
 # # S bounds (>=0)
@@ -452,3 +440,13 @@ nU = nu * N
 nS = num_dyn_obs * N
 nProg = (N + 1)          # s
 nVs = N                  # vs
+
+
+
+r_sym, t_sym, n_sym = soft_ref_and_frames(R, s[0])
+
+ref_eval_fun = ca.Function(
+    "ref_eval_fun",
+    [R, s[0]],
+    [r_sym, t_sym, n_sym]
+)
