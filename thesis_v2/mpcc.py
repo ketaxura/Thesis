@@ -14,16 +14,18 @@ from dynamics import unicycle_dynamics
 # -----------------------------
 # MPCC tuning knobs (start here)
 # -----------------------------
-q_cont = 50.0          # contouring error weight (main path-following term)
+q_cont = 70.0          # contouring error weight (main path-following term)
 q_lag  = 1.0  # lag error weight (prevents falling behind)
 # q_vs   = 5.0  # Stronger reward on progress rate vs (push forward)
-q_s_terminal = 75.0      # reward on terminal progress s_N
+q_s_terminal = 30.0      # reward on terminal progress s_N
 
-q_goal = 20.0           # terminal goal xy weight
-q_terminal_cont = 30.0  # terminal contouring weight
+q_theta = 30.0   # heading–tangent alignment weight
 
-r_v = 0.01
-r_w = 0.01
+
+q_goal = 200.0           # terminal goal xy weight
+
+r_v = 0.1
+r_w = 0.1
 
 w_v = 0.1
 w_omega = 0.1
@@ -307,6 +309,8 @@ for k in range(N):
     theta_k = X[2, k]
     heading_vec = ca.vertcat(ca.cos(theta_k), ca.sin(theta_k))
 
+
+
     # Tangential velocity
     v_par = U[0, k] * ca.dot(t_k, heading_vec)
 
@@ -325,6 +329,11 @@ for k in range(N):
     # cost += w_v * U[0, k]**2
     # cost += w_omega * U[1, k]**2
 
+    # Heading–tangent alignment term
+    align = ca.dot(t_k, heading_vec)          # ∈ [-1, 1]
+    cost += q_theta * (1 - align)**2
+
+
 
     cost += r_v * U[0,k]**2 + r_w * U[1,k]**2
 
@@ -342,6 +351,11 @@ e_cont_fun = ca.Function(
 )
 
 cost += -q_s_terminal * s[N]
+
+# Terminal pose penalty
+pN = X[0:2, N]
+p_goal = X_goal[0:2]
+cost += q_goal * ca.sumsqr(pN - p_goal)
 
 
 g = ca.vertcat(*g_list)
@@ -362,8 +376,8 @@ for _ in range(N + 1):
 
 # U bounds
 for _ in range(N):
-    # lbx += [ 0.0, -omega_max]
-    lbx += [ -v_max, -omega_max]
+    lbx += [ 0.0, -omega_max]
+    # lbx += [ -v_max, -omega_max]
     ubx += [ v_max,  omega_max]
 
 # # S bounds (>=0)

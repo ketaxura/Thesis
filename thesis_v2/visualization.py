@@ -70,8 +70,8 @@ def visualize(ref_traj, x_history, y_history, theta_history):
     ax.add_patch(robot_buffer)
 
     # safe bounds (no min() crash)
-    ax.set_xlim(-5, 24)
-    ax.set_ylim(-8, 8)
+    ax.set_xlim(-5, 15)
+    ax.set_ylim(-5, 15)
     
 
     ax.legend()
