@@ -106,16 +106,10 @@ for k in range(500):
     # 1. Build local reference window
     # -------------------------------------------------
     k_ref = int(np.floor(mu))
-    # k_ref = min(k_ref, ref_traj.shape[1] - (N + 1))
-    k_ref = int(np.floor(mu))
+    k_ref = min(k_ref, ref_traj.shape[1] - (N + 1))
     k_ref = max(k_ref, 0)
     s_local = mu - k_ref
     R_horizon = ref_traj[:, k_ref : k_ref + N + 1]
-
-    if R_horizon.shape[1] < N + 1:
-        last_col = R_horizon[:, -1].reshape(-1,1)
-        pad = np.repeat(last_col, N+1 - R_horizon.shape[1], axis=1)
-        R_horizon = np.hstack((R_horizon, pad))
 
     # if R_horizon.shape[1] < N + 1:
     #     last = ref_traj[:, -1].reshape(2, 1)
@@ -200,7 +194,7 @@ for k in range(500):
 
     # # offset += mpcc.nProg
     # # vs_opt = z[offset : offset + mpcc.nVs]
-    print("k", k, "mu", mu, "s_local", s_local)
+    # # print("k", k, "mu", mu, "s_local", s_local)
     
     s0_opt = float(s_opt[0])
     sN_opt = float(s_opt[-1])

@@ -14,24 +14,24 @@ from dynamics import unicycle_dynamics
 # -----------------------------
 # MPCC tuning knobs (start here)
 # -----------------------------
-q_cont = 70.0          # contouring error weight (main path-following term)
-q_lag  = 1.0  # lag error weight (prevents falling behind)
+q_cont = 5.0          # contouring error weight (main path-following term)
+q_lag  = 0.0  # lag error weight (prevents falling behind)
 # q_vs   = 5.0  # Stronger reward on progress rate vs (push forward)
-q_s_terminal = 30.0      # reward on terminal progress s_N
+q_s_terminal = 60.0      # reward on terminal progress s_N
 
 q_theta = 30.0   # heading–tangent alignment weight
 
 
-q_goal = 200.0           # terminal goal xy weight
+q_goal = 100.0           # terminal goal xy weight
 
 r_v = 0.1
-r_w = 0.1
+r_w = 0.5
 
 w_v = 0.1
 w_omega = 0.1
 
 r_dv = 2.0
-r_dw = 2.0
+r_dw = 4.0
 
 rho_vs = 0.5  # Much smaller - don't over-penalize progress rate
 
@@ -318,14 +318,13 @@ for k in range(N):
     e = p_xy - r_k
 
     e_cont = ca.dot(n_k, e)
-
+    cost += q_cont * (e_cont**2)
 
     e_lag  = ca.dot(t_k, e)
 
-    cost += q_cont * (e_cont**2)
-    cost += q_lag * (e_lag**2)  # Prevent falling behind
-    # cost += -q_vs * vs[k]
-
+    # One-sided lag penalty (only penalize being behind)
+    e_lag_behind = ca.fmax(0, -e_lag)
+    cost += q_lag * e_lag_behind**2
     # cost += w_v * U[0, k]**2
     # cost += w_omega * U[1, k]**2
 
@@ -388,7 +387,9 @@ for _ in range(N):
 # s bounds (LOCAL horizon index)
 for _ in range(N + 1):
     lbx.append(0.0)
-    ubx.append(float(ref_traj.shape[1] - 1)) 
+    # ubx.append(float(ref_traj.shape[1] - 1)) 
+    # ubx.append(float(N))   # NOT ref_traj.shape[1]-1
+    ubx.append(ca.inf)          # or N + 50
 
 
 
