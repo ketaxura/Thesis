@@ -17,7 +17,9 @@ from matplotlib.patches import Rectangle
 from params import *
 
 
-""""""
+"""
+Simulation plot of the robot moving
+"""
 def visualize(ref_traj, x_history, y_history, theta_history):
     # ---- PLOTTING (single animation loop)
     plt.ion()                                   #interactive plot on
@@ -104,3 +106,6 @@ def visualize(ref_traj, x_history, y_history, theta_history):
 
     plt.ioff()
     plt.show(block=True)
+
+
+

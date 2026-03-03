@@ -77,10 +77,16 @@ a_obs = 0.6
 b_obs = 0.3
 
 
+#####################
+# History Variables #
+#####################
 
 obs_pos_hist = []
-
-
+cont_err_hist = []
+lag_err_hist = []
+x_state_hist = []
+u_hist = []
+mu_hist = []
 
 ##CONFIGURABLE PARAMS
 #Safety buffer for the robot, this inflates the minkowsky sum further

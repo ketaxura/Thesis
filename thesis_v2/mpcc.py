@@ -1,3 +1,13 @@
+"""
+Title: Model Predictive Contouring Control Implementation
+Author: Usukhbayar Amgalanbat
+
+Comment:
+Inspired by LMPCC by Tu Delft
+"""
+
+
+
 import casadi as ca
 import numpy as np
 import matplotlib.pyplot as plt
@@ -5,35 +15,31 @@ import sys
 import time
 
 from params import *
-import casadi as ca
-
 from dynamics import unicycle_dynamics
 
 
-
 # -----------------------------
-# MPCC tuning knobs (start here)
+# MPCC tuning knobs 
 # -----------------------------
-q_cont = 5.0          # contouring error weight (main path-following term)
-q_lag  = 0.0  # lag error weight (prevents falling behind)
-# q_vs   = 5.0  # Stronger reward on progress rate vs (push forward)
-q_s_terminal = 60.0      # reward on terminal progress s_N
-
-q_theta = 30.0   # heading–tangent alignment weight
+q_cont = 20.0            # contouring error weight (main path-following term)
+q_lag  = 2.0            # lag error weight (prevents falling behind)
+q_theta = 5.0          # heading–tangent alignment weight
+q_goal = 100.0          # terminal goal xy weight
 
 
-q_goal = 100.0           # terminal goal xy weight
+q_vs   = 1.0            # Stronger reward on progress rate vs (push forward)
+q_s_terminal = 2.0     # reward on terminal progress s_N
+rho_vs = 0.5            # Much smaller - don't over-penalize progress rate
+
 
 r_v = 0.1
 r_w = 0.5
 
-w_v = 0.1
-w_omega = 0.1
-
 r_dv = 2.0
 r_dw = 4.0
 
-rho_vs = 0.5  # Much smaller - don't over-penalize progress rate
+w_v = 0.1
+w_omega = 0.1
 
 # -----------------------------
 # Helper: soft reference r(s), tangent t(s), normal n(s)
@@ -75,12 +81,18 @@ def soft_ref_and_frames(R, s_scalar):
 
 
 
+
+
+
 # -----------------------------
 # Symbols
 # -----------------------------
 X = ca.SX.sym("X", nx, N + 1)
 U = ca.SX.sym("U", nu, N)
-s = ca.SX.sym("s", N + 1, 1)                # progress
+s = ca.SX.sym("s", N + 1, 1)            # progress
+
+v = U[0, :]
+omega = U[1, :]
 
 X0 = ca.SX.sym("X0", nx)
 u_prev = ca.SX.sym("u_prev", nu)
@@ -147,6 +159,14 @@ ubg.append(0.0)
 
 
 
+eps = 1e-9
+
+dR0 = R[:, 1] - R[:, 0]                      # (2,)
+ds_ref = ca.sqrt(ca.dot(dR0, dR0) + eps)     # meters per index step
+
+
+
+
 
 """
 There is a for loop here because the conditions within loop have to be met and satisfied throughout the entire horizon.
@@ -199,47 +219,20 @@ for k in range(N):
     # heading unit vector
     heading_vec = ca.vertcat(ca.cos(theta_k), ca.sin(theta_k))
 
-    # tangential speed in m/s (can be negative if facing backward)
-    v_par_mps = U[0, k] * ca.dot(t_k, heading_vec)
-
-    # meters per waypoint-index (for your straight line it’s constant)
-    dR0 = R[:, 1] - R[:, 0]
-    ds_ref = ca.sqrt(ca.dot(dR0, dR0) + 1e-9)     # [m/index]
-
-    # convert to index/s
-    v_par_idx = v_par_mps / ds_ref               # [index/s]
 
 
-    
-    """
-    Forward/positive progress soft constraint
-    vs[k] is a rate of progress that we choose
-    This term vs[k] can be at its lowest 0.05 and the highest it can be is infinity
-    
-    So this constraint keeps the solver from making negative or completely zero progress
-    """
-    # # Enforce forward progress
-    # g_list.append(vs[k])
-    # lbg.append(0.0)    # minimum progress rate
-    # ubg.append(ca.inf)
+    # Tangential velocity (progress rate along path)
+    v_par = U[0, k] * ca.dot(t_k, heading_vec)
 
-    # # enforce: s[k+1] >= s[k] + dt * v_par_idx   (lower bound)
-    # g_list.append(s[k+1] - s[k] - dt * v_par_idx)
-    # lbg.append(0.0)
-    # ubg.append(ca.inf)
-
-    # # optional: also cap how fast progress can increase
-    # g_list.append(s[k+1] - s[k])
-    # lbg.append(0.0)
-    # ubg.append(dt * (v_max / ds_ref))
-
-
-    # Convert meters/sec to index/sec
-    v_par_idx = v_par_mps / ds_ref
-
-    g_list.append(s[k + 1] - (s[k] + dt * v_par_idx))
+    # Progress dynamics: s_{k+1} = s_k + dt * v_par / ds_ref
+    g_list.append(s[k + 1] - (s[k] + dt * v_par / (ds_ref + 1e-9)))
     lbg.append(0.0)
     ubg.append(0.0)
+
+    # (Optional but recommended) monotonic progress (no backward progress)
+    g_list.append(s[k + 1] - s[k])
+    lbg.append(0.0)
+    ubg.append(ca.inf)
 
 
 
@@ -297,6 +290,9 @@ a single casadi object.
 """
 
 
+#################
+# COST FUNCTION #
+#################
 cost = 0
 
 for k in range(N):
@@ -308,12 +304,9 @@ for k in range(N):
 
     theta_k = X[2, k]
     heading_vec = ca.vertcat(ca.cos(theta_k), ca.sin(theta_k))
-
-
-
+    
     # Tangential velocity
     v_par = U[0, k] * ca.dot(t_k, heading_vec)
-
 
     e = p_xy - r_k
 
@@ -323,24 +316,47 @@ for k in range(N):
     e_lag  = ca.dot(t_k, e)
 
     # One-sided lag penalty (only penalize being behind)
-    e_lag_behind = ca.fmax(0, -e_lag)
-    cost += q_lag * e_lag_behind**2
-    # cost += w_v * U[0, k]**2
-    # cost += w_omega * U[1, k]**2
+    # cost += q_lag * e_lag**2
+    cost += q_lag * ca.fmax(0, -e_lag)**2
+    
+    
+    
+    # # Heading–tangent alignment term
+    # align = ca.dot(t_k, heading_vec)          # ∈ [-1, 1]
+    # cost += q_theta * (1 - align)**2
 
-    # Heading–tangent alignment term
-    align = ca.dot(t_k, heading_vec)          # ∈ [-1, 1]
-    cost += q_theta * (1 - align)**2
 
-
-
+    
+    # Direct control input penalty
+    # Through this cost function definition, the robot wants to keep both v and w as small possible.
     cost += r_v * U[0,k]**2 + r_w * U[1,k]**2
+    
+    
+    # cost += -q_vs * v_par
+    
 
-    if k > 0:
-        cost += r_dv * (U[0,k] - U[0,k-1])**2
-        cost += r_dw * (U[1,k] - U[1,k-1])**2
+    # # This slew cost function penalizes sudden input changes
+    # if k > 0:
+    #     cost += r_dv * (U[0,k] - U[0,k-1])**2
+    #     cost += r_dw * (U[1,k] - U[1,k-1])**2
+        
 
+# ---- True contouring over full horizon ----
+e_cont_list = []
 
+for k in range(N):
+    r_k, t_k, n_k = soft_ref_and_frames(R, s[k])
+    e_k = X[0:2, k] - r_k
+    e_cont_k = ca.dot(n_k, e_k)
+    e_cont_list.append(e_cont_k)
+
+e_cont_horizon = ca.vertcat(*e_cont_list)
+
+e_cont_horizon_fun = ca.Function(
+    "e_cont_horizon_fun",
+    [X, s, R],
+    [e_cont_horizon]
+)
 
 
 e_cont_fun = ca.Function(
@@ -349,12 +365,77 @@ e_cont_fun = ca.Function(
     [e_cont]     # output
 )
 
-cost += -q_s_terminal * s[N]
+
+# ---- Cost term breakdown over full horizon ----
+
+cont_list = []
+lag_list  = []
+prog_list = []
+ctrl_list = []
+align_list = []
+
+for k in range(N):
+
+    r_k, t_k, n_k = soft_ref_and_frames(R, s[k])
+    theta_k = X[2, k]
+    heading_vec = ca.vertcat(ca.cos(theta_k), ca.sin(theta_k))
+
+    p_xy = X[0:2, k]
+    e = p_xy - r_k
+
+    e_cont = ca.dot(n_k, e)
+    e_lag  = ca.dot(t_k, e)
+
+    v_par = U[0,k] * ca.dot(t_k, heading_vec)
+
+    align = ca.dot(t_k, heading_vec)
+
+    cont_list.append(q_cont * (e_cont**2))
+    lag_list.append(q_lag * (e_lag**2))
+    prog_list.append(-q_vs * v_par)
+    ctrl_list.append(r_v * U[0,k]**2 + r_w * U[1,k]**2)
+    align_list.append(q_theta * (1 - align)**2)
+
+cont_cost_fun = ca.Function(
+    "cont_cost_fun",
+    [X, U, s, R],
+    [ca.vertcat(*cont_list)]
+)
+
+lag_cost_fun = ca.Function(
+    "lag_cost_fun",
+    [X, U, s, R],
+    [ca.vertcat(*lag_list)]
+)
+
+prog_cost_fun = ca.Function(
+    "prog_cost_fun",
+    [X, U, s, R],
+    [ca.vertcat(*prog_list)]
+)
+
+ctrl_cost_fun = ca.Function(
+    "ctrl_cost_fun",
+    [X, U, s, R],
+    [ca.vertcat(*ctrl_list)]
+)
+
+align_cost_fun = ca.Function(
+    "align_cost_fun",
+    [X, U, s, R],
+    [ca.vertcat(*align_list)]
+)
+
+
+
+
+cost += - q_s_terminal * s[N]
+
 
 # Terminal pose penalty
 pN = X[0:2, N]
 p_goal = X_goal[0:2]
-cost += q_goal * ca.sumsqr(pN - p_goal)
+# cost += q_goal * ca.sumsqr(pN - p_goal)
 
 
 g = ca.vertcat(*g_list)
@@ -377,7 +458,8 @@ for _ in range(N + 1):
 for _ in range(N):
     lbx += [ 0.0, -omega_max]
     # lbx += [ -v_max, -omega_max]
-    ubx += [ v_max,  omega_max]
+    # ubx += [ v_max,  omega_max]
+    ubx += [ 0.25,  omega_max]
 
 # # S bounds (>=0)
 # for _ in range(num_dyn_obs * N):
@@ -388,8 +470,8 @@ for _ in range(N):
 for _ in range(N + 1):
     lbx.append(0.0)
     # ubx.append(float(ref_traj.shape[1] - 1)) 
-    # ubx.append(float(N))   # NOT ref_traj.shape[1]-1
-    ubx.append(ca.inf)          # or N + 50
+    ubx.append(float(N))   # NOT ref_traj.shape[1]-1
+    # ubx.append(ca.inf)          # or N + 50
 
 
 
@@ -411,7 +493,6 @@ for _ in range(N + 1):
 OPT_vars = ca.vertcat(
     ca.reshape(X, -1, 1),
     ca.reshape(U, -1, 1),
-    # ca.reshape(S, -1, 1),
     ca.reshape(s, -1, 1)
 )
 
@@ -454,7 +535,6 @@ nX = nx * (N + 1)
 nU = nu * N
 nS = num_dyn_obs * N
 nProg = (N + 1)          # s
-nVs = N                  # vs
 
 
 
@@ -465,3 +545,9 @@ ref_eval_fun = ca.Function(
     [R, s[0]],
     [r_sym, t_sym, n_sym]
 )
+
+
+
+
+
+
