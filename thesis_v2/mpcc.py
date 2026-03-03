@@ -332,7 +332,7 @@ for k in range(N):
     cost += r_v * U[0,k]**2 + r_w * U[1,k]**2
     
     
-    # cost += -q_vs * v_par
+    cost += -q_vs * v_par
     
 
     # # This slew cost function penalizes sudden input changes
@@ -458,8 +458,8 @@ for _ in range(N + 1):
 for _ in range(N):
     lbx += [ 0.0, -omega_max]
     # lbx += [ -v_max, -omega_max]
-    # ubx += [ v_max,  omega_max]
-    ubx += [ 0.25,  omega_max]
+    ubx += [ v_max,  omega_max]
+    # ubx += [ 0.25,  omega_max]
 
 # # S bounds (>=0)
 # for _ in range(num_dyn_obs * N):

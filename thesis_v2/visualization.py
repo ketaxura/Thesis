@@ -57,7 +57,20 @@ def visualize(ref_traj, x_history, y_history, theta_history):
 
 
 
-        
+    L_arrow = 0.6
+
+    # create empty quiver (will update inside loop)
+    heading_arrow = ax.quiver(
+        x_history[0],
+        y_history[0],
+        L_arrow * np.cos(theta_history[0]),
+        L_arrow * np.sin(theta_history[0]),
+        angles='xy',
+        scale_units='xy',
+        scale=1,
+        width=0.01,
+        color='red'
+    )
         
     robot_buffer = plt.Circle(
         (x_history[0], y_history[0]),
@@ -89,11 +102,19 @@ def visualize(ref_traj, x_history, y_history, theta_history):
         y = y_history[k]
         th = theta_history[k]
 
+        
+
         R = np.array([[np.cos(th), -np.sin(th)],
                     [np.sin(th),  np.cos(th)]])
 
         robot_circle.center = (x, y)
         robot_buffer.center = (x, y)
+
+        dx = L_arrow * np.cos(th)
+        dy = L_arrow * np.sin(th)
+
+        heading_arrow.set_offsets([x, y])
+        heading_arrow.set_UVC(dx, dy)
 
 
         path_line.set_data(x_history[:k+1], y_history[:k+1])
