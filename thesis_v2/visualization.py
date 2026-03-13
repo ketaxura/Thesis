@@ -9,6 +9,11 @@ import casadi as ca
 import numpy as np
 import matplotlib.pyplot as plt
 
+from params import STATIC_RECTS
+import matplotlib.patches as patches
+
+
+
 import sys
 import time
 
@@ -83,6 +88,14 @@ def visualize(ref_traj, x_history, y_history, theta_history):
         label="Safety buffer"
     )
     ax.add_patch(robot_buffer)
+
+
+    for (cx, cy, hw, hh) in STATIC_RECTS:
+        rect = patches.Rectangle(
+            (cx - hw, cy - hh), 2*hw, 2*hh,
+            linewidth=1, edgecolor='black', facecolor='gray', alpha=0.5
+        )
+        ax.add_patch(rect)
 
     # safe bounds (no min() crash)
     ax.set_xlim(-5, 15)

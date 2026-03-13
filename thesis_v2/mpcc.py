@@ -21,14 +21,21 @@ from dynamics import unicycle_dynamics
 # -----------------------------
 # MPCC tuning knobs 
 # -----------------------------
-q_cont = 20.0            # contouring error weight (main path-following term)
-q_lag  = 2.0            # lag error weight (prevents falling behind)
+q_cont = 10.0            # contouring error weight (main path-following term)
+q_lag  = 0.5            # lag error weight (prevents falling behind)
 q_theta = 5.0          # heading–tangent alignment weight
 q_goal = 100.0          # terminal goal xy weight
 
+rho_obs = 1e4
 
-q_vs   = 1.0            # Stronger reward on progress rate vs (push forward)
-q_s_terminal = 2.0     # reward on terminal progress s_N
+
+# --- Static obstacle avoidance (soft penalty) ---
+q_obs = 100.0   # tune this: higher = harder avoidance
+obs_margin = r_robot + safety_buffer  # e.g. 0.25 + 0.2 = 0.45
+
+
+q_vs   = 20.0            # Stronger reward on progress rate vs (push forward)
+q_s_terminal = 3.0     # reward on terminal progress s_N
 rho_vs = 0.5            # Much smaller - don't over-penalize progress rate
 
 
@@ -90,6 +97,10 @@ def soft_ref_and_frames(R, s_scalar):
 X = ca.SX.sym("X", nx, N + 1)
 U = ca.SX.sym("U", nu, N)
 s = ca.SX.sym("s", N + 1, 1)            # progress
+num_static_obs = len(STATIC_RECTS)
+
+S_obs = ca.SX.sym("S_obs", num_static_obs, N)
+
 
 v = U[0, :]
 omega = U[1, :]
@@ -234,6 +245,41 @@ for k in range(N):
     lbg.append(0.0)
     ubg.append(ca.inf)
 
+    p_xy = X[0:2, k]
+
+    # for i, (cx, cy, hw, hh) in enumerate(STATIC_RECTS):
+
+    #     dx = p_xy[0] - cx
+    #     dy = p_xy[1] - cy
+
+    #     dist_sq = (dx / (hw + obs_margin))**2 + (dy / (hh + obs_margin))**2
+
+    #     slack = S_obs[i, k]
+
+    #     g_list.append(dist_sq + slack)
+    #     lbg.append(1.0)
+    #     ubg.append(ca.inf)
+
+    #     g_list.append(slack)
+    #     lbg.append(0.0)
+    #     ubg.append(ca.inf)
+    p_xy = X[0:2, k]
+
+    for i, (cx, cy, hw, hh) in enumerate(STATIC_RECTS):
+
+        dx = p_xy[0] - cx
+        dy = p_xy[1] - cy
+
+        p = 6
+
+        dist_p = (ca.fabs(dx)/(hw + obs_margin))**p + \
+                (ca.fabs(dy)/(hh + obs_margin))**p
+        
+        slack = S_obs[i, k]
+
+        g_list.append(dist_p + slack)
+        lbg.append(1.0)
+        ubg.append(ca.inf)
 
 
 
@@ -333,12 +379,18 @@ for k in range(N):
     
     
     cost += -q_vs * v_par
+
+    for i in range(num_static_obs):
+        cost += rho_obs * S_obs[i, k]**2
     
 
     # # This slew cost function penalizes sudden input changes
     # if k > 0:
     #     cost += r_dv * (U[0,k] - U[0,k-1])**2
     #     cost += r_dw * (U[1,k] - U[1,k-1])**2
+
+
+
         
 
 # ---- True contouring over full horizon ----
@@ -474,6 +526,10 @@ for _ in range(N + 1):
     # ubx.append(ca.inf)          # or N + 50
 
 
+#Slack bounds
+for _ in range(num_static_obs * N):
+    lbx.append(0.0)
+    ubx.append(ca.inf)
 
 # for _ in range(N + 1):
 #     lbx.append(0.0)
@@ -493,7 +549,8 @@ for _ in range(N + 1):
 OPT_vars = ca.vertcat(
     ca.reshape(X, -1, 1),
     ca.reshape(U, -1, 1),
-    ca.reshape(s, -1, 1)
+    ca.reshape(s, -1, 1),
+    ca.reshape(S_obs, -1, 1)
 )
 
 # -----------------------------

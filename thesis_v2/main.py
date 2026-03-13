@@ -7,6 +7,58 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import time
+<<<<<<< HEAD
+=======
+
+# =============================================================
+# DEFINE YOUR PATH HERE — this is the only place you need to edit
+# to change the path the robot follows.
+# ref_traj must be a (2, M) numpy array of [x; y] waypoints.
+# =============================================================
+import numpy as np
+
+# # Straight Diagonal line
+# ref_x = np.linspace(0, -10, 100)
+# ref_y = np.linspace(0, 0, 100)
+# ref_traj = np.vstack((ref_x, ref_y))   # shape (2, 100)
+
+
+
+# # Sine wave from x=0 to x=20
+# t = np.linspace(0, 20, 300)
+# ref_x = t
+# ref_y = 2.0 * np.sin(0.5 * t)   # amplitude=2, frequency=0.5
+# ref_traj = np.vstack((ref_x, ref_y))
+
+
+# # Figure-8 (requires negative x, direction reversal at crossing)
+# t = np.linspace(0, 2*np.pi, 400)
+# ref_x = 10 * np.sin(t)
+# ref_y = 5 * np.sin(2*t)
+# ref_traj = np.vstack((ref_x, ref_y))
+
+
+# # Tight spiral (continuously increasing curvature)
+# t = np.linspace(0, 4*np.pi, 400)
+# ref_x = t * np.cos(t)
+# ref_y = t * np.sin(t)
+# ref_traj = np.vstack((ref_x, ref_y))
+
+
+
+
+# Sharp zigzag (tests corner handling)
+ref_x = np.array([0,5,10,15,20], dtype=float)
+ref_y = np.array([0,4,0,4,0], dtype=float)
+ref_x = np.interp(np.linspace(0,4,300), np.arange(5), ref_x)
+ref_y = np.interp(np.linspace(0,4,300), np.arange(5), ref_y)
+ref_traj = np.vstack((ref_x, ref_y))
+
+# =============================================================
+# NOW import everything else — params.py and mpcc.py will read
+# ref_traj from this module, so define it BEFORE importing them.
+# =============================================================
+>>>>>>> 5900bca (Added static obstacles to my MPCC simulation. Had some ideas for geometric horizon bound for local obstacle detours.)
 import params
 import mpcc
 
@@ -61,7 +113,7 @@ prev_z = None
 # =============================================================
 # Main loop
 # =============================================================
-for k in range(1000):
+for k in range(500):
 
     # -------------------------------------------------
     # 1. Build local reference window
@@ -113,9 +165,16 @@ for k in range(1000):
     z      = sol["x"].full().flatten()
     offset = 0
 
+
+
     X_opt  = z[offset : offset + mpcc.nX].reshape((nx, N + 1), order="F");  offset += mpcc.nX
     U_opt  = z[offset : offset + mpcc.nU].reshape((nu, N),     order="F");  offset += mpcc.nU
     s_opt  = z[offset : offset + mpcc.nProg].reshape((N + 1,), order="F");  offset += mpcc.nProg
+
+    nSlack = len(STATIC_RECTS) * N
+    S_obs_opt = z[offset : offset + nSlack].reshape((len(STATIC_RECTS), N), order="F")
+    offset += nSlack
+
 
     assert offset == z.size, (offset, z.size)
 
@@ -186,6 +245,7 @@ for k in range(1000):
     print(f"contouring error: {e_cont_val:.4f}")
     print(f"lag error:        {e_lag_val:.4f}")
     print()
+    
 
 
     # -------------------------------------------------
