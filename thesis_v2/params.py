@@ -101,6 +101,6 @@ STATIC_RECTS = [
     (10.0, 0.0, 0.5, 0.5),
 ]
 
-# NOTE: ref_traj, x_current, x_history, y_history, theta_history
+## NOTE: ref_traj, x_current, x_history, y_history, theta_history
 # are all defined in main.py AFTER the path is set.
 # Do NOT define them here.

@@ -1,110 +1,53 @@
+"""
+UNICYCLE MODEL PREDICTIVE CONTOURING CONTROL 
+Usukhbayar Amgalanbat
+"""
 import casadi as ca
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import time
-
-# =============================================================
-# DEFINE YOUR PATH HERE — this is the only place you need to edit
-# to change the path the robot follows.
-# ref_traj must be a (2, M) numpy array of [x; y] waypoints.
-# =============================================================
-import numpy as np
-
-# # Straight Diagonal line
-# ref_x = np.linspace(0, -10, 100)
-# ref_y = np.linspace(0, 0, 100)
-# ref_traj = np.vstack((ref_x, ref_y))   # shape (2, 100)
-
-
-# # Sine wave from x=0 to x=20
-# t = np.linspace(0, 20, 300)
-# ref_x = t
-# ref_y = 2.0 * np.sin(0.5 * t)   # amplitude=2, frequency=0.5
-# ref_traj = np.vstack((ref_x, ref_y))
-
-
-# # Figure-8 (requires negative x, direction reversal at crossing)
-# t = np.linspace(0, 2*np.pi, 400)
-# ref_x = 10 * np.sin(t)
-# ref_y = 5 * np.sin(2*t)
-# ref_traj = np.vstack((ref_x, ref_y))
-
-
-# Tight spiral (continuously increasing curvature)
-t = np.linspace(0, 4*np.pi, 400)
-ref_x = t * np.cos(t)
-ref_y = t * np.sin(t)
-ref_traj = np.vstack((ref_x, ref_y))
-
-
-
-
-# # Sharp zigzag (tests corner handling)
-# ref_x = np.array([0,5,10,15,20], dtype=float)
-# ref_y = np.array([0,4,0,4,0], dtype=float)
-# ref_x = np.interp(np.linspace(0,4,300), np.arange(5), ref_x)
-# ref_y = np.interp(np.linspace(0,4,300), np.arange(5), ref_y)
-# ref_traj = np.vstack((ref_x, ref_y))
-
-# =============================================================
-# NOW import everything else — params.py and mpcc.py will read
-# ref_traj from this module, so define it BEFORE importing them.
-# =============================================================
 import params
-# Patch params so mpcc.py sees the correct ref_traj
-params.ref_traj = ref_traj
-
 import mpcc
 
 from params import *
 from dynamics import *
 from visualization import visualize
 from subplots import subplots
+from dynamics import path_selector
+
+"""
+Reference Path Generation:
+
+Path 0 = Straight line path
+Path 1 = Sine wave
+Path 2 = Figure 8
+Path 3 = Sharp zig zag
+Path 4 = Big spiral
+"""
+
+ref_traj = path_selector(3)
+
 
 # =============================================================
 # Initial state — always derived from the path defined above
 # =============================================================
-
-# Compute initial heading from the first path segment
-d0 = ref_traj[:, 1] - ref_traj[:, 0]
-theta0 = float(np.arctan2(d0[1], d0[0]))   # point robot along path at start
-
-x_current = np.array([ref_traj[0, 0], ref_traj[1, 0], theta0], dtype=float)
-
-# History buffers — init here so they match x_current
-x_history     = [x_current[0]]
-y_history     = [x_current[1]]
-theta_history = [x_current[2]]
-
-log_file = open("mpcc_main_run_log.txt", "w")
-sys.stdout = log_file
-sys.stderr = log_file
-
 solver = mpcc.solver
 lbx    = mpcc.lbx
 ubx    = mpcc.ubx
 lbg    = mpcc.lbg
 ubg    = mpcc.ubg
 
-print("Running MPCC")
-print(f"Path: start={ref_traj[:,0]}, end={ref_traj[:,-1]}, points={ref_traj.shape[1]}")
-print(f"Initial state: {x_current}")
+log_file = open("mpcc_main_run_log.txt", "w")
+sys.stdout = log_file
+sys.stderr = log_file
 
-
-# =============================================================
-# Helper
-# =============================================================
-def arc_length_parameterize(xy: np.ndarray):
-    diffs = np.diff(xy, axis=0)
-    ds = np.linalg.norm(diffs, axis=1)
-    s_grid = np.concatenate(([0.0], np.cumsum(ds)))
-    return s_grid
-
-
-s_grid = arc_length_parameterize(ref_traj.T)   # (M,)
+x_current, x_history, y_history, theta_history = main_init(ref_traj)
 
 mu = 0.0   # global progress index along ref_traj
+
+
+
 
 X_goal_global = np.array(
     [ref_traj[0, -1], ref_traj[1, -1], 0.0],
