@@ -13,7 +13,7 @@ y_ref_history = []
 # MPC Params
 # -----------------------------
 dt = 0.1
-N = 40
+N = 30
 
 nx = 3
 nu = 2
@@ -96,10 +96,14 @@ WALL_Y_MAX =  2.75
 
 rng = np.random.default_rng(389999)
 
-STATIC_RECTS = [
-    (6.0,  3.0, 0.6, 1.2),
-    (10.0, 0.0, 0.5, 0.5),
-]
+
+STATIC_RECTS=[]
+
+
+# STATIC_RECTS = [
+#     (7.0,  1.0, 0.6, 1.2),
+#     (10.0, 0.0, 0.5, 0.5),
+# ]
 
 ## NOTE: ref_traj, x_current, x_history, y_history, theta_history
 # are all defined in main.py AFTER the path is set.

@@ -1,0 +1,4514 @@
+Running MPCC
+Path: start=[0. 0.], end=[20.  0.], points=300
+Initial state: [0.         0.         0.67474094]
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+s min: -2.2420775429197073e-44  s max: 29.999999831466404
+mu: 0.2918
+
+step: 0
+x vector: [0.01951717 0.01561374 0.67733098]
+control input: [0.24994172 0.02590034]
+contouring error: 0.0000
+lag error:        0.0250
+
+s min: 0.29178147072065286  s max: 29.999999826690278
+mu: 0.8753
+
+step: 1
+x vector: [0.05846739 0.0469397  0.68020485]
+control input: [0.49984354 0.0287387 ]
+contouring error: 0.0001
+lag error:        0.0750
+
+s min: 0.8752958890692397  s max: 29.999999824913047
+mu: 1.7485
+
+step: 2
+x vector: [0.11661886 0.09398426 0.68315905]
+control input: [0.74798292 0.02954201]
+contouring error: 0.0005
+lag error:        0.0641
+
+s min: 0.7484766593485799  s max: 29.999999816526845
+mu: 2.7758
+
+step: 3
+x vector: [0.18487109 0.14953472 0.68800716]
+control input: [0.88001252 0.04848114]
+contouring error: 0.0013
+lag error:        0.0665
+
+s min: 0.7757651646062733  s max: 29.999999812367793
+mu: 3.8842
+
+step: 4
+x vector: [0.25822705 0.20983268 0.69367893]
+control input: [0.94957571 0.05671765]
+contouring error: 0.0025
+lag error:        0.0757
+
+s min: 0.8842004495221585  s max: 29.99999980993875
+mu: 5.0479
+
+step: 5
+x vector: [0.33488814 0.27357944 0.69932184]
+control input: [0.99702417 0.05642911]
+contouring error: 0.0044
+lag error:        0.0041
+
+s min: 0.04791581497337738  s max: 29.999999800261282
+mu: 6.2144
+
+step: 6
+x vector: [0.41138035 0.33791931 0.70398876]
+control input: [0.99953379 0.04666925]
+contouring error: 0.0069
+lag error:        0.0184
+
+s min: 0.214417105969396  s max: 29.999999793332293
+mu: 7.3808
+
+step: 7
+x vector: [0.48757469 0.40261821 0.70693766]
+control input: [0.9995762  0.02948894]
+contouring error: 0.0098
+lag error:        0.0326
+
+s min: 0.3808213375132814  s max: 29.99999978545964
+mu: 8.5471
+
+step: 8
+x vector: [0.56357521 0.46753921 0.70782393]
+control input: [0.9995406  0.00886269]
+contouring error: 0.0130
+lag error:        0.0469
+
+s min: 0.547078339474723  s max: 29.999999781298484
+mu: 9.7133
+
+step: 9
+x vector: [0.63951952 0.5325287  0.70668818]
+control input: [ 0.99955853 -0.01135744]
+contouring error: 0.0163
+lag error:        0.0611
+
+s min: 0.7133225158936991  s max: 29.999999777857052
+mu: 10.8796
+
+step: 10
+x vector: [0.71553794 0.5974322  0.70343205]
+control input: [ 0.99956308 -0.03256135]
+contouring error: 0.0195
+lag error:        0.0753
+
+s min: 0.8796150837888579  s max: 29.99999977549245
+mu: 12.0460
+
+step: 11
+x vector: [0.79176656 0.66208721 0.69786265]
+control input: [ 0.99955356 -0.05569396]
+contouring error: 0.0224
+lag error:        0.0039
+
+s min: 0.046011722994082405  s max: 29.999999780557935
+mu: 13.2127
+
+step: 12
+x vector: [0.86836162 0.72632298 0.68868817]
+control input: [ 0.99965185 -0.09174487]
+contouring error: 0.0247
+lag error:        0.0182
+
+s min: 0.21269140643476092  s max: 29.999999782886285
+mu: 14.3795
+
+step: 13
+x vector: [0.94553871 0.78985    0.67675694]
+control input: [ 0.99959917 -0.11931224]
+contouring error: 0.0261
+lag error:        0.0325
+
+s min: 0.3795080262860342  s max: 29.999999786259725
+mu: 15.5463
+
+step: 14
+x vector: [1.02346165 0.8524464  0.66178524]
+control input: [ 0.99951454 -0.14971697]
+contouring error: 0.0263
+lag error:        0.0468
+
+s min: 0.5463369780592675  s max: 29.999999792254247
+mu: 16.7129
+
+step: 15
+x vector: [1.10229911 0.91385837 0.64345766]
+control input: [ 0.99933853 -0.18327581]
+contouring error: 0.0250
+lag error:        0.0611
+
+s min: 0.7128649252401367  s max: 29.999999799845906
+mu: 17.8783
+
+step: 16
+x vector: [1.18220388 0.97378153 0.62149   ]
+control input: [ 0.99877715 -0.21967662]
+contouring error: 0.0219
+lag error:        0.0752
+
+s min: 0.8782649401268685  s max: 29.999999808155472
+mu: 19.0413
+
+step: 17
+x vector: [1.26331653 1.03187122 0.59559962]
+control input: [ 0.99768102 -0.25890386]
+contouring error: 0.0166
+lag error:        0.0035
+
+s min: 0.04130487344126976  s max: 29.999999835438487
+mu: 20.1929
+
+step: 18
+x vector: [1.34523562 1.08738748 0.5626724 ]
+control input: [ 0.98958538 -0.32927211]
+contouring error: 0.0087
+lag error:        0.0165
+
+s min: 0.19292896445256602  s max: 29.999999858566643
+mu: 21.3530
+
+step: 19
+x vector: [1.4298184  1.14073204 0.5060045 ]
+control input: [ 0.99999446 -0.56667903]
+contouring error: -0.0024
+lag error:        0.0302
+
+s min: 0.35299737225643213  s max: 29.999999855323395
+mu: 22.5038
+
+step: 20
+x vector: [1.51728696 1.18920053 0.43385412]
+control input: [ 0.99999719 -0.72150383]
+contouring error: -0.0192
+lag error:        0.0432
+
+s min: 0.5038125129580919  s max: 29.999999843008585
+mu: 23.6375
+
+step: 21
+x vector: [1.60802202 1.23123754 0.35482992]
+control input: [ 0.999998   -0.79024201]
+contouring error: -0.0431
+lag error:        0.0546
+
+s min: 0.6375017702446968  s max: 29.999999832811923
+mu: 24.7457
+
+step: 22
+x vector: [1.70179242 1.26598057 0.27365987]
+control input: [ 0.9999983  -0.81170048]
+contouring error: -0.0745
+lag error:        0.0639
+
+s min: 0.7456681369340572  s max: 29.9999998242783
+mu: 25.8204
+
+step: 23
+x vector: [1.7980711  1.29300622 0.19301685]
+control input: [ 0.9999985  -0.80643023]
+contouring error: -0.1136
+lag error:        0.0703
+
+s min: 0.8204192449905854  s max: 29.99999982039715
+mu: 26.8550
+
+step: 24
+x vector: [1.89621396 1.31218825 0.11452451]
+control input: [ 0.99999857 -0.7849234 ]
+contouring error: -0.1599
+lag error:        0.0732
+
+s min: 0.8549629458800219  s max: 29.999999819967663
+mu: 27.8439
+
+step: 25
+x vector: [1.99555875 1.32361567 0.03789012]
+control input: [ 0.99999866 -0.76634387]
+contouring error: -0.2130
+lag error:        0.0723
+
+s min: 0.84391135440314  s max: 29.999999823266982
+mu: 28.7825
+
+step: 26
+x vector: [ 2.09548684  1.32740377 -0.0366278 ]
+control input: [ 0.99999868 -0.74517916]
+contouring error: -0.2725
+lag error:        0.0670
+
+s min: 0.7824659884042333  s max: 29.999999829617057
+mu: 29.6667
+
+step: 27
+x vector: [ 2.19541964  1.32374182 -0.1065833 ]
+control input: [ 0.99999871 -0.69955506]
+contouring error: -0.3378
+lag error:        0.0571
+
+s min: 0.6667326545328294  s max: 29.999999842121948
+mu: 30.4956
+
+step: 28
+x vector: [ 2.29485205  1.31310367 -0.17125026]
+control input: [ 0.9999987  -0.64666953]
+contouring error: -0.4082
+lag error:        0.0425
+
+s min: 0.49556271417327835  s max: 29.999999846895037
+mu: 31.2695
+
+step: 29
+x vector: [ 2.39338928  1.29606222 -0.22189028]
+control input: [ 0.99999986 -0.50640018]
+contouring error: -0.4831
+lag error:        0.0231
+
+s min: 0.26953533724296364  s max: 29.999999841111233
+mu: 31.9919
+
+step: 30
+x vector: [ 2.49008752  1.27424661 -0.21253036]
+control input: [0.99128551 0.09359911]
+contouring error: -0.5605
+lag error:        0.0850
+
+s min: 0.9919274508920886  s max: 29.99999984249114
+mu: 32.6915
+
+step: 31
+x vector: [ 2.58284779  1.25422995 -0.14317056]
+control input: [0.9489539  0.69359803]
+contouring error: -0.6341
+lag error:        0.0592
+
+s min: 0.6915408436504507  s max: 29.99999984292819
+mu: 33.3505
+
+step: 32
+x vector: [ 2.66455595  1.24245116 -0.01381095]
+control input: [0.8255279  1.29359612]
+contouring error: -0.6943
+lag error:        0.0300
+
+s min: 0.35048100009872485  s max: 29.999999843351972
+mu: 34.0499
+
+step: 33
+x vector: [2.74213695 1.24137962 0.1755482 ]
+control input: [0.77588407 1.89359145]
+contouring error: -0.7436
+lag error:        0.0043
+
+s min: 0.0498832505918827  s max: 29.999999843718967
+mu: 34.8469
+
+step: 34
+x vector: [2.81870295 1.25496044 0.37554763]
+control input: [0.77761111 1.99999435]
+contouring error: -0.7809
+lag error:        0.0725
+
+s min: 0.8468877004896314  s max: 29.999999844039273
+mu: 35.6626
+
+step: 35
+x vector: [2.88672909 1.28178037 0.57554707]
+control input: [0.7312226  1.99999434]
+contouring error: -0.8024
+lag error:        0.0568
+
+s min: 0.6625927603520623  s max: 29.999999844360243
+mu: 36.5335
+
+step: 36
+x vector: [2.94961983 1.3225853  0.7755461 ]
+control input: [0.74968578 1.99999035]
+contouring error: -0.8098
+lag error:        0.0457
+
+s min: 0.5334723625013496  s max: 29.999999843838395
+mu: 37.6946
+
+step: 37
+x vector: [3.02100028 1.39257294 0.97554126]
+control input: [0.99967179 1.99995155]
+contouring error: -0.7998
+lag error:        0.0595
+
+s min: 0.6945628636802397  s max: 29.99999984492004
+mu: 38.8095
+
+step: 38
+x vector: [3.07707202 1.4753731  1.13224698]
+control input: [0.99999534 1.56705726]
+contouring error: -0.7702
+lag error:        0.0693
+
+s min: 0.8095391725932473  s max: 29.99999984244655
+mu: 39.8569
+
+step: 39
+x vector: [3.11953451 1.56590963 1.2382191 ]
+control input: [0.99999636 1.05972113]
+contouring error: -0.7260
+lag error:        0.0734
+
+s min: 0.8568745781753506  s max: 29.99999984042434
+mu: 40.8438
+
+step: 40
+x vector: [3.15218241 1.6604297  1.30377562]
+control input: [0.99999643 0.65556528]
+contouring error: -0.6726
+lag error:        0.0723
+
+s min: 0.8437922206546489  s max: 29.999999840225744
+mu: 41.7877
+
+step: 41
+x vector: [3.1785682  1.75688545 1.33790749]
+control input: [0.99999608 0.34131866]
+contouring error: -0.6137
+lag error:        0.0675
+
+s min: 0.7877417358239072  s max: 29.99999984115839
+mu: 42.7077
+
+step: 42
+x vector: [3.20164702 1.85418538 1.34773313]
+control input: [0.99999538 0.09825639]
+contouring error: -0.5522
+lag error:        0.0606
+
+s min: 0.7077017970994106  s max: 29.999999839552775
+mu: 43.6206
+
+step: 43
+x vector: [3.22376869 1.95170725 1.33922871]
+control input: [ 0.99999424 -0.08504414]
+contouring error: -0.4898
+lag error:        0.0532
+
+s min: 0.6205551790820678  s max: 29.99999983688834
+mu: 44.5396
+
+step: 44
+x vector: [3.24671888 2.0490373  1.31709893]
+control input: [ 0.99999242 -0.2212978 ]
+contouring error: -0.4282
+lag error:        0.0462
+
+s min: 0.5395621996986861  s max: 29.999999839766147
+mu: 45.4743
+
+step: 45
+x vector: [3.27181708 2.14583538 1.28461153]
+control input: [ 0.99998945 -0.32487402]
+contouring error: -0.3683
+lag error:        0.0406
+
+s min: 0.474270848644494  s max: 29.999999837811636
+mu: 46.4312
+
+step: 46
+x vector: [3.30004606 2.24176666 1.24556946]
+control input: [ 0.99998424 -0.39042068]
+contouring error: -0.3110
+lag error:        0.0369
+
+s min: 0.4311978062306068  s max: 29.99999982383628
+mu: 47.4135
+
+step: 47
+x vector: [3.33199761 2.33652202 1.2025679 ]
+control input: [ 0.99997398 -0.43001569]
+contouring error: -0.2570
+lag error:        0.0354
+
+s min: 0.41348352867242255  s max: 29.999999804830736
+mu: 48.4220
+
+step: 48
+x vector: [3.36799209 2.42981391 1.15732001]
+control input: [ 0.99994903 -0.45247889]
+contouring error: -0.2066
+lag error:        0.0361
+
+s min: 0.42195147650249964  s max: 29.999999798549823
+mu: 49.4559
+
+step: 49
+x vector: [3.40816706 2.52137652 1.11159582]
+control input: [ 0.99988698 -0.45724183]
+contouring error: -0.1602
+lag error:        0.0391
+
+s min: 0.4559169781957806  s max: 29.999999790659352
+mu: 50.5067
+
+step: 50
+x vector: [3.45219918 2.61042864 1.06764325]
+control input: [ 0.99343382 -0.43952578]
+contouring error: -0.1182
+lag error:        0.0434
+
+s min: 0.5067354918690654  s max: 29.999999781231736
+mu: 51.3551
+
+step: 51
+x vector: [3.49013168 2.67934624 1.02649849]
+control input: [ 0.78667083 -0.41144755]
+contouring error: -0.0881
+lag error:        0.0304
+
+s min: 0.3551162086497399  s max: 29.99999977200374
+mu: 52.0914
+
+step: 52
+x vector: [3.52491858 2.73681799 0.98826975]
+control input: [ 0.67179837 -0.38228739]
+contouring error: -0.0649
+lag error:        0.0078
+
+s min: 0.09135122098591353  s max: 29.999999762808848
+mu: 52.7975
+
+step: 53
+x vector: [3.55990016 2.78991809 0.95285628]
+control input: [ 0.63587198 -0.35413471]
+contouring error: -0.0453
+lag error:        0.0683
+
+s min: 0.7974798911769057  s max: 29.999999764195728
+mu: 53.4274
+
+step: 54
+x vector: [3.59241196 2.83565758 0.92326281]
+control input: [ 0.56116999 -0.29593472]
+contouring error: -0.0299
+lag error:        0.0366
+
+s min: 0.42741581029190456  s max: 29.99999975598087
+mu: 54.0912
+
+step: 55
+x vector: [3.62779661 2.88244289 0.89743209]
+control input: [ 0.58659516 -0.25830717]
+contouring error: -0.0155
+lag error:        0.0078
+
+s min: 0.0911670939302951  s max: 29.999999748541235
+mu: 54.8052
+
+step: 56
+x vector: [3.66690612 2.93146798 0.87614015]
+control input: [ 0.62713738 -0.21291944]
+contouring error: -0.0016
+lag error:        0.0690
+
+s min: 0.805207556454917  s max: 29.99999974841828
+mu: 55.4605
+
+step: 57
+x vector: [3.70358001 2.97548399 0.85875509]
+control input: [ 0.57292094 -0.17385058]
+contouring error: 0.0099
+lag error:        0.0395
+
+s min: 0.4605157833403908  s max: 29.999999742488004
+mu: 56.1847
+
+step: 58
+x vector: [3.74480945 3.02325389 0.84560543]
+control input: [ 0.63101739 -0.13149659]
+contouring error: 0.0214
+lag error:        0.0158
+
+s min: 0.1847275051754238  s max: 29.99999973762485
+mu: 56.9615
+
+step: 59
+x vector: [3.78959278 3.07378264 0.83685702]
+control input: [ 0.67518161 -0.08748413]
+contouring error: 0.0329
+lag error:        0.0824
+
+s min: 0.9614554573957932  s max: 29.99999973786594
+mu: 57.6404
+
+step: 60
+x vector: [3.82906521 3.11754186 0.83039628]
+control input: [ 0.58931666 -0.06460736]
+contouring error: 0.0424
+lag error:        0.0549
+
+s min: 0.6404019118127238  s max: 29.99999973392694
+mu: 58.3734
+
+step: 61
+x vector: [3.87193795 3.16445764 0.827675  ]
+control input: [ 0.63554408 -0.02721286]
+contouring error: 0.0522
+lag error:        0.0320
+
+s min: 0.37336497483053677  s max: 29.999999733556486
+mu: 59.1119
+
+step: 62
+x vector: [3.91524644 3.21159205 0.82800553]
+control input: [0.64009984 0.00330533]
+contouring error: 0.0620
+lag error:        0.0096
+
+s min: 0.11189463697603941  s max: 29.99999973344116
+mu: 59.8645
+
+step: 63
+x vector: [3.95936791 3.25964313 0.83056293]
+control input: [0.65235038 0.02557398]
+contouring error: 0.0720
+lag error:        0.0741
+
+s min: 0.8645202380305008  s max: 29.99999973391073
+mu: 60.4904
+
+step: 64
+x vector: [3.99597256 3.29971313 0.8330492 ]
+control input: [0.54272514 0.0248627 ]
+contouring error: 0.0804
+lag error:        0.0420
+
+s min: 0.4904202883660531  s max: 29.99999973434997
+mu: 61.1710
+
+step: 65
+x vector: [4.03568034 3.34339765 0.83718988]
+control input: [0.59034265 0.04140686]
+contouring error: 0.0897
+lag error:        0.0146
+
+s min: 0.17096741503895174  s max: 29.999999732885946
+mu: 61.9022
+
+step: 66
+x vector: [4.07817896 3.39054326 0.84211243]
+control input: [0.63473154 0.04922548]
+contouring error: 0.1000
+lag error:        0.0773
+
+s min: 0.9021960999358498  s max: 29.999999734980207
+mu: 62.4987
+
+step: 67
+x vector: [4.11268838 3.4292071  0.84595118]
+control input: [0.51824634 0.03838755]
+contouring error: 0.1086
+lag error:        0.0427
+
+s min: 0.49874163931607285  s max: 29.999999735636617
+mu: 63.2196
+
+step: 68
+x vector: [4.15423507 3.47611664 0.84952617]
+control input: [0.62662845 0.03574987]
+contouring error: 0.1193
+lag error:        0.0188
+
+s min: 0.21957105657195086  s max: 29.99999974024264
+mu: 64.0299
+
+step: 69
+x vector: [4.20077929 3.52904883 0.85151773]
+control input: [0.70485328 0.01991559]
+contouring error: 0.1315
+lag error:        0.0026
+
+s min: 0.02987846555424767  s max: 29.999999748064827
+mu: 64.8878
+
+step: 70
+x vector: [4.24996483 3.58521003 0.84996648]
+control input: [ 0.74654519 -0.01551248]
+contouring error: 0.1446
+lag error:        0.0761
+
+s min: 0.887811844447711  s max: 29.999999749395148
+mu: 65.5035
+
+step: 71
+x vector: [4.28531778 3.62545073 0.84778065]
+control input: [ 0.53564403 -0.02185828]
+contouring error: 0.1540
+lag error:        0.0431
+
+s min: 0.503546422572299  s max: 29.999999757632818
+mu: 66.3139
+
+step: 72
+x vector: [4.33194272 3.67828846 0.84098386]
+control input: [ 0.70467801 -0.06796794]
+contouring error: 0.1661
+lag error:        0.0269
+
+s min: 0.31390080911386065  s max: 29.999999766188164
+mu: 67.2675
+
+step: 73
+x vector: [4.38716605 3.74001948 0.82859994]
+control input: [ 0.82827139 -0.12383919]
+contouring error: 0.1798
+lag error:        0.0229
+
+s min: 0.2674926842662302  s max: 29.99999977707549
+mu: 68.3656
+
+step: 74
+x vector: [4.45150646 3.81017393 0.80907799]
+control input: [ 0.95191042 -0.19521955]
+contouring error: 0.1944
+lag error:        0.0313
+
+s min: 0.3656237890030951  s max: 29.999999787936638
+mu: 69.5222
+
+step: 75
+x vector: [4.52050627 3.88252144 0.78311676]
+control input: [ 0.99975679 -0.25961225]
+contouring error: 0.2078
+lag error:        0.0447
+
+s min: 0.5222226103734755  s max: 29.999999799946114
+mu: 70.6826
+
+step: 76
+x vector: [4.59137057 3.95306314 0.75257569]
+control input: [ 0.99989407 -0.3054107 ]
+contouring error: 0.2186
+lag error:        0.0585
+
+s min: 0.6826487067145592  s max: 29.999999813506996
+mu: 71.8464
+
+step: 77
+x vector: [4.66435822 4.02141016 0.71055528]
+control input: [ 0.99992556 -0.42020409]
+contouring error: 0.2264
+lag error:        0.0725
+
+s min: 0.8464257113843985  s max: 29.99999982494487
+mu: 72.8639
+
+step: 78
+x vector: [4.73046799 4.07829727 0.66585746]
+control input: [ 0.87216078 -0.44697823]
+contouring error: 0.2295
+lag error:        0.0740
+
+s min: 0.8639276298801946  s max: 29.999999831604338
+mu: 74.0312
+
+step: 79
+x vector: [4.80910212 4.14006701 0.57237554]
+control input: [ 0.99994138 -0.93481914]
+contouring error: 0.2196
+lag error:        -0.0637
+
+s min: 0.03121972507570092  s max: 29.99999973191301
+mu: 75.2006
+
+step: 80
+x vector: [4.88449196 4.18864259 0.53878955]
+control input: [ 0.89683978 -0.33585995]
+contouring error: 0.0751
+lag error:        -0.2295
+
+s min: 0.2005864045404735  s max: 29.999999741534353
+mu: 75.6088
+
+step: 81
+x vector: [4.97032465 4.23995211 0.44520479]
+control input: [ 0.99999586 -0.93584762]
+contouring error: 0.1688
+lag error:        -0.1945
+
+s min: 0.6088401812122441  s max: 29.999999812799054
+mu: 76.1175
+
+step: 82
+x vector: [5.06057458 4.28301528 0.31071381]
+control input: [ 0.99997428 -1.3449098 ]
+contouring error: 0.2588
+lag error:        -0.2366
+
+s min: 0.11749896284548811  s max: 29.999999819116404
+mu: 76.6013
+
+step: 83
+x vector: [5.13199463 4.30594931 0.22008771]
+control input: [ 0.75011962 -0.90626099]
+contouring error: 0.3214
+lag error:        -0.1951
+
+s min: 0.6013027809248399  s max: 29.99999981777555
+mu: 77.3316
+
+step: 84
+x vector: [5.22957441 4.32777903 0.14189216]
+control input: [ 0.99991749 -0.7819555 ]
+contouring error: 0.3994
+lag error:        -0.2182
+
+s min: 0.3316280202376163  s max: 29.999999806181574
+mu: 78.1309
+
+step: 85
+x vector: [5.32856753 4.34192041 0.07229543]
+control input: [ 0.9999808  -0.69596727]
+contouring error: 0.4722
+lag error:        -0.2354
+
+s min: 0.13090563996796334  s max: 29.999999798219218
+mu: 78.9874
+
+step: 86
+x vector: [5.42830523 4.34914358 0.00645971]
+control input: [ 0.99998917 -0.65835721]
+contouring error: 0.5402
+lag error:        -0.1621
+
+s min: 0.9874230565998516  s max: 29.99999979853025
+mu: 79.8943
+
+step: 87
+x vector: [ 5.52830248  4.34978954 -0.06143569]
+control input: [ 0.99999334 -0.67895397]
+contouring error: 0.6032
+lag error:        -0.1700
+
+s min: 0.8942718966182497  s max: 29.99999979576389
+mu: 80.8489
+
+step: 88
+x vector: [ 5.62811344  4.34364986 -0.13822949]
+control input: [ 0.99999619 -0.767938  ]
+contouring error: 0.6607
+lag error:        -0.1739
+
+s min: 0.8489080973866265  s max: 29.9999997899939
+mu: 81.8523
+
+step: 89
+x vector: [ 5.72715921  4.32987094 -0.21731902]
+control input: [ 0.99999618 -0.79089532]
+contouring error: 0.7118
+lag error:        -0.1736
+
+s min: 0.8522794433009295  s max: 29.9999997861922
+mu: 82.8997
+
+step: 90
+x vector: [ 5.82480682  4.30830976 -0.29848407]
+control input: [ 0.99999701 -0.81165053]
+contouring error: 0.7560
+lag error:        -0.1696
+
+s min: 0.8996588988673722  s max: 29.999999787889614
+mu: 83.9854
+
+step: 91
+x vector: [ 5.92038491  4.27890267 -0.38253847]
+control input: [ 0.99999739 -0.84054397]
+contouring error: 0.7927
+lag error:        -0.1622
+
+s min: 0.9853905734222508  s max: 29.999999781708016
+mu: 85.1033
+
+step: 92
+x vector: [ 6.0131567   4.2415751  -0.47034341]
+control input: [ 0.9999976  -0.87804944]
+contouring error: 0.8216
+lag error:        -0.2378
+
+s min: 0.10330198904408405  s max: 29.999999769513998
+mu: 86.2464
+
+step: 93
+x vector: [ 6.10229777  4.19625595 -0.56280854]
+control input: [ 0.99999774 -0.92465124]
+contouring error: 0.8419
+lag error:        -0.2255
+
+s min: 0.2463962517866065  s max: 29.999999772737038
+mu: 87.4065
+
+step: 94
+x vector: [ 6.18687357  4.14289971 -0.66087332]
+control input: [ 0.99999778 -0.98064785]
+contouring error: 0.8530
+lag error:        -0.2118
+
+s min: 0.4064862747543714  s max: 29.99999977050996
+mu: 88.5738
+
+step: 95
+x vector: [ 6.26581905  4.08151918 -0.76545827]
+control input: [ 0.99999789 -1.04584947]
+contouring error: 0.8544
+lag error:        -0.1975
+
+s min: 0.573769609804927  s max: 29.99999976990333
+mu: 89.7364
+
+step: 96
+x vector: [ 6.33792538  4.01223259 -0.87737491]
+control input: [ 0.99999776 -1.11916639]
+contouring error: 0.8453
+lag error:        -0.1836
+
+s min: 0.7363647226865169  s max: 29.999999780453383
+mu: 90.8799
+
+step: 97
+x vector: [ 6.40184245  3.9353264  -0.99717962]
+control input: [ 0.99999769 -1.19804713]
+contouring error: 0.8252
+lag error:        -0.1713
+
+s min: 0.8798750471880226  s max: 29.999999774623817
+mu: 91.9871
+
+step: 98
+x vector: [ 6.45610971  3.85133216 -1.12494459]
+control input: [ 0.99999838 -1.27764967]
+contouring error: 0.7935
+lag error:        -0.1621
+
+s min: 0.9871099926704687  s max: 29.999999785619863
+mu: 93.0382
+
+step: 99
+x vector: [ 6.49923221  3.76110811 -1.23491899]
+control input: [ 0.99999647 -1.09974399]
+contouring error: 0.7500
+lag error:        -0.2434
+
+s min: 0.03818304600841316  s max: 29.999999818143426
+mu: 94.0272
+
+step: 100
+x vector: [ 6.53219186  3.66669627 -1.29216514]
+control input: [ 0.99999665 -0.57246153]
+contouring error: 0.6969
+lag error:        -0.2443
+
+s min: 0.02715326848959876  s max: 29.999999823299937
+mu: 94.9790
+
+step: 101
+x vector: [ 6.55969575  3.57055334 -1.30841926]
+control input: [ 0.99999633 -0.16254115]
+contouring error: 0.6390
+lag error:        -0.1628
+
+s min: 0.979013909588744  s max: 29.999999825524668
+mu: 95.9198
+
+step: 102
+x vector: [ 6.58563333  3.47397615 -1.30617627]
+control input: [0.99999567 0.02242983]
+contouring error: 0.5798
+lag error:        -0.1678
+
+s min: 0.9197633841731658  s max: 29.999999843602108
+mu: 96.8621
+
+step: 103
+x vector: [ 6.61178745  3.37745748 -1.26855235]
+control input: [0.99999449 0.37623922]
+contouring error: 0.5208
+lag error:        -0.1728
+
+s min: 0.8620597894354063  s max: 29.999999842449725
+mu: 97.8296
+
+step: 104
+x vector: [ 6.64155353  3.28199114 -1.20446918]
+control input: [0.99999213 0.64083175]
+contouring error: 0.4648
+lag error:        -0.1756
+
+s min: 0.8296081789839747  s max: 29.999999840479024
+mu: 98.8370
+
+step: 105
+x vector: [ 6.67737195  3.1886274  -1.12112747]
+control input: [0.99998738 0.83341709]
+contouring error: 0.4143
+lag error:        -0.1749
+
+s min: 0.8369951114897702  s max: 29.999999844841827
+mu: 99.8900
+
+step: 106
+x vector: [ 6.72083734  3.09857108 -1.00879504]
+control input: [0.99996898 1.12332426]
+contouring error: 0.3711
+lag error:        -0.1704
+
+s min: 0.8899706167834438  s max: 29.999999844351066
+mu: 100.9069
+
+step: 107
+x vector: [ 6.76997285  3.02054613 -0.89222498]
+control input: [0.92207334 1.16570062]
+contouring error: 0.3409
+lag error:        -0.1690
+
+s min: 0.906893311839724  s max: 29.9999998443711
+mu: 101.6733
+
+step: 108
+x vector: [ 6.81217264  2.96820863 -0.77518988]
+control input: [0.67231212 1.17035104]
+contouring error: 0.3264
+lag error:        -0.1890
+
+s min: 0.6732606497286042  s max: 29.999999843565472
+mu: 102.1641
+
+step: 109
+x vector: [ 6.84235941  2.93863196 -0.65951565]
+control input: [0.42261336 1.15674226]
+contouring error: 0.3221
+lag error:        -0.2326
+
+s min: 0.16413176676934427  s max: 29.999999842762556
+mu: 102.5201
+
+step: 110
+x vector: [ 6.86646113  2.91994519 -0.56895416]
+control input: [0.30497352 0.90561485]
+contouring error: 0.3226
+lag error:        -0.2021
+
+s min: 0.5201159900861825  s max: 29.999999843336607
+mu: 103.1593
+
+step: 111
+x vector: [ 6.91284663  2.89028194 -0.48082694]
+control input: [0.55059263 0.88127229]
+contouring error: 0.3284
+lag error:        -0.2330
+
+s min: 0.1592835938617725  s max: 29.999999843191933
+mu: 104.0758
+
+step: 112
+x vector: [ 6.9837801   2.85327862 -0.39861027]
+control input: [0.80005018 0.82216671]
+contouring error: 0.3438
+lag error:        -0.2401
+
+s min: 0.07575556229230074  s max: 29.99999984344997
+mu: 105.1989
+
+step: 113
+x vector: [ 7.07593401  2.81446745 -0.3275397 ]
+control input: [0.99993253 0.71070568]
+contouring error: 0.3711
+lag error:        -0.2296
+
+s min: 0.19885393001862894  s max: 29.999999843429293
+mu: 106.2966
+
+step: 114
+x vector: [ 7.17061534  2.78229679 -0.27149791]
+control input: [0.99997528 0.56041788]
+contouring error: 0.4051
+lag error:        -0.2212
+
+s min: 0.29656470897796794  s max: 29.99999984349358
+mu: 107.3703
+
+step: 115
+x vector: [ 7.26695106  2.75547968 -0.2346084 ]
+control input: [0.99998636 0.36889505]
+contouring error: 0.4443
+lag error:        -0.2149
+
+s min: 0.3703149180886953  s max: 29.99999984363274
+mu: 108.4264
+
+step: 116
+x vector: [ 7.36421073  2.73223367 -0.22134441]
+control input: [0.99999107 0.13263995]
+contouring error: 0.4870
+lag error:        -0.2101
+
+s min: 0.4264448971989907  s max: 29.99999984380731
+mu: 109.4759
+
+step: 117
+x vector: [ 7.46177036  2.71027969 -0.23685546]
+control input: [ 0.99999293 -0.15511048]
+contouring error: 0.5308
+lag error:        -0.2059
+
+s min: 0.4758869279175002  s max: 29.999999844016102
+mu: 110.5331
+
+step: 118
+x vector: [ 7.55897785  2.68681512 -0.28708437]
+control input: [ 0.99999409 -0.50228918]
+contouring error: 0.5732
+lag error:        -0.2010
+
+s min: 0.5331350718044376  s max: 29.999999844334226
+mu: 111.6139
+
+step: 119
+x vector: [ 7.65488468  2.65849956 -0.37924105]
+control input: [ 0.99999451 -0.92156673]
+contouring error: 0.6110
+lag error:        -0.1940
+
+s min: 0.6139032962447999  s max: 29.999999829466628
+mu: 112.7307
+
+step: 120
+x vector: [ 7.74777866  2.62147825 -0.52205802]
+control input: [ 0.99999348 -1.42816972]
+contouring error: 0.6401
+lag error:        -0.1840
+
+s min: 0.7306951676575579  s max: 29.999999808443356
+mu: 113.8845
+
+step: 121
+x vector: [ 7.83445707  2.57161235 -0.72188105]
+control input: [ 0.99998772 -1.99823025]
+contouring error: 0.6553
+lag error:        -0.1709
+
+s min: 0.8844982300774404  s max: 29.999999785125983
+mu: 115.0506
+
+step: 122
+x vector: [ 7.90951268  2.50553328 -0.89879367]
+control input: [ 0.99998944 -1.7691262 ]
+contouring error: 0.6506
+lag error:        -0.2423
+
+s min: 0.05058712288112588  s max: 29.999999714160314
+mu: 116.1888
+
+step: 123
+x vector: [ 7.97176771  2.42727616 -1.02223326]
+control input: [ 0.99999326 -1.23439591]
+contouring error: 0.6284
+lag error:        -0.2305
+
+s min: 0.18879840254901126  s max: 29.999999666021402
+mu: 117.2864
+
+step: 124
+x vector: [ 8.0239136   2.34194914 -1.10420853]
+control input: [ 0.99999474 -0.81975273]
+contouring error: 0.5943
+lag error:        -0.2221
+
+s min: 0.286414871808077  s max: 29.999999639108
+mu: 118.3478
+
+step: 125
+x vector: [ 8.06889749  2.25263881 -1.15325557]
+control input: [ 0.99999425 -0.49047042]
+contouring error: 0.5527
+lag error:        -0.2168
+
+s min: 0.34779256443650297  s max: 29.999998699588655
+mu: 119.3841
+
+step: 126
+x vector: [ 8.1094488   2.16123005 -1.17856647]
+control input: [ 0.9999985  -0.25310901]
+contouring error: 0.5066
+lag error:        -0.2137
+
+s min: 0.3840667467893013  s max: 29.879038736811708
+mu: 120.4064
+
+step: 127
+x vector: [ 8.14767375  2.06882424 -1.18939849]
+control input: [ 0.9999991  -0.10832021]
+contouring error: 0.4583
+lag error:        -0.2118
+
+s min: 0.40640543440795796  s max: 29.527738024805345
+mu: 121.4226
+
+step: 128
+x vector: [ 8.18489553  1.97600982 -1.18660324]
+control input: [0.99999884 0.02795254]
+contouring error: 0.4091
+lag error:        -0.2104
+
+s min: 0.4225791242021302  s max: 28.9904421047718
+mu: 122.4404
+
+step: 129
+x vector: [ 8.22237658  1.88329988 -1.17165372]
+control input: [0.99999805 0.1494952 ]
+contouring error: 0.3601
+lag error:        -0.2089
+
+s min: 0.4403542937312608  s max: 28.480050581665292
+mu: 123.4666
+
+step: 130
+x vector: [ 8.26123938  1.79116054 -1.1592635 ]
+control input: [0.99999881 0.12390214]
+contouring error: 0.3125
+lag error:        -0.2067
+
+s min: 0.46656422067223957  s max: 28.33914948080972
+mu: 124.4996
+
+step: 131
+x vector: [ 8.3012408   1.69950976 -1.15452541]
+control input: [0.99999889 0.04738094]
+contouring error: 0.2659
+lag error:        -0.2038
+
+s min: 0.49959061155654183  s max: 28.149889214027333
+mu: 125.5352
+
+step: 132
+x vector: [ 8.34167604  1.60804951 -1.16206524]
+control input: [ 0.99999934 -0.07539826]
+contouring error: 0.2197
+lag error:        -0.2008
+
+s min: 0.5351822342896781  s max: 28.103711449652852
+mu: 126.5667
+
+step: 133
+x vector: [ 8.38142055  1.51628697 -1.17484749]
+control input: [ 0.99999951 -0.12782257]
+contouring error: 0.1729
+lag error:        -0.1981
+
+s min: 0.5666817571593867  s max: 28.275013335218336
+mu: 127.5911
+
+step: 134
+x vector: [ 8.41998891  1.42402391 -1.18846341]
+control input: [ 0.99999953 -0.13615914]
+contouring error: 0.1250
+lag error:        -0.1960
+
+s min: 0.5911098044936551  s max: 28.18065168778075
+mu: 128.6078
+
+step: 135
+x vector: [ 8.45729748  1.33124428 -1.19044152]
+control input: [ 0.99999949 -0.01978117]
+contouring error: 0.0758
+lag error:        -0.1946
+
+s min: 0.6078210468753866  s max: 28.077030628688146
+mu: 129.6234
+
+step: 136
+x vector: [ 8.49442245  1.23839103 -1.18703111]
+control input: [0.9999994  0.03410412]
+contouring error: 0.0265
+lag error:        -0.1932
+
+s min: 0.6233953925402318  s max: 27.977003271629627
+mu: 130.6409
+
+step: 137
+x vector: [ 8.53186388  1.14566495 -1.18487274]
+control input: [0.99999938 0.02158371]
+contouring error: -0.0225
+lag error:        -0.1917
+
+s min: 0.6409271699659769  s max: 27.87463193205038
+mu: 131.6597
+
+step: 138
+x vector: [ 8.56950535  1.05301989 -1.18472726]
+control input: [0.99999936 0.00145478]
+contouring error: -0.0714
+lag error:        -0.1901
+
+s min: 0.6596916363145908  s max: 27.77378610763898
+mu: 132.6785
+
+step: 139
+x vector: [ 8.60716029  0.96038031 -1.18724193]
+control input: [ 0.99999933 -0.02514667]
+contouring error: -0.1202
+lag error:        -0.1885
+
+s min: 0.6785389902554186  s max: 27.67582718172082
+mu: 133.6960
+
+step: 140
+x vector: [ 8.64458216  0.86764634 -1.19294314]
+control input: [ 0.9999993  -0.05701206]
+contouring error: -0.1692
+lag error:        -0.1870
+
+s min: 0.6959500275090988  s max: 27.58106863904933
+mu: 134.7101
+
+step: 141
+x vector: [ 8.68147473  0.77470052 -1.20227398]
+control input: [ 0.99999927 -0.09330841]
+contouring error: -0.2187
+lag error:        -0.1858
+
+s min: 0.710080897075386  s max: 27.490085687314128
+mu: 135.7188
+
+step: 142
+x vector: [ 8.71749844  0.68141453 -1.21569393]
+control input: [ 0.99999923 -0.13419948]
+contouring error: -0.2691
+lag error:        -0.1851
+
+s min: 0.7187722510529682  s max: 27.405947995042407
+mu: 136.7195
+
+step: 143
+x vector: [ 8.75226705  0.58765351 -1.23380103]
+control input: [ 0.9999992  -0.18107104]
+contouring error: -0.3206
+lag error:        -0.1850
+
+s min: 0.7194864631852624  s max: 27.337514179109924
+mu: 137.7092
+
+step: 144
+x vector: [ 8.78533232  0.49327835 -1.2574003 ]
+control input: [ 0.9999992  -0.23599271]
+contouring error: -0.3736
+lag error:        -0.1859
+
+s min: 0.7091520485761009  s max: 27.304844610919154
+mu: 138.6839
+
+step: 145
+x vector: [ 8.8161614   0.39814921 -1.28741563]
+control input: [ 0.99999925 -0.30015331]
+contouring error: -0.4286
+lag error:        -0.1880
+
+s min: 0.6839313812340606  s max: 27.376686877397308
+mu: 139.6390
+
+step: 146
+x vector: [ 8.84412169  0.30213771 -1.32007053]
+control input: [ 0.99999932 -0.32654895]
+contouring error: -0.4861
+lag error:        -0.1919
+
+s min: 0.6389940743193563  s max: 27.526271582127073
+mu: 140.5716
+
+step: 147
+x vector: [ 8.86893238  0.20526451 -1.35200433]
+control input: [ 0.99999935 -0.31933804]
+contouring error: -0.5463
+lag error:        -0.1977
+
+s min: 0.5716296180991947  s max: 27.716635682453994
+mu: 141.4814
+
+step: 148
+x vector: [ 8.89063743  0.10764853 -1.38130139]
+control input: [ 0.99999937 -0.29297056]
+contouring error: -0.6090
+lag error:        -0.2054
+
+s min: 0.481371336330767  s max: 27.901947735260105
+mu: 142.3693
+
+step: 149
+x vector: [ 8.90947371  0.00943864 -1.40748377]
+control input: [ 0.9999994  -0.26182385]
+contouring error: -0.6739
+lag error:        -0.2150
+
+s min: 0.3692930640729344  s max: 28.08024900309458
+mu: 143.2371
+
+step: 150
+x vector: [ 8.92573245 -0.08923071 -1.42888266]
+control input: [ 0.99999944 -0.2139889 ]
+contouring error: -0.7408
+lag error:        -0.2263
+
+s min: 0.23706915086597746  s max: 28.253375093662964
+mu: 144.0879
+
+step: 151
+x vector: [ 8.93987623 -0.18822537 -1.44211997]
+control input: [ 0.99999947 -0.13237311]
+contouring error: -0.8092
+lag error:        -0.2391
+
+s min: 0.08793779198907714  s max: 28.41822418073647
+mu: 144.9282
+
+step: 152
+x vector: [ 8.95270838 -0.28739859 -1.44234849]
+control input: [ 0.9999995  -0.00228521]
+contouring error: -0.8787
+lag error:        -0.1671
+
+s min: 0.9281519817702701  s max: 29.573030756736088
+mu: 145.7682
+
+step: 153
+x vector: [ 8.96551786 -0.38657473 -1.42195823]
+control input: [0.99999953 0.20390267]
+contouring error: -0.9481
+lag error:        -0.1808
+
+s min: 0.7681809734608009  s max: 29.71570776529663
+mu: 146.6246
+
+step: 154
+x vector: [ 8.98034677 -0.48546909 -1.36034926]
+control input: [0.99999956 0.61608962]
+contouring error: -1.0161
+lag error:        -0.1931
+
+s min: 0.6245637453337451  s max: 29.854807529801935
+mu: 147.5281
+
+step: 155
+x vector: [ 9.00123648 -0.58326282 -1.2387457 ]
+control input: [0.99999967 1.2160356 ]
+contouring error: -1.0794
+lag error:        -0.2014
+
+s min: 0.5281267832767185  s max: 29.97697634495975
+mu: 148.5076
+
+step: 156
+x vector: [ 9.0338347  -0.67780037 -1.05714493]
+control input: [0.99999961 1.81600776]
+contouring error: -1.1328
+lag error:        -0.2025
+
+s min: 0.5076053861116065  s max: 29.999998600298856
+mu: 149.4517
+
+step: 157
+x vector: [ 9.08297074 -0.76489594 -0.85714569]
+control input: [0.9999994  1.99999237]
+contouring error: -0.7917
+lag error:        -0.8836
+
+s min: 0.4517428276414819  s max: 29.999999385329915
+mu: 150.1114
+
+step: 158
+x vector: [ 9.1441768  -0.83558114 -0.71027442]
+control input: [0.93501762 1.46871268]
+contouring error: -0.1179
+lag error:        -1.2331
+
+s min: 0.11142654859210666  s max: 29.06130532822255
+mu: 150.3271
+
+step: 159
+x vector: [ 9.21999499 -0.90078523 -0.51027506]
+control input: [0.99999861 1.99999358]
+contouring error: -0.2161
+lag error:        -1.2146
+
+s min: 0.32706114415452703  s max: 29.999999466197014
+mu: 150.7663
+
+step: 160
+x vector: [ 9.30725577 -0.94962683 -0.31028481]
+control input: [0.9999972  1.99990252]
+contouring error: -0.3088
+lag error:        -1.1770
+
+s min: 0.7663310453619658  s max: 29.99999971931906
+mu: 151.4117
+
+step: 161
+x vector: [ 9.40248013 -0.98015971 -0.16593838]
+control input: [0.99999682 1.44346434]
+contouring error: -0.3921
+lag error:        -1.2074
+
+s min: 0.4117152620218292  s max: 29.999999710376407
+mu: 152.1903
+
+step: 162
+x vector: [ 9.50110632 -0.99667747 -0.06642324]
+control input: [0.99999809 0.99515142]
+contouring error: -0.4666
+lag error:        -1.2263
+
+s min: 0.19031786891756042  s max: 29.999999702784365
+mu: 153.0515
+
+step: 163
+x vector: [ 9.60088565e+00 -1.00331490e+00 -4.58731527e-03]
+control input: [0.99999855 0.6183592 ]
+contouring error: -0.5341
+lag error:        -1.2382
+
+s min: 0.051486389593463855  s max: 29.99999969738337
+mu: 153.9597
+
+step: 164
+x vector: [ 9.70088448 -1.00377363  0.02790006]
+control input: [0.99999878 0.32487377]
+contouring error: -0.5970
+lag error:        -1.1604
+
+s min: 0.9597150387502609  s max: 29.999999769992538
+mu: 154.8913
+
+step: 165
+x vector: [ 9.80084543 -1.00098399  0.03875223]
+control input: [0.99999867 0.1085217 ]
+contouring error: -0.6572
+lag error:        -1.1663
+
+s min: 0.8912877286863079  s max: 29.9999997705127
+mu: 155.8304
+
+step: 166
+x vector: [ 9.90077023 -0.99710974  0.03581805]
+control input: [ 0.99999878 -0.02934183]
+contouring error: -0.7166
+lag error:        -1.1715
+
+s min: 0.8304406029458846  s max: 29.999999772774615
+mu: 156.7676
+
+step: 167
+x vector: [10.00070598 -0.99352871  0.02587221]
+control input: [ 0.99999887 -0.09945843]
+contouring error: -0.7763
+lag error:        -1.1769
+
+s min: 0.7675549492458913  s max: 29.999999776843318
+mu: 157.6977
+
+step: 168
+x vector: [10.1006724  -0.99094178  0.015585  ]
+control input: [ 0.99999894 -0.10287209]
+contouring error: -0.8367
+lag error:        -1.1829
+
+s min: 0.6976992746057249  s max: 29.999999782731056
+mu: 158.6205
+
+step: 169
+x vector: [10.20066016 -0.98938334  0.01206429]
+control input: [ 0.99999899 -0.03520708]
+contouring error: -0.8979
+lag error:        -1.1895
+
+s min: 0.6205375411608145  s max: 29.99999979035013
+mu: 159.5409
+
+step: 170
+x vector: [10.30065278 -0.98817695  0.02363545]
+control input: [0.99999903 0.11571162]
+contouring error: -0.9595
+lag error:        -1.1963
+
+s min: 0.540852923033043  s max: 29.99999979947199
+mu: 160.4694
+
+step: 171
+x vector: [10.40062476 -0.98581362  0.06112483]
+control input: [0.99999906 0.37489381]
+contouring error: -1.0201
+lag error:        -1.2024
+
+s min: 0.46941713229176685  s max: 29.999999810354037
+mu: 161.4238
+
+step: 172
+x vector: [10.50043791 -0.97970495  0.14130436]
+control input: [0.99999907 0.80179531]
+contouring error: -1.0776
+lag error:        -1.2063
+
+s min: 0.42384717007843165  s max: 29.999999821480014
+mu: 162.4291
+
+step: 173
+x vector: [10.59944114 -0.9656215   0.2813478 ]
+control input: [0.99999909 1.40043434]
+contouring error: -1.1285
+lag error:        -1.2059
+
+s min: 0.42905147124031373  s max: 29.999999836516235
+mu: 163.5073
+
+step: 174
+x vector: [10.69550932 -0.93785644  0.48132089]
+control input: [0.9999997  1.99973091]
+contouring error: -1.1668
+lag error:        -1.1992
+
+s min: 0.5072759787820758  s max: 29.99999984041405
+mu: 164.6529
+
+step: 175
+x vector: [10.78414762 -0.89156146  0.68132027]
+control input: [0.99999866 1.99999385]
+contouring error: -1.1860
+lag error:        -1.1867
+
+s min: 0.6529035358650503  s max: 29.999999840803678
+mu: 165.8203
+
+step: 176
+x vector: [10.86182166 -0.82857967  0.88131991]
+control input: [0.99999822 1.99999636]
+contouring error: -1.1854
+lag error:        -1.1724
+
+s min: 0.8202742451225333  s max: 29.999999841105378
+mu: 166.9628
+
+step: 177
+x vector: [10.92543478 -0.75142201  1.08131921]
+control input: [0.99999658 1.99999306]
+contouring error: -1.1649
+lag error:        -1.1602
+
+s min: 0.9628475706934125  s max: 29.99999984228645
+mu: 168.0351
+
+step: 178
+x vector: [10.97245112 -0.66316432  1.28131662]
+control input: [0.99999789 1.99997401]
+contouring error: -1.1253
+lag error:        -1.2396
+
+s min: 0.03507635783898877  s max: 29.99999984286442
+mu: 168.9942
+
+step: 179
+x vector: [11.00099644 -0.56732522  1.43541302]
+control input: [0.99999833 1.540964  ]
+contouring error: -1.0683
+lag error:        -1.1575
+
+s min: 0.9942146996514225  s max: 29.999999842216205
+mu: 169.8398
+
+step: 180
+x vector: [11.01449343 -0.46824042  1.53841068]
+control input: [0.99999841 1.02997666]
+contouring error: -0.9994
+lag error:        -1.1707
+
+s min: 0.8398447976454406  s max: 29.999999842768272
+mu: 170.5982
+
+step: 181
+x vector: [11.01773142 -0.36829302  1.59875253]
+control input: [0.99999828 0.60341843]
+contouring error: -0.9234
+lag error:        -1.1914
+
+s min: 0.5982459664353712  s max: 29.99999984209661
+mu: 171.3017
+
+step: 182
+x vector: [11.01493617 -0.2683323   1.62658876]
+control input: [0.99999804 0.27836231]
+contouring error: -0.8436
+lag error:        -1.2168
+
+s min: 0.30174628356832045  s max: 29.999999841985076
+mu: 171.9790
+
+step: 183
+x vector: [11.00935983 -0.16848813  1.62917853]
+control input: [0.99999767 0.02589769]
+contouring error: -0.7621
+lag error:        -1.1588
+
+s min: 0.9790446036001015  s max: 29.999999842121518
+mu: 172.6539
+
+step: 184
+x vector: [11.00352495 -0.06865879  1.61381237]
+control input: [ 0.9999971 -0.1536616]
+contouring error: -0.6805
+lag error:        -1.1866
+
+s min: 0.653877843519183  s max: 29.99999984243171
+mu: 173.3433
+
+step: 185
+x vector: [10.99922469  0.03124833  1.58275477]
+control input: [ 0.99999629 -0.31057598]
+contouring error: -0.5998
+lag error:        -1.2132
+
+s min: 0.3432677892859033  s max: 29.999999843177946
+mu: 174.0616
+
+step: 186
+x vector: [10.99802888  0.13124069  1.53952054]
+control input: [ 0.99999505 -0.43234224]
+contouring error: -0.5210
+lag error:        -1.2374
+
+s min: 0.06157899655784149  s max: 29.999999843817005
+mu: 174.8190
+
+step: 187
+x vector: [11.00115592  0.23119109  1.48713745]
+control input: [ 0.99999303 -0.52383093]
+contouring error: -0.4449
+lag error:        -1.1725
+
+s min: 0.8189907291359475  s max: 29.99999984389001
+mu: 175.6219
+
+step: 188
+x vector: [11.00951197  0.33084032  1.43233929]
+control input: [ 0.99998962 -0.54798163]
+contouring error: -0.3723
+lag error:        -1.1894
+
+s min: 0.6218728905525666  s max: 29.999999843620184
+mu: 176.4700
+
+step: 189
+x vector: [11.02331325  0.42988172  1.37351344]
+control input: [ 0.99998375 -0.58825851]
+contouring error: -0.3036
+lag error:        -1.2024
+
+s min: 0.469960331656722  s max: 29.99999984379029
+mu: 177.3637
+
+step: 190
+x vector: [11.04291323  0.52793903  1.31295443]
+control input: [ 0.99996977 -0.6055901 ]
+contouring error: -0.2393
+lag error:        -1.2115
+
+s min: 0.36373107351934664  s max: 29.999999843953226
+mu: 178.3013
+
+step: 191
+x vector: [11.06841071  0.62462586  1.25272047]
+control input: [ 0.99992322 -0.60233954]
+contouring error: -0.1797
+lag error:        -1.2168
+
+s min: 0.3012681083259281  s max: 29.999999844025755
+mu: 179.2301
+
+step: 192
+x vector: [11.09811815  0.71485204  1.19454269]
+control input: [ 0.94991028 -0.58177782]
+contouring error: -0.1278
+lag error:        -1.2229
+
+s min: 0.23006709450254448  s max: 29.999999843838097
+mu: 179.9418
+
+step: 193
+x vector: [11.12392733  0.7801793   1.13913121]
+control input: [ 0.70240765 -0.55411478]
+contouring error: -0.0929
+lag error:        -1.1620
+
+s min: 0.9417503152792506  s max: 29.999999844485195
+mu: 180.4294
+
+step: 194
+x vector: [11.14347511  0.82261561  1.08863999]
+control input: [ 0.46722116 -0.50491221]
+contouring error: -0.0720
+lag error:        -1.2059
+
+s min: 0.4294191967893539  s max: 29.9999998445377
+mu: 180.8527
+
+step: 195
+x vector: [11.16183903  0.85770448  1.03964558]
+control input: [ 0.39603813 -0.4899441 ]
+contouring error: -0.0560
+lag error:        -1.1696
+
+s min: 0.8527136854190474  s max: 29.99999984458909
+mu: 181.2027
+
+step: 196
+x vector: [11.17809502  0.88537596  0.99598808]
+control input: [ 0.32093118 -0.43657502]
+contouring error: -0.0446
+lag error:        -1.2253
+
+s min: 0.20270004235493388  s max: 29.999992764034445
+mu: 181.6034
+
+step: 197
+x vector: [11.19776033  0.91573428  0.95332263]
+control input: [ 0.36171145 -0.42665449]
+contouring error: -0.0332
+lag error:        -1.1910
+
+s min: 0.6033594003051519  s max: 29.999992777306865
+mu: 182.0047
+
+step: 198
+x vector: [11.21846225  0.94488772  0.9124464 ]
+control input: [ 0.35756018 -0.40876231]
+contouring error: -0.0233
+lag error:        -1.2422
+
+s min: 0.004681614207470375  s max: 29.99999276544624
+mu: 182.5092
+
+step: 199
+x vector: [11.24566901  0.98006292  0.87356824]
+control input: [ 0.44469123 -0.38878158]
+contouring error: -0.0129
+lag error:        -1.1990
+
+s min: 0.50921574303905  s max: 29.999992778168657
+mu: 183.0422
+
+step: 200
+x vector: [11.27557377  1.01576749  0.83716179]
+control input: [ 0.46573708 -0.36406451]
+contouring error: -0.0037
+lag error:        -1.2390
+
+s min: 0.042204791152329335  s max: 29.9999998456045
+mu: 183.6853
+
+step: 201
+x vector: [11.31295301  1.05723161  0.8035473 ]
+control input: [ 0.55825452 -0.33614488]
+contouring error: 0.0054
+lag error:        -1.1839
+
+s min: 0.6853327392333881  s max: 29.99999984560159
+mu: 184.3889
+
+step: 202
+x vector: [11.35513684  1.10097511  0.77299049]
+control input: [ 0.60769802 -0.30556814]
+contouring error: 0.0132
+lag error:        -1.2093
+
+s min: 0.38888128936366684  s max: 29.999999845433297
+mu: 185.2176
+
+step: 203
+x vector: [11.40619781  1.15078445  0.74601174]
+control input: [ 0.71331576 -0.26978755]
+contouring error: 0.0202
+lag error:        -1.2240
+
+s min: 0.2175888164520643  s max: 29.999999845605572
+mu: 186.1328
+
+step: 204
+x vector: [11.46392174  1.20413143  0.72276116]
+control input: [ 0.78599955 -0.23250578]
+contouring error: 0.0258
+lag error:        -1.2313
+
+s min: 0.13283372672208316  s max: 29.999999845606357
+mu: 187.1039
+
+step: 205
+x vector: [11.52637656  1.25921439  0.70318527]
+control input: [ 0.83275066 -0.19575887]
+contouring error: 0.0298
+lag error:        -1.2337
+
+s min: 0.10386457872172628  s max: 29.999999845434978
+mu: 188.1086
+
+step: 206
+x vector: [11.59205584  1.31489388  0.68708901]
+control input: [ 0.86104426 -0.16096261]
+contouring error: 0.0322
+lag error:        -1.2333
+
+s min: 0.10863935657775414  s max: 29.999999845435365
+mu: 189.1312
+
+step: 207
+x vector: [11.65977712  1.37045607  0.67418465]
+control input: [ 0.87597544 -0.12904357]
+contouring error: 0.0333
+lag error:        -1.2314
+
+s min: 0.13117341276523575  s max: 29.999999845435667
+mu: 190.1603
+
+step: 208
+x vector: [11.72864875  1.42549057  0.66413373]
+control input: [ 0.88159501 -0.10050922]
+contouring error: 0.0332
+lag error:        -1.2289
+
+s min: 0.16034554066663986  s max: 29.999999845435894
+mu: 191.1894
+
+step: 209
+x vector: [11.79806369  1.47982511  0.65657978]
+control input: [ 0.88151435 -0.07553956]
+contouring error: 0.0323
+lag error:        -1.2264
+
+s min: 0.1893657821014756  s max: 29.999999845436054
+mu: 192.2147
+
+step: 210
+x vector: [11.86764369  1.53344617  0.65117097]
+control input: [ 0.87844157 -0.05408803]
+contouring error: 0.0307
+lag error:        -1.2243
+
+s min: 0.21468764769397808  s max: 29.999999845436164
+mu: 193.2349
+
+step: 211
+x vector: [11.93717173  1.58643027  0.6475739 ]
+control input: [ 0.87415459 -0.03597071]
+contouring error: 0.0287
+lag error:        -1.2225
+
+s min: 0.23489056447039047  s max: 29.999999845436232
+mu: 194.2498
+
+step: 212
+x vector: [12.00653505  1.63889553  0.64548098]
+control input: [ 0.86970533 -0.02092924]
+contouring error: 0.0263
+lag error:        -1.2212
+
+s min: 0.24980821923728058  s max: 29.99999984543627
+mu: 195.2599
+
+step: 213
+x vector: [12.07568488  1.69097213  0.6446139 ]
+control input: [ 0.86565993 -0.00867075]
+contouring error: 0.0238
+lag error:        -1.2204
+
+s min: 0.25994536013342895  s max: 29.99999975888539
+mu: 196.2324
+
+step: 214
+x vector: [12.14230337  1.74105193  0.64369892]
+control input: [ 0.83342721 -0.0091498 ]
+contouring error: 0.0212
+lag error:        -1.2227
+
+s min: 0.23244515640831764  s max: 29.999988295324542
+mu: 197.2858
+
+step: 215
+x vector: [12.21451291  1.79523141  0.64901499]
+control input: [0.90275323 0.05316067]
+contouring error: 0.0184
+lag error:        -1.2182
+
+s min: 0.28580979913510873  s max: 29.999999626892887
+mu: 198.4524
+
+step: 216
+x vector: [12.29415047  1.85564855  0.65718084]
+control input: [0.99961857 0.08165848]
+contouring error: 0.0159
+lag error:        -1.2039
+
+s min: 0.45237643248876225  s max: 29.99999966762148
+mu: 199.6192
+
+step: 217
+x vector: [12.3732948   1.91671612  0.66591888]
+control input: [0.99965353 0.0873804 ]
+contouring error: 0.0141
+lag error:        -1.1896
+
+s min: 0.6191900903355645  s max: 29.999999681926532
+mu: 200.7588
+
+step: 218
+x vector: [12.4500621   1.97702703  0.67440789]
+control input: [0.97624922 0.0848901 ]
+contouring error: 0.0133
+lag error:        -1.1776
+
+s min: 0.7588171825927361  s max: 29.999999791045724
+mu: 201.9262
+
+step: 219
+x vector: [12.52816928  2.03947012  0.68178865]
+control input: [0.99999356 0.0738076 ]
+contouring error: 0.0132
+lag error:        -1.1633
+
+s min: 0.9262076516829154  s max: 29.999999791316775
+mu: 203.0936
+
+step: 220
+x vector: [12.60581357  2.10248809  0.6917516 ]
+control input: [0.99999493 0.09962948]
+contouring error: 0.0139
+lag error:        -1.2346
+
+s min: 0.09357079797092638  s max: 29.99999977653055
+mu: 204.2608
+
+step: 221
+x vector: [12.6828263   2.16627659  0.70623609]
+control input: [0.99999665 0.14484493]
+contouring error: 0.0156
+lag error:        -1.2203
+
+s min: 0.26079603333849377  s max: 29.999999776251105
+mu: 205.4276
+
+step: 222
+x vector: [12.75890706  2.23117386  0.72045843]
+control input: [0.99999694 0.14222341]
+contouring error: 0.0188
+lag error:        -1.2060
+
+s min: 0.427611566011592  s max: 29.999999776800735
+mu: 206.5938
+
+step: 223
+x vector: [12.83405718  2.2971466   0.73418346]
+control input: [0.99999712 0.13725027]
+contouring error: 0.0233
+lag error:        -1.1918
+
+s min: 0.5937864892878792  s max: 29.999999778250647
+mu: 207.7591
+
+step: 224
+x vector: [12.90829478  2.36414453  0.74730689]
+control input: [0.99999721 0.13123432]
+contouring error: 0.0293
+lag error:        -1.1776
+
+s min: 0.7591194503259828  s max: 29.999999780628844
+mu: 208.9234
+
+step: 225
+x vector: [12.98164677  2.43211092  0.75980565]
+control input: [0.99999723 0.12498758]
+contouring error: 0.0365
+lag error:        -1.1635
+
+s min: 0.9234419734029871  s max: 29.999999783462727
+mu: 210.0866
+
+step: 226
+x vector: [13.05414356  2.50098878  0.77170455]
+control input: [0.99999721 0.11898904]
+contouring error: 0.0450
+lag error:        -1.2352
+
+s min: 0.08661567663986602  s max: 29.99999975549095
+mu: 211.2485
+
+step: 227
+x vector: [13.12581571  2.57072443  0.78383453]
+control input: [0.99999794 0.12129975]
+contouring error: 0.0547
+lag error:        -1.2214
+
+s min: 0.24852772612035778  s max: 29.999999760086645
+mu: 212.4090
+
+step: 228
+x vector: [13.19663672  2.64132431  0.79451198]
+control input: [0.9999979  0.10677458]
+contouring error: 0.0656
+lag error:        -1.2076
+
+s min: 0.40898338405918366  s max: 29.99999976652328
+mu: 213.5680
+
+step: 229
+x vector: [13.26669987  2.71267633  0.80382792]
+control input: [0.99999781 0.09315934]
+contouring error: 0.0776
+lag error:        -1.1940
+
+s min: 0.5680156722709171  s max: 29.999999773858907
+mu: 214.7257
+
+step: 230
+x vector: [13.33609528  2.78467794  0.81181111]
+control input: [0.99999767 0.07983191]
+contouring error: 0.0904
+lag error:        -1.1805
+
+s min: 0.7256980822877779  s max: 29.999999762279923
+mu: 215.8821
+
+step: 231
+x vector: [13.40491367  2.85723125  0.82626639]
+control input: [0.99999774 0.1445528 ]
+contouring error: 0.1041
+lag error:        -1.1671
+
+s min: 0.8821440068531672  s max: 29.99999919486992
+mu: 217.0362
+
+step: 232
+x vector: [13.47267623  2.93077183  0.90071794]
+control input: [0.99999907 0.74451546]
+contouring error: 0.1192
+lag error:        -1.2395
+
+s min: 0.03616490467862832  s max: 28.529477389656442
+mu: 218.1739
+
+step: 233
+x vector: [13.53478094  3.00914909  1.02059148]
+control input: [0.99999942 1.19873549]
+contouring error: 0.1416
+lag error:        -1.2277
+
+s min: 0.17388197764057622  s max: 27.783829954027027
+mu: 219.2722
+
+step: 234
+x vector: [13.58706709  3.09439078  1.09661039]
+control input: [0.99999946 0.76018908]
+contouring error: 0.1755
+lag error:        -1.2193
+
+s min: 0.2721548254092454  s max: 27.02788784377736
+mu: 220.3372
+
+step: 235
+x vector: [13.63272851  3.18335721  1.13379428]
+control input: [0.99999948 0.37183885]
+contouring error: 0.2164
+lag error:        -1.2138
+
+s min: 0.33720076295458057  s max: 26.27492319912197
+mu: 221.3837
+
+step: 236
+x vector: [13.675051    3.27395962  1.13170614]
+control input: [ 0.9999995  -0.02088141]
+contouring error: 0.2607
+lag error:        -1.2098
+
+s min: 0.38374033530300267  s max: 25.526605411599668
+mu: 222.4313
+
+step: 237
+x vector: [13.71756259  3.36447346  1.09315171]
+control input: [ 0.99999952 -0.38554422]
+contouring error: 0.3049
+lag error:        -1.2057
+
+s min: 0.4313498880913471  s max: 24.781123310144817
+mu: 223.4929
+
+step: 238
+x vector: [13.76353144  3.45328143  1.00683875]
+control input: [ 0.99999952 -0.86312965]
+contouring error: 0.3455
+lag error:        -1.2000
+
+s min: 0.4928758089241967  s max: 24.03327109139986
+mu: 224.3915
+
+step: 239
+x vector: [13.81698493  3.53779601  0.86716108]
+control input: [ 0.99999952 -1.39677674]
+contouring error: -0.8499
+lag error:        -0.9162
+
+s min: 0.3915120308594453  s max: 28.56078989883897
+mu: 224.7110
+
+step: 240
+x vector: [13.88168428  3.61404551  0.68131352]
+control input: [ 0.99999959 -1.85847556]
+contouring error: -0.7551
+lag error:        -0.8844
+
+s min: 0.7109663838450331  s max: 29.99999941735098
+mu: 225.2265
+
+step: 241
+x vector: [13.95935881  3.67702682  0.55546399]
+control input: [ 0.99999891 -1.25849525]
+contouring error: -0.9023
+lag error:        -0.6751
+
+s min: 0.22651279732679086  s max: 25.352633781965974
+mu: 225.6165
+
+step: 242
+x vector: [14.04432436  3.72976056  0.39430395]
+control input: [ 0.99999956 -1.6116004 ]
+contouring error: -0.8080
+lag error:        -0.6417
+
+s min: 0.6164756049501818  s max: 26.12874294725283
+mu: 226.1779
+
+step: 243
+x vector: [14.13665073  3.76817711  0.28465312]
+control input: [ 0.99999956 -1.09650838]
+contouring error: -0.7204
+lag error:        -0.6792
+
+s min: 0.17794925539936912  s max: 25.89655282663005
+mu: 226.8481
+
+step: 244
+x vector: [14.2326266   3.79625955  0.20731552]
+control input: [ 0.99999953 -0.77337601]
+contouring error: -0.6385
+lag error:        -0.6218
+
+s min: 0.8480544081282346  s max: 26.65310077959293
+mu: 227.5900
+
+step: 245
+x vector: [14.33048525  3.8168429   0.15020855]
+control input: [ 0.99999951 -0.5710697 ]
+contouring error: -0.5613
+lag error:        -0.6440
+
+s min: 0.5900111593768145  s max: 26.397182424113858
+mu: 228.3822
+
+step: 246
+x vector: [14.42935919  3.83180733  0.10604238]
+control input: [ 0.99999947 -0.44166168]
+contouring error: -0.4878
+lag error:        -0.6618
+
+s min: 0.38220013378324325  s max: 26.129065428764456
+mu: 229.2115
+
+step: 247
+x vector: [14.52879741  3.8423917   0.07042565]
+control input: [ 0.99999943 -0.3561673 ]
+contouring error: -0.4174
+lag error:        -0.6764
+
+s min: 0.21147537119961157  s max: 25.844394873247904
+mu: 230.0695
+
+step: 248
+x vector: [14.62854946  3.84942844  0.04030537]
+control input: [ 0.99999937 -0.30120274]
+contouring error: -0.3496
+lag error:        -0.6885
+
+s min: 0.06948315504726565  s max: 25.544214576630573
+mu: 230.9509
+
+step: 249
+x vector: [1.47284682e+01 3.85345788e+00 1.38808736e-02]
+control input: [ 0.99999931 -0.264245  ]
+contouring error: -0.2841
+lag error:        -0.6130
+
+s min: 0.9509414680780424  s max: 26.227385676544227
+mu: 231.8523
+
+step: 250
+x vector: [ 1.48284585e+01  3.85484592e+00 -1.01102172e-02]
+control input: [ 0.99999922 -0.23991091]
+contouring error: -0.2205
+lag error:        -0.6215
+
+s min: 0.8523151218749376  s max: 25.890805250743192
+mu: 232.7712
+
+step: 251
+x vector: [14.92845326  3.85383492 -0.03273448]
+control input: [ 0.99999909 -0.22624263]
+contouring error: -0.1588
+lag error:        -0.6284
+
+s min: 0.7712253576847559  s max: 25.533001433093244
+mu: 233.7062
+
+step: 252
+x vector: [15.02839958  3.85056206 -0.0549135 ]
+control input: [ 0.99999891 -0.22179022]
+contouring error: -0.0990
+lag error:        -0.6340
+
+s min: 0.7061886424064028  s max: 25.15310554819157
+mu: 234.6564
+
+step: 253
+x vector: [15.1282487   3.84507347 -0.07745697]
+control input: [ 0.99999859 -0.22543464]
+contouring error: -0.0409
+lag error:        -0.6383
+
+s min: 0.656424465343747  s max: 24.749936654305216
+mu: 235.6217
+
+step: 254
+x vector: [15.22794867  3.83733554 -0.10120329]
+control input: [ 0.99999797 -0.2374632 ]
+contouring error: 0.0154
+lag error:        -0.6412
+
+s min: 0.6217044419198317  s max: 29.999999828581245
+mu: 236.3572
+
+step: 255
+x vector: [15.3025651   3.82975822 -0.18493912]
+control input: [ 0.7500018  -0.83735839]
+contouring error: 0.0561
+lag error:        -0.6639
+
+s min: 0.35715531215552687  s max: 29.999999841874256
+mu: 236.8722
+
+step: 256
+x vector: [15.35171337  3.82056372 -0.26245484]
+control input: [ 0.50000909 -0.7751572 ]
+contouring error: 0.0796
+lag error:        -0.6198
+
+s min: 0.8722359413157221  s max: 29.999999843184458
+mu: 237.1397
+
+step: 257
+x vector: [15.37585952  3.81407681 -0.32655149]
+control input: [ 0.2500233  -0.64096642]
+contouring error: 0.0896
+lag error:        -0.6825
+
+s min: 0.13965547793557676  s max: 29.99999984354522
+mu: 237.1398
+
+step: 258
+x vector: [15.37587078  3.814073   -0.38930282]
+control input: [ 1.18946475e-04 -6.27513325e-01]
+contouring error: 0.0896
+lag error:        -0.6825
+
+s min: 0.13978600323497403  s max: 29.999999844511184
+mu: 237.1399
+
+step: 259
+x vector: [15.37588103  3.81406879 -0.44454194]
+control input: [ 1.10821230e-04 -5.52391241e-01]
+contouring error: 0.0896
+lag error:        -0.6825
+
+s min: 0.13991014110175115  s max: 29.999999844758946
+mu: 237.1402
+
+step: 260
+x vector: [15.37590165  3.81405897 -0.49831157]
+control input: [ 2.28381861e-04 -5.37696306e-01]
+contouring error: 0.0896
+lag error:        -0.6825
+
+s min: 0.14016972067017264  s max: 29.99999984483988
+mu: 237.1412
+
+step: 261
+x vector: [15.37598071  3.81401595 -0.55090023]
+control input: [ 0.00090007 -0.52588655]
+contouring error: 0.0896
+lag error:        -0.6824
+
+s min: 0.1412041459882687  s max: 29.9999998448584
+mu: 237.3101
+
+step: 262
+x vector: [15.38840516  3.80638306 -0.59803635]
+control input: [ 0.1458177  -0.47136121]
+contouring error: 0.0914
+lag error:        -0.6679
+
+s min: 0.3101277670228342  s max: 29.999999844869897
+mu: 237.6775
+
+step: 263
+x vector: [15.41448611  3.78861521 -0.63963095]
+control input: [ 0.31558079 -0.415946  ]
+contouring error: 0.0939
+lag error:        -0.6365
+
+s min: 0.677452909995651  s max: 29.999999845521835
+mu: 238.3118
+
+step: 264
+x vector: [15.45810944  3.75616074 -0.67551225]
+control input: [ 0.54371748 -0.35881302]
+contouring error: 0.0958
+lag error:        -0.6678
+
+s min: 0.31179645842578907  s max: 29.999999845338127
+mu: 239.1741
+
+step: 265
+x vector: [15.51575318  3.70997279 -0.70500719]
+control input: [ 0.73865608 -0.2949494 ]
+contouring error: 0.0957
+lag error:        -0.6796
+
+s min: 0.17410186556952567  s max: 29.999999843899495
+mu: 240.1373
+
+step: 266
+x vector: [15.57862048  3.65647999 -0.72974341]
+control input: [ 0.82545606 -0.24736217]
+contouring error: 0.0932
+lag error:        -0.6827
+
+s min: 0.13729631882105764  s max: 29.9999998369323
+mu: 241.0541
+
+step: 267
+x vector: [15.63724701  3.60404117 -0.75774823]
+control input: [ 0.78656847 -0.28004825]
+contouring error: 0.0889
+lag error:        -0.6899
+
+s min: 0.05414620538167014  s max: 29.999999834949598
+mu: 241.8095
+
+step: 268
+x vector: [15.68440808  3.55941856 -0.78667724]
+control input: [ 0.64925685 -0.2892901 ]
+contouring error: 0.0835
+lag error:        -0.6252
+
+s min: 0.8094776967573694  s max: 29.999999833480253
+mu: 242.4825
+
+step: 269
+x vector: [15.72537936  3.51834234 -0.81412527]
+control input: [ 0.58016383 -0.27448023]
+contouring error: 0.0770
+lag error:        -0.6532
+
+s min: 0.4825211724745486  s max: 29.99999983345238
+mu: 243.1038
+
+step: 270
+x vector: [15.76226997  3.47926889 -0.84423214]
+control input: [ 0.53736875 -0.30106869]
+contouring error: 0.0696
+lag error:        -0.6856
+
+s min: 0.10376045195187089  s max: 29.999999835404086
+mu: 243.6719
+
+step: 271
+x vector: [15.79506737  3.44236601 -0.87875689]
+control input: [ 0.49370961 -0.34524751]
+contouring error: 0.0612
+lag error:        -0.6369
+
+s min: 0.6718573254170224  s max: 29.999999839931142
+mu: 244.1807
+
+step: 272
+x vector: [15.82346814  3.40809745 -0.91242981]
+control input: [ 0.4450773  -0.33672921]
+contouring error: 0.0522
+lag error:        -0.6790
+
+s min: 0.1806639941329422  s max: 29.99999984798513
+mu: 244.6728
+
+step: 273
+x vector: [15.85000846  3.37378506 -0.97257457]
+control input: [ 0.43378898 -0.6014476 ]
+contouring error: 0.0420
+lag error:        -0.6369
+
+s min: 0.672830712215017  s max: 29.999999850572593
+mu: 245.4359
+
+step: 274
+x vector: [15.88851701  3.31728193 -1.0438018 ]
+control input: [ 0.6837772  -0.71227233]
+contouring error: 0.0219
+lag error:        -0.6572
+
+s min: 0.4359279279660768  s max: 29.999999850865336
+mu: 246.4526
+
+step: 275
+x vector: [15.93547974  3.23657426 -1.11933329]
+control input: [ 0.93376792 -0.75531486]
+contouring error: -0.0117
+lag error:        -0.6557
+
+s min: 0.45260800335771023  s max: 29.99999985110234
+mu: 247.5065
+
+step: 276
+x vector: [15.97910777  3.14659374 -1.19505308]
+control input: [ 0.99999497 -0.75719789]
+contouring error: -0.0548
+lag error:        -0.6511
+
+s min: 0.50651339415856  s max: 29.999999851580952
+mu: 248.5194
+
+step: 277
+x vector: [16.01580404  3.05357055 -1.25577328]
+control input: [ 0.99999651 -0.60720202]
+contouring error: -0.1045
+lag error:        -0.6500
+
+s min: 0.5194191747443426  s max: 29.999999850014685
+mu: 249.4952
+
+step: 278
+x vector: [16.04678779  2.95849192 -1.29986809]
+control input: [ 0.99999689 -0.44094806]
+contouring error: -0.1594
+lag error:        -0.6521
+
+s min: 0.4952400326092459  s max: 29.999999848262007
+mu: 250.4419
+
+step: 279
+x vector: [16.0735503   2.86213991 -1.32707572]
+control input: [ 0.99999717 -0.27207635]
+contouring error: -0.2179
+lag error:        -0.6566
+
+s min: 0.4418672690318033  s max: 29.999999845459076
+mu: 251.3696
+
+step: 280
+x vector: [16.09768172  2.76509551 -1.3607057 ]
+control input: [ 0.99999701 -0.33629976]
+contouring error: -0.2786
+lag error:        -0.6628
+
+s min: 0.3695591345233993  s max: 29.999999844114612
+mu: 252.2729
+  [EXCLUSION VIOLATION] step 281: dyn obs 1 robot=(16.12,2.67) obs=(17.16,2.77)
+
+step: 281
+x vector: [16.11853654  2.6672945  -1.40973375]
+control input: [ 0.99999808 -0.49028049]
+contouring error: -0.3419
+lag error:        -0.6711
+
+s min: 0.27289971225664617  s max: 27.435277780684615
+mu: 253.1389
+  [EXCLUSION VIOLATION] step 282: dyn obs 1 robot=(16.13,2.57) obs=(17.15,2.76)
+
+step: 282
+x vector: [16.13457324  2.56858883 -1.4294911 ]
+control input: [ 0.99999919 -0.19757352]
+contouring error: -0.4090
+lag error:        -0.6826
+
+s min: 0.13891642081529199  s max: 29.99999513317525
+mu: 253.8310
+  [EXCLUSION VIOLATION] step 283: dyn obs 1 robot=(16.15,2.49) obs=(17.14,2.75)
+
+step: 283
+x vector: [16.14603465  2.4880184  -1.38925098]
+control input: [0.81381561 0.40240116]
+contouring error: -0.4647
+lag error:        -0.6233
+
+s min: 0.8309710775788801  s max: 29.99999984349961
+mu: 254.3379
+  [EXCLUSION VIOLATION] step 284: dyn obs 1 robot=(16.16,2.43) obs=(17.13,2.74)
+
+step: 284
+x vector: [16.15641245  2.43148412 -1.28901137]
+control input: [0.57478898 1.00239613]
+contouring error: -0.5024
+lag error:        -0.6656
+
+s min: 0.3378598140336635  s max: 29.99999984363222
+mu: 255.0884
+
+step: 285
+x vector: [16.17828998  2.35591088 -1.12877404]
+control input: [0.78676181 1.60237327]
+contouring error: -0.5477
+lag error:        -0.6869
+
+s min: 0.08842339711702607  s max: 29.999999843600126
+mu: 256.1375
+
+step: 286
+x vector: [16.22106623  2.26552325 -0.96324573]
+control input: [0.99998652 1.65528313]
+contouring error: -0.5916
+lag error:        -0.6827
+
+s min: 0.13753297593962088  s max: 29.99999984366733
+mu: 257.2567
+
+step: 287
+x vector: [16.27815159  2.18341904 -0.81786197]
+control input: [0.999992   1.45383753]
+contouring error: -0.6201
+lag error:        -0.6725
+
+s min: 0.256673927724421  s max: 29.99999984414259
+mu: 258.4121
+
+step: 288
+x vector: [16.3465294   2.11045098 -0.67860948]
+control input: [0.99999309 1.3925249 ]
+contouring error: -0.6343
+lag error:        -0.6592
+
+s min: 0.41212811435218555  s max: 29.999999844689732
+mu: 259.5795
+
+step: 289
+x vector: [16.42437339  2.04768038 -0.53219764]
+control input: [0.99999183 1.46411847]
+contouring error: -0.6347
+lag error:        -0.6449
+
+s min: 0.5795078905437663  s max: 29.999999845002286
+mu: 260.7351
+
+step: 290
+x vector: [16.51054165  1.99693823 -0.38033941]
+control input: [0.99998672 1.51858231]
+contouring error: -0.6205
+lag error:        -0.6315
+
+s min: 0.7350507243455127  s max: 29.999999845126904
+mu: 261.8522
+
+step: 291
+x vector: [16.60339489  1.95981492 -0.27284714]
+control input: [0.99999317 1.0749227 ]
+contouring error: -0.5915
+lag error:        -0.6215
+
+s min: 0.852214981567613  s max: 29.99999984466647
+mu: 262.9266
+
+step: 292
+x vector: [16.69969509  1.93286764 -0.20139519]
+control input: [0.99999425 0.71451942]
+contouring error: -0.5524
+lag error:        -0.6151
+
+s min: 0.9265907527181412  s max: 29.999999845174862
+mu: 263.9656
+
+step: 293
+x vector: [16.79767336  1.9128641  -0.1594163 ]
+control input: [0.9999941  0.41978896]
+contouring error: -0.5068
+lag error:        -0.6118
+
+s min: 0.9656249873417551  s max: 29.9999998452984
+mu: 264.9814
+
+step: 294
+x vector: [16.89640471  1.89699002 -0.14069425]
+control input: [0.99999332 0.18722051]
+contouring error: -0.4575
+lag error:        -0.6104
+
+s min: 0.9814095168579797  s max: 29.999999845266263
+mu: 265.9862
+
+step: 295
+x vector: [16.99541575  1.88296708 -0.14003841]
+control input: [0.99999148 0.00655841]
+contouring error: -0.4066
+lag error:        -0.6100
+
+s min: 0.9862438197474717  s max: 29.999999845241003
+mu: 266.9907
+
+step: 296
+x vector: [17.09443579  1.86900911 -0.15336244]
+control input: [ 0.99998959 -0.13324035]
+contouring error: -0.3556
+lag error:        -0.6096
+
+s min: 0.9906862934851688  s max: 29.99999984531374
+mu: 268.0030
+
+step: 297
+x vector: [17.19326059  1.85373315 -0.17523656]
+control input: [ 0.99998487 -0.21874116]
+contouring error: -0.3058
+lag error:        -0.6942
+
+s min: 0.0029608253128117212  s max: 29.999999845334404
+mu: 269.0277
+
+step: 298
+x vector: [17.29172713  1.83629939 -0.20877462]
+control input: [ 0.99997972 -0.33538068]
+contouring error: -0.2579
+lag error:        -0.6921
+
+s min: 0.027705471850651975  s max: 29.999999845328578
+mu: 270.0706
+
+step: 299
+x vector: [17.3895525   1.81557394 -0.24705638]
+control input: [ 0.99996739 -0.38281761]
+contouring error: -0.2130
+lag error:        -0.6884
+
+s min: 0.07061066185252685  s max: 29.999999846062025
+mu: 271.1328
+
+step: 300
+x vector: [17.48651034  1.79112033 -0.28810291]
+control input: [ 0.9999401  -0.41046521]
+contouring error: -0.1715
+lag error:        -0.6831
+
+s min: 0.13279584303120373  s max: 29.99999984717982
+mu: 272.2138
+
+step: 301
+x vector: [17.58237305  1.76271161 -0.33011446]
+control input: [ 0.99983572 -0.42011555]
+contouring error: -0.1338
+lag error:        -0.6762
+
+s min: 0.21384128950006698  s max: 29.99999984135011
+mu: 273.3041
+
+step: 302
+x vector: [17.67623952  1.73054801 -0.36891068]
+control input: [ 0.99224045 -0.38796215]
+contouring error: -0.1003
+lag error:        -0.6684
+
+s min: 0.30407246247818875  s max: 29.27977064377135
+mu: 274.2207
+
+step: 303
+x vector: [17.75304135  1.70085561 -0.40651455]
+control input: [ 0.82341724 -0.37603872]
+contouring error: -0.0755
+lag error:        -0.6756
+
+s min: 0.22072328744093284  s max: 28.279962534424627
+mu: 275.0998
+
+step: 304
+x vector: [17.82476912  1.66997727 -0.44541793]
+control input: [ 0.78091898 -0.38903382]
+contouring error: -0.0548
+lag error:        -0.6859
+
+s min: 0.09976845613812202  s max: 27.280065107088728
+mu: 275.8674
+
+step: 305
+x vector: [17.8857078   1.64088415 -0.47929784]
+control input: [ 0.67527279 -0.33879909]
+contouring error: -0.0395
+lag error:        -0.6202
+
+s min: 0.8674429802126156  s max: 27.28006734238485
+mu: 276.6089
+
+step: 306
+x vector: [17.94316014  1.61102509 -0.51096668]
+control input: [ 0.64748239 -0.31668839]
+contouring error: -0.0269
+lag error:        -0.6423
+
+s min: 0.6089221982240929  s max: 26.28008545311152
+mu: 277.3932
+
+step: 307
+x vector: [18.00255518  1.57772654 -0.54029206]
+control input: [ 0.68092323 -0.29325386]
+contouring error: -0.0158
+lag error:        -0.6608
+
+s min: 0.3931939394011579  s max: 25.280103152661592
+mu: 278.2364
+
+step: 308
+x vector: [18.06505916  1.54023499 -0.56700373]
+control input: [ 0.72885962 -0.26711673]
+contouring error: -0.0060
+lag error:        -0.6742
+
+s min: 0.2363844450615602  s max: 24.280125447320387
+mu: 279.1329
+
+step: 309
+x vector: [18.13021383  1.49874779 -0.59092648]
+control input: [ 0.77241949 -0.23922747]
+contouring error: 0.0023
+lag error:        -0.6831
+
+s min: 0.13287722922376588  s max: 23.28014430157537
+mu: 280.0734
+
+step: 310
+x vector: [18.19735666  1.45370178 -0.61198328]
+control input: [ 0.80853588 -0.210568  ]
+contouring error: 0.0090
+lag error:        -0.6882
+
+s min: 0.07344704568964744  s max: 22.28016323104896
+mu: 281.0493
+
+step: 311
+x vector: [18.26590964  1.40558615 -0.63018973]
+control input: [ 0.83753364 -0.18206446]
+contouring error: 0.0143
+lag error:        -0.6903
+
+s min: 0.049257389733043055  s max: 21.280181139677815
+mu: 282.0513
+
+step: 312
+x vector: [18.33532457  1.35495453 -0.64564194]
+control input: [ 0.85918523 -0.15452215]
+contouring error: 0.0181
+lag error:        -0.6901
+
+s min: 0.0512733142385855  s max: 20.28019988231432
+mu: 283.0707
+
+step: 313
+x vector: [18.4050985   1.30239031 -0.65850256]
+control input: [ 0.87357871 -0.12860616]
+contouring error: 0.0207
+lag error:        -0.6884
+
+s min: 0.07065566218886943  s max: 19.280218654345592
+mu: 284.0997
+
+step: 314
+x vector: [18.4748252   1.24844219 -0.66898238]
+control input: [ 0.88160159 -0.10479819]
+contouring error: 0.0221
+lag error:        -0.6859
+
+s min: 0.09969994869675247  s max: 18.280236269723826
+mu: 285.1325
+
+step: 315
+x vector: [18.54422913  1.1935715  -0.67732096]
+control input: [ 0.88474277 -0.08338582]
+contouring error: 0.0226
+lag error:        -0.6831
+
+s min: 0.13252979878575388  s max: 17.280254902581266
+mu: 286.1653
+
+step: 316
+x vector: [18.61316614  1.1381296  -0.68376948]
+control input: [ 0.88465337 -0.06448526]
+contouring error: 0.0224
+lag error:        -0.6803
+
+s min: 0.16526898147191105  s max: 16.280273576345092
+mu: 287.1958
+
+step: 317
+x vector: [18.68160066  1.08236128 -0.6885776 ]
+control input: [ 0.88280177 -0.04808113]
+contouring error: 0.0216
+lag error:        -0.6777
+
+s min: 0.19580803436195993  s max: 15.280292219319163
+mu: 288.2234
+
+step: 318
+x vector: [18.74957513  1.02642186 -0.69198436]
+control input: [ 0.88032644 -0.03406762]
+contouring error: 0.0204
+lag error:        -0.6754
+
+s min: 0.2234010244043816  s max: 14.280310856674703
+mu: 289.2483
+
+step: 319
+x vector: [18.81718295  0.97039677 -0.69421258]
+control input: [ 0.87804493 -0.02228222]
+contouring error: 0.0189
+lag error:        -0.6732
+
+s min: 0.24827657794804736  s max: 13.28032945355423
+mu: 290.2713
+
+step: 320
+x vector: [18.88454951  0.91431795 -0.69546563]
+control input: [ 0.8765322  -0.01253045]
+contouring error: 0.0171
+lag error:        -0.6712
+
+s min: 0.27134458078307944  s max: 12.280348134398814
+mu: 291.2940
+
+step: 321
+x vector: [18.95182095  0.85817546 -0.69592587]
+control input: [ 0.8762092  -0.00460242]
+contouring error: 0.0153
+lag error:        -0.6693
+
+s min: 0.2940098225210477  s max: 11.280366769769202
+mu: 292.3181
+
+step: 322
+x vector: [19.01915914  0.80192465 -0.69575432]
+control input: [0.87741584 0.00171544]
+contouring error: 0.0135
+lag error:        -0.6672
+
+s min: 0.31807352275069434  s max: 10.280385353208121
+mu: 293.3457
+
+step: 323
+x vector: [19.08674051  0.7454904  -0.69509101]
+control input: [0.88045813 0.00663316]
+contouring error: 0.0116
+lag error:        -0.6649
+
+s min: 0.34569170065088883  s max: 9.280404034634328
+mu: 294.3793
+
+step: 324
+x vector: [19.15475558  0.68877051 -0.69405577]
+control input: [0.88561818 0.01035242]
+contouring error: 0.0098
+lag error:        -0.6620
+
+s min: 0.3793465660064612  s max: 8.280422658759571
+mu: 295.4218
+
+step: 325
+x vector: [19.22340449  0.63164244 -0.6927494 ]
+control input: [0.89310078 0.01306367]
+contouring error: 0.0081
+lag error:        -0.6584
+
+s min: 0.42175620500501054  s max: 7.280441224563728
+mu: 296.4756
+
+step: 326
+x vector: [19.29287875  0.57398096 -0.69125494]
+control input: [0.90285769 0.01494461]
+contouring error: 0.0065
+lag error:        -0.6538
+
+s min: 0.4755796042442739  s max: 6.280459904822045
+mu: 297.5427
+
+step: 327
+x vector: [19.36331654  0.51569734 -0.68963893]
+control input: [0.91424625 0.01616009]
+contouring error: 0.0050
+lag error:        -0.6480
+
+s min: 0.5427233696012763  s max: 5.280478475632702
+mu: 298.6223
+
+step: 328
+x vector: [19.43466977  0.45685025 -0.68795263]
+control input: [0.92489256 0.01686298]
+contouring error: 0.0036
+lag error:        -0.6412
+
+s min: 0.6223213213942813  s max: 4.280451203073659
+mu: 299.0000
+
+step: 329
+x vector: [19.50035182  0.40286618 -0.68623455]
+control input: [0.85020063 0.0171808 ]
+contouring error: 0.0025
+lag error:        -0.5562
+
+s min: -7.346839692639166e-40  s max: 1.4693679385278747e-39
+mu: 299.0000
+
+step: 330
+x vector: [19.54678893  0.36483301 -0.6862334 ]
+control input: [6.00243920e-01 1.15396196e-05]
+contouring error: 0.0018
+lag error:        -0.4961
+
+s min: -8.00524352134059e-51  s max: 1.6712577296275996e-53
+mu: 299.0000
+
+step: 331
+x vector: [19.57389294  0.34263419 -0.68623313]
+control input: [3.50344865e-01 2.68698946e-06]
+contouring error: 0.0014
+lag error:        -0.4611
+
+s min: -3.75857537356715e-52  s max: 1.50343014942686e-51
+mu: 299.0000
+
+step: 332
+x vector: [19.58168655  0.33625105 -0.68623294]
+control input: [1.00739711e-01 1.91788708e-06]
+contouring error: 0.0012
+lag error:        -0.4510
+
+s min: -2.127249256567519e-52  s max: 8.352389719038111e-53
+mu: 299.0000
+
+step: 333
+x vector: [19.58304107  0.33514167 -0.68623268]
+control input: [1.75083595e-02 2.54225593e-06]
+contouring error: 0.0012
+lag error:        -0.4493
+
+s min: -2.088097429759528e-53  s max: 6.264292289278584e-53
+mu: 299.0000
+
+step: 334
+x vector: [19.58443189  0.33400256 -0.68623237]
+control input: [1.79776354e-02 3.12130531e-06]
+contouring error: 0.0012
+lag error:        -0.4475
+
+s min: -9.183549615807474e-41  s max: 2.1053004162994457e-40
+mu: 299.0000
+
+step: 335
+x vector: [19.58581678  0.3328683  -0.68623206]
+control input: [1.79010184e-02 3.08453536e-06]
+contouring error: 0.0012
+lag error:        -0.4457
+
+s min: -6.129043601381397e-41  s max: 7.44307795044201e-41
+mu: 299.0000
+
+step: 336
+x vector: [19.58719619  0.33173854 -0.68623176]
+control input: [1.78301154e-02 3.04625475e-06]
+contouring error: 0.0012
+lag error:        -0.4439
+
+s min: -9.18354956448199e-41  s max: 4.10880757638631e-41
+mu: 299.0000
+
+step: 337
+x vector: [19.58857002  0.33061334 -0.68623146]
+control input: [1.77580721e-02 3.00746543e-06]
+contouring error: 0.0011
+lag error:        -0.4421
+
+s min: -5.115838702910843e-52  s max: 1.1484535863677403e-52
+mu: 299.0000
+
+step: 338
+x vector: [19.58993821  0.32949276 -0.68623116]
+control input: [1.76850939e-02 2.96829040e-06]
+contouring error: 0.0011
+lag error:        -0.4404
+
+s min: -4.40810381558362e-39  s max: 2.9387358770555948e-39
+mu: 299.0000
+
+step: 339
+x vector: [19.59130035  0.32837714 -0.68623087]
+control input: [1.76069153e-02 2.92690792e-06]
+contouring error: 0.0011
+lag error:        -0.4386
+
+s min: -1.7702113582733126e-41  s max: 2.4464851411079055e-40
+mu: 299.0000
+
+step: 340
+x vector: [19.59265992  0.32726363 -0.68623058]
+control input: [1.75736546e-02 2.90433782e-06]
+contouring error: 0.0011
+lag error:        -0.4369
+
+s min: -1.4996133098294704e-41  s max: 1.530580734807024e-42
+mu: 299.0000
+
+step: 341
+x vector: [19.59401668  0.32615242 -0.68623029]
+control input: [1.75373870e-02 2.88250269e-06]
+contouring error: 0.0011
+lag error:        -0.4351
+
+s min: -4.176194859519056e-53  s max: 2.088097429759528e-53
+mu: 299.0000
+
+step: 342
+x vector: [19.59537091  0.32504328 -0.68623   ]
+control input: [1.75046887e-02 2.86214730e-06]
+contouring error: 0.0010
+lag error:        -0.4334
+
+s min: -4.176194859519056e-53  s max: 4.176194859519056e-53
+mu: 299.0000
+
+step: 343
+x vector: [19.59672273  0.32393612 -0.68622972]
+control input: [1.74734499e-02 2.84242340e-06]
+contouring error: 0.0010
+lag error:        -0.4316
+
+s min: -8.352389719038111e-53  s max: 4.698219216958938e-52
+mu: 299.0000
+
+step: 344
+x vector: [19.59775086  0.32309406 -0.68622963]
+control input: [1.32894922e-02 9.05481856e-07]
+contouring error: 0.0010
+lag error:        -0.4303
+
+s min: -2.6779849536665945e-51  s max: 6.681911775230489e-52
+mu: 299.0000
+
+step: 345
+x vector: [19.59911951  0.32197311 -0.68622934]
+control input: [1.76910818e-02 2.84286681e-06]
+contouring error: 0.0010
+lag error:        -0.4285
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 346
+x vector: [19.6002642   0.32103559 -0.68623043]
+control input: [ 1.47960814e-02 -1.08788997e-05]
+contouring error: 0.0010
+lag error:        -0.4270
+
+s min: -3.030571373213582e-39  s max: 1.322431144675086e-38
+mu: 299.0000
+
+step: 347
+x vector: [19.60163026  0.31991676 -0.68623015]
+control input: [1.76576180e-02 2.82181839e-06]
+contouring error: 0.0010
+lag error:        -0.4253
+
+s min: -3.6734198463196485e-39  s max: 1.4693679385278803e-39
+mu: 299.0000
+
+step: 348
+x vector: [19.60305892  0.31874667 -0.68622923]
+control input: [1.84666662e-02 9.16565354e-06]
+contouring error: 0.0009
+lag error:        -0.4234
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 349
+x vector: [19.6042035   0.31780923 -0.68623033]
+control input: [ 1.47948414e-02 -1.09520720e-05]
+contouring error: 0.0009
+lag error:        -0.4219
+
+s min: -1.1938614500538362e-39  s max: 5.877471754111485e-39
+mu: 299.0000
+
+step: 350
+x vector: [19.605566    0.31669332 -0.68623005]
+control input: [1.76114541e-02 2.79401061e-06]
+contouring error: 0.0009
+lag error:        -0.4202
+
+s min: -2.5057169157114334e-52  s max: 1.6704779438076223e-52
+mu: 299.0000
+
+step: 351
+x vector: [19.60699332  0.31552432 -0.68622913]
+control input: [1.84494237e-02 9.12592968e-06]
+contouring error: 0.0009
+lag error:        -0.4183
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 352
+x vector: [19.60813777  0.314587   -0.68623024]
+control input: [ 1.47930074e-02 -1.10453584e-05]
+contouring error: 0.0009
+lag error:        -0.4169
+
+s min: -2.1155037085251217e-51  s max: 1.044048714879764e-53
+mu: 299.0000
+
+step: 353
+x vector: [19.60949659  0.3134741  -0.68622996]
+control input: [1.75639982e-02 2.76637992e-06]
+contouring error: 0.0008
+lag error:        -0.4151
+
+s min: -1.1754943508222875e-38  s max: 2.9387358770561364e-39
+mu: 299.0000
+
+step: 354
+x vector: [19.61092255  0.31230621 -0.68622905]
+control input: [1.84318884e-02 9.08626856e-06]
+contouring error: 0.0008
+lag error:        -0.4133
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 355
+x vector: [19.61206686  0.31136901 -0.68623016]
+control input: [ 1.47911853e-02 -1.11015890e-05]
+contouring error: 0.0008
+lag error:        -0.4118
+
+s min: -2.5057169157114334e-52  s max: 7.3083410041583475e-53
+mu: 299.0000
+
+step: 356
+x vector: [19.61342208  0.31025906 -0.68622989]
+control input: [1.75174144e-02 2.73923681e-06]
+contouring error: 0.0008
+lag error:        -0.4100
+
+s min: -2.1925023012475042e-52  s max: 0.0
+mu: 299.0000
+
+step: 357
+x vector: [19.61484669  0.30909228 -0.68622898]
+control input: [1.84143516e-02 9.04700594e-06]
+contouring error: 0.0008
+lag error:        -0.4082
+
+s min: -6.708012993102483e-52  s max: 3.3409558876152446e-52
+mu: 299.0000
+
+step: 358
+x vector: [19.61627087  0.30792585 -0.68622808]
+control input: [1.84087933e-02 9.03703302e-06]
+contouring error: 0.0007
+lag error:        -0.4063
+
+s min: -1.8270852510395869e-53  s max: 9.135426255197934e-54
+mu: 299.0000
+
+step: 359
+x vector: [19.61769469  0.30675972 -0.68622718]
+control input: [1.84041610e-02 9.02861027e-06]
+contouring error: 0.0007
+lag error:        -0.4045
+
+s min: -5.22024357439882e-54  s max: 3.784676591439144e-53
+mu: 299.0000
+
+step: 360
+x vector: [19.61911829  0.30559378 -0.68622628]
+control input: [1.84012692e-02 9.02872278e-06]
+contouring error: 0.0007
+lag error:        -0.4027
+
+s min: -3.967385116543103e-52  s max: 7.3083410041583475e-53
+mu: 299.0000
+
+step: 361
+x vector: [19.62054168  0.304428   -0.68622537]
+control input: [1.83985650e-02 9.02949694e-06]
+contouring error: 0.0007
+lag error:        -0.4008
+
+s min: -2.6101217871994098e-52  s max: 7.3083410041583475e-53
+mu: 299.0000
+
+step: 362
+x vector: [19.62196488  0.30326239 -0.68622447]
+control input: [1.83960932e-02 9.03106663e-06]
+contouring error: 0.0007
+lag error:        -0.3990
+
+s min: -4.3850046024950085e-52  s max: 9.396438433917875e-53
+mu: 299.0000
+
+step: 363
+x vector: [19.6233879   0.30209692 -0.68622357]
+control input: [1.83936959e-02 9.03286025e-06]
+contouring error: 0.0006
+lag error:        -0.3971
+
+s min: -2.5057169157114334e-52  s max: 1.6704779438076223e-52
+mu: 299.0000
+
+step: 364
+x vector: [19.62481073  0.30093161 -0.68622266]
+control input: [1.83913645e-02 9.03484020e-06]
+contouring error: 0.0006
+lag error:        -0.3953
+
+s min: -1.879287686783575e-52  s max: 1.044048714879764e-53
+mu: 299.0000
+
+step: 365
+x vector: [19.62623349  0.29976637 -0.68622176]
+control input: [1.83902747e-02 9.04064078e-06]
+contouring error: 0.0006
+lag error:        -0.3935
+
+s min: -6.264292289278584e-53  s max: 4.176194859519056e-53
+mu: 299.0000
+
+step: 366
+x vector: [19.62765618  0.29860118 -0.68622085]
+control input: [1.83894270e-02 9.04715246e-06]
+contouring error: 0.0006
+lag error:        -0.3916
+
+s min: -3.75857537356715e-52  s max: 1.2789596757277108e-52
+mu: 299.0000
+
+step: 367
+x vector: [19.62907881  0.29743604 -0.68621995]
+control input: [1.83886124e-02 9.05367827e-06]
+contouring error: 0.0005
+lag error:        -0.3898
+
+s min: -1.1902155349629309e-51  s max: 3.3409558876152446e-52
+mu: 299.0000
+
+step: 368
+x vector: [19.63050137  0.29627096 -0.68621904]
+control input: [1.83878390e-02 9.06023609e-06]
+contouring error: 0.0005
+lag error:        -0.3879
+
+s min: -4.176194859519056e-52  s max: 3.334430583147246e-52
+mu: 299.0000
+
+step: 369
+x vector: [19.63192392  0.29510589 -0.68621814]
+control input: [1.83875281e-02 9.06788724e-06]
+contouring error: 0.0005
+lag error:        -0.3861
+
+s min: -5.141939920782837e-52  s max: 1.044048714879764e-53
+mu: 299.0000
+
+step: 370
+x vector: [19.63334648  0.29394082 -0.68621723]
+control input: [1.83876648e-02 9.07656715e-06]
+contouring error: 0.0005
+lag error:        -0.3843
+
+s min: -8.874414076477993e-53  s max: 3.3409558876152446e-52
+mu: 299.0000
+
+step: 371
+x vector: [19.63476906  0.29277573 -0.68621632]
+control input: [1.83879308e-02 9.08546874e-06]
+contouring error: 0.0005
+lag error:        -0.3824
+
+s min: -2.871133965919351e-53  s max: 2.61012178719941e-54
+mu: 299.0000
+
+step: 372
+x vector: [19.63619167  0.29161062 -0.68621541]
+control input: [1.83883133e-02 9.09453268e-06]
+contouring error: 0.0004
+lag error:        -0.3806
+
+s min: -2.5057169157114334e-52  s max: 1.044048714879764e-53
+mu: 299.0000
+
+step: 373
+x vector: [19.63761432  0.29044548 -0.6862145 ]
+control input: [1.83887987e-02 9.10369740e-06]
+contouring error: 0.0004
+lag error:        -0.3788
+
+s min: -1.1484535863677403e-51  s max: 3.654170502079174e-52
+mu: 299.0000
+
+step: 374
+x vector: [19.63903701  0.28928031 -0.68621359]
+control input: [1.83893725e-02 9.11289998e-06]
+contouring error: 0.0004
+lag error:        -0.3769
+
+s min: -4.176194859519056e-53  s max: 6.316494725022572e-52
+mu: 299.0000
+
+step: 375
+x vector: [19.64045967  0.28811517 -0.68621268]
+control input: [1.83889115e-02 9.11775073e-06]
+contouring error: 0.0004
+lag error:        -0.3751
+
+s min: -3.6541705020791737e-53  s max: 1.044048714879764e-53
+mu: 299.0000
+
+step: 376
+x vector: [19.64188219  0.28695013 -0.68621176]
+control input: [1.83871617e-02 9.11747081e-06]
+contouring error: 0.0004
+lag error:        -0.3732
+
+s min: -2.0880974297595278e-51  s max: 5.846672803326678e-52
+mu: 299.0000
+
+step: 377
+x vector: [19.64330459  0.28578521 -0.68621085]
+control input: [1.83854595e-02 9.11711541e-06]
+contouring error: 0.0003
+lag error:        -0.3714
+
+s min: 6.264292289278584e-53  s max: 3.1321461446392918e-52
+mu: 299.0000
+
+step: 378
+x vector: [19.64472686  0.28462039 -0.68620994]
+control input: [1.83838972e-02 9.11660405e-06]
+contouring error: 0.0003
+lag error:        -0.3696
+
+s min: -8.352389719038111e-53  s max: 2.088097429759528e-52
+mu: 299.0000
+
+step: 379
+x vector: [19.64614902  0.28345567 -0.68620903]
+control input: [1.83823274e-02 9.11609006e-06]
+contouring error: 0.0003
+lag error:        -0.3677
+
+s min: -7.464948311390312e-52  s max: 1.6704779438076223e-52
+mu: 299.0000
+
+step: 380
+x vector: [19.64757135  0.2822908  -0.68620812]
+control input: [1.83846357e-02 9.13345636e-06]
+contouring error: 0.0003
+lag error:        -0.3659
+
+s min: -3.3409558876152446e-52  s max: 4.176194859519056e-53
+mu: 299.0000
+
+step: 381
+x vector: [19.64899389  0.28112577 -0.6862072 ]
+control input: [1.83872422e-02 9.15194548e-06]
+contouring error: 0.0003
+lag error:        -0.3640
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 382
+x vector: [19.65013861  0.28018826 -0.68620839]
+control input: [ 1.4796302e-02 -1.1922654e-05]
+contouring error: 0.0002
+lag error:        -0.3626
+
+s min: -7.099531261182395e-52  s max: 1.795763789593194e-51
+mu: 299.0000
+
+step: 383
+x vector: [19.65149883  0.27907427 -0.68620812]
+control input: [1.75816874e-02 2.75968882e-06]
+contouring error: 0.0002
+lag error:        -0.3608
+
+s min: -3.3409558876152446e-52  s max: 1.6639526393396238e-52
+mu: 299.0000
+
+step: 384
+x vector: [19.65292231  0.27790846 -0.6862072 ]
+control input: [1.83995506e-02 9.22000795e-06]
+contouring error: 0.0002
+lag error:        -0.3590
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 385
+x vector: [19.65406732  0.27697072 -0.68620839]
+control input: [ 1.47999825e-02 -1.19885574e-05]
+contouring error: 0.0002
+lag error:        -0.3575
+
+s min: -4.176194859519056e-52  s max: 8.352389719038111e-53
+mu: 299.0000
+
+step: 386
+x vector: [19.65543333  0.27585199 -0.68620811]
+control input: [1.76565195e-02 2.80086126e-06]
+contouring error: 0.0002
+lag error:        -0.3557
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 387
+x vector: [19.65657849  0.27491412 -0.68620931]
+control input: [ 1.48020249e-02 -1.19977247e-05]
+contouring error: 0.0001
+lag error:        -0.3542
+
+s min: -4.176194859519056e-52  s max: 1.690053857211618e-52
+mu: 299.0000
+
+step: 388
+x vector: [19.65794904  0.27379167 -0.68620903]
+control input: [1.77153229e-02 2.83476393e-06]
+contouring error: 0.0001
+lag error:        -0.3525
+
+s min: -3.3540064965512416e-52  s max: 2.5057169157114334e-52
+mu: 299.0000
+
+step: 389
+x vector: [19.65937388  0.27262475 -0.6862081 ]
+control input: [1.84170430e-02 9.34962464e-06]
+contouring error: 0.0001
+lag error:        -0.3506
+
+s min: 0.0  s max: 2.088097429759528e-53
+mu: 299.0000
+
+step: 390
+x vector: [19.66079921  0.27145743 -0.68620716]
+control input: [1.84233667e-02 9.38521409e-06]
+contouring error: 0.0001
+lag error:        -0.3488
+
+s min: -6.995126389694418e-52  s max: 0.0
+mu: 299.0000
+
+step: 391
+x vector: [19.6622251   0.27028966 -0.68620621]
+control input: [1.84304860e-02 9.42328018e-06]
+contouring error: 0.0001
+lag error:        -0.3469
+
+s min: -3.549765630591197e-52  s max: 2.0045735325691467e-51
+mu: 299.0000
+
+step: 392
+x vector: [19.66360595  0.26915877 -0.68620592]
+control input: [1.78484706e-02 2.91602747e-06]
+contouring error: 0.0000
+lag error:        -0.3452
+
+s min: 0.0  s max: 2.5057169157114334e-52
+mu: 299.0000
+
+step: 393
+x vector: [19.66498974  0.26802548 -0.68620563]
+control input: [1.78863100e-02 2.93824205e-06]
+contouring error: 0.0000
+lag error:        -0.3434
+
+s min: -2.69886592796419e-51  s max: 1.044048714879764e-53
+mu: 299.0000
+
+step: 394
+x vector: [19.66637531  0.26689073 -0.68620533]
+control input: [1.79094011e-02 2.94948083e-06]
+contouring error: -0.0000
+lag error:        -0.3416
+
+s min: -1.3050608935997049e-51  s max: 1.3677038164924907e-51
+mu: 299.0000
+
+step: 395
+x vector: [19.66776271  0.26575448 -0.68620504]
+control input: [1.79329868e-02 2.96023211e-06]
+contouring error: -0.0000
+lag error:        -0.3398
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 396
+x vector: [19.66890782  0.26481666 -0.68620626]
+control input: [ 1.48013373e-02 -1.22453396e-05]
+contouring error: -0.0000
+lag error:        -0.3383
+
+s min: -8.482895808398082e-53  s max: 8.352389719038111e-53
+mu: 299.0000
+
+step: 397
+x vector: [19.67029899  0.26367732 -0.68620597]
+control input: [1.79817564e-02 2.97824146e-06]
+contouring error: -0.0001
+lag error:        -0.3365
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 398
+x vector: [19.67144422  0.26273941 -0.6862072 ]
+control input: [ 1.48028368e-02 -1.23821290e-05]
+contouring error: -0.0001
+lag error:        -0.3350
+
+s min: -1.6704779438076223e-52  s max: 3.1321461446392918e-52
+mu: 299.0000
+
+step: 399
+x vector: [19.67283814  0.26159782 -0.6862069 ]
+control input: [1.80173309e-02 2.99071160e-06]
+contouring error: -0.0001
+lag error:        -0.3332
+
+s min: -3.5889174573991885e-53  s max: 1.362157307694692e-53
+mu: 299.0000
+
+step: 400
+x vector: [19.67387947  0.26074499 -0.68620681]
+control input: [1.34599215e-02 9.88298747e-07]
+contouring error: -0.0001
+lag error:        -0.3319
+
+s min: -7.0473288254384065e-53  s max: 1.044048714879764e-53
+mu: 299.0000
+
+step: 401
+x vector: [19.67527818  0.25959947 -0.6862065 ]
+control input: [1.80792851e-02 3.03973293e-06]
+contouring error: -0.0001
+lag error:        -0.3301
+
+s min: -1.2398078489197197e-53  s max: 3.75857537356715e-52
+mu: 299.0000
+
+step: 402
+x vector: [19.67631994  0.2587463  -0.6862064 ]
+control input: [1.34653357e-02 9.88339011e-07]
+contouring error: -0.0002
+lag error:        -0.3287
+
+s min: -6.737376863208477e-52  s max: 6.629709339486501e-52
+mu: 299.0000
+
+step: 403
+x vector: [19.67772063  0.25759916 -0.68620609]
+control input: [1.81049131e-02 3.07769381e-06]
+contouring error: -0.0002
+lag error:        -0.3269
+
+s min: 1.044048714879764e-53  s max: 4.176194859519056e-53
+mu: 299.0000
+
+step: 404
+x vector: [19.67876247  0.25674591 -0.686206  ]
+control input: [1.34664906e-02 9.87880856e-07]
+contouring error: -0.0002
+lag error:        -0.3256
+
+s min: -5.22024357439882e-54  s max: 9.970665227101745e-52
+mu: 299.0000
+
+step: 405
+x vector: [19.68016485  0.2555974  -0.68620568]
+control input: [1.81266250e-02 3.11731019e-06]
+contouring error: -0.0002
+lag error:        -0.3238
+
+s min: -1.044048714879764e-53  s max: 2.61012178719941e-53
+mu: 299.0000
+
+step: 406
+x vector: [19.68120572  0.25474495 -0.68620559]
+control input: [1.34539170e-02 9.84315802e-07]
+contouring error: -0.0002
+lag error:        -0.3224
+
+s min: -2.088097429759528e-53  s max: 4.1109418148390705e-53
+mu: 299.0000
+
+step: 407
+x vector: [19.68263698  0.25357278 -0.6862046 ]
+control input: [1.84998933e-02 9.83232516e-06]
+contouring error: -0.0002
+lag error:        -0.3206
+
+s min: -2.088097429759528e-53  s max: 1.2528584578557167e-52
+mu: 299.0000
+
+step: 408
+x vector: [19.68403654  0.25242658 -0.68620429]
+control input: [1.80901959e-02 3.13043662e-06]
+contouring error: -0.0003
+lag error:        -0.3188
+
+s min: -1.044048714879764e-53  s max: 7.3083410041583475e-53
+mu: 299.0000
+
+step: 409
+x vector: [19.6850774   0.25157414 -0.68620419]
+control input: [1.34537937e-02 9.85444494e-07]
+contouring error: -0.0003
+lag error:        -0.3174
+
+s min: -1.9001686610811703e-51  s max: 3.5367150216552e-52
+mu: 299.0000
+
+step: 410
+x vector: [19.68650856  0.25040206 -0.68620321]
+control input: [1.84986278e-02 9.85156933e-06]
+contouring error: -0.0003
+lag error:        -0.3156
+
+s min: -2.025454506866742e-51  s max: 3.132146144639292e-53
+mu: 299.0000
+
+step: 411
+x vector: [19.68790812  0.24925585 -0.68620289]
+control input: [1.80902601e-02 3.14071107e-06]
+contouring error: -0.0003
+lag error:        -0.3138
+
+s min: -6.681911775230489e-52  s max: 2.0863029710308283e-51
+mu: 299.0000
+
+step: 412
+x vector: [19.68894883  0.24840354 -0.68620279]
+control input: [1.34517375e-02 9.83624329e-07]
+contouring error: -0.0003
+lag error:        -0.3124
+
+s min: -7.83036536159823e-54  s max: 5.22024357439882e-54
+mu: 299.0000
+
+step: 413
+x vector: [19.69037985  0.24723157 -0.68620181]
+control input: [1.84969262e-02 9.86572433e-06]
+contouring error: -0.0004
+lag error:        -0.3106
+
+s min: -1.3207216243229014e-51  s max: 6.681911775230489e-52
+mu: 299.0000
+
+step: 414
+x vector: [19.69177911  0.24608562 -0.68620149]
+control input: [1.80861857e-02 3.14545877e-06]
+contouring error: -0.0004
+lag error:        -0.3087
+
+s min: -8.352389719038111e-53  s max: 2.140299865503516e-52
+mu: 299.0000
+
+step: 415
+x vector: [19.69281944  0.24523362 -0.68620139]
+control input: [1.34469260e-02 9.80755723e-07]
+contouring error: -0.0004
+lag error:        -0.3074
+
+s min: -4.408103815583317e-39  s max: 2.5057169157114334e-52
+mu: 299.0000
+
+step: 416
+x vector: [19.69425012  0.24406193 -0.68620041]
+control input: [1.84924583e-02 9.86786141e-06]
+contouring error: -0.0004
+lag error:        -0.3056
+
+s min: -1.0022867662845734e-51  s max: 0.0
+mu: 299.0000
+
+step: 417
+x vector: [19.69564836  0.24291682 -0.68620009]
+control input: [1.80730190e-02 3.14182302e-06]
+contouring error: -0.0004
+lag error:        -0.3037
+
+s min: -6.655810557358495e-52  s max: 7.3083410041583475e-53
+mu: 299.0000
+
+step: 418
+x vector: [19.69704629  0.24177197 -0.68619978]
+control input: [1.80690166e-02 3.13944616e-06]
+contouring error: -0.0005
+lag error:        -0.3019
+
+s min: -4.593814345470961e-52  s max: 1.6965791616796164e-52
+mu: 299.0000
+
+step: 419
+x vector: [19.69844373  0.24062751 -0.68619947]
+control input: [1.80627673e-02 3.13612444e-06]
+contouring error: -0.0005
+lag error:        -0.3001
+
+s min: -6.36869716076656e-52  s max: 9.292033562429899e-52
+mu: 299.0000
+
+step: 420
+x vector: [19.69984167  0.23948264 -0.68619915]
+control input: [1.80692622e-02 3.13663595e-06]
+contouring error: -0.0005
+lag error:        -0.2983
+
+s min: -1.331162111471699e-51  s max: 6.708012993102483e-52
+mu: 299.0000
+
+step: 421
+x vector: [19.70124004  0.23833743 -0.68619884]
+control input: [1.80746314e-02 3.13636916e-06]
+contouring error: -0.0005
+lag error:        -0.2965
+
+s min: -1.044048714879764e-53  s max: 1.8270852510395869e-53
+mu: 299.0000
+
+step: 422
+x vector: [19.70228064  0.2374852  -0.68619874]
+control input: [1.34504694e-02 9.82008295e-07]
+contouring error: -0.0005
+lag error:        -0.2952
+
+s min: -1.5660730723196459e-52  s max: 5.22024357439882e-53
+mu: 299.0000
+
+step: 423
+x vector: [19.70371157  0.23631333 -0.68619775]
+control input: [1.84954764e-02 9.93231942e-06]
+contouring error: -0.0006
+lag error:        -0.2933
+
+s min: -1.566073072319646e-53  s max: 3.8499296361191295e-53
+mu: 299.0000
+
+step: 424
+x vector: [19.70511452  0.23516436 -0.68619743]
+control input: [1.81340222e-02 3.17879092e-06]
+contouring error: -0.0006
+lag error:        -0.2915
+
+s min: -2.5448687425194246e-53  s max: 4.176194859519056e-53
+mu: 299.0000
+
+step: 425
+x vector: [19.70615653  0.23431099 -0.68619733]
+control input: [1.34685578e-02 9.86760924e-07]
+contouring error: -0.0006
+lag error:        -0.2902
+
+s min: -1.1680294997717359e-52  s max: 0.0
+mu: 299.0000
+
+step: 426
+x vector: [19.70756438  0.23315801 -0.68619701]
+control input: [1.81972475e-02 3.21898552e-06]
+contouring error: -0.0006
+lag error:        -0.2883
+
+s min: 0.0  s max: 9.918462791357757e-52
+mu: 299.0000
+
+step: 427
+x vector: [19.70860716  0.23230401 -0.68619691]
+control input: [1.34785257e-02 9.89048904e-07]
+contouring error: -0.0006
+lag error:        -0.2870
+
+s min: -7.902143710746213e-52  s max: 4.176194859519056e-53
+mu: 299.0000
+
+step: 428
+x vector: [19.7100185   0.23114818 -0.68619658]
+control input: [1.82423107e-02 3.25459943e-06]
+contouring error: -0.0007
+lag error:        -0.2852
+
+s min: 2.088097429759528e-53  s max: 1.4616682008316695e-52
+mu: 299.0000
+
+step: 429
+x vector: [19.71106204  0.23029356 -0.68619649]
+control input: [1.34882820e-02 9.91388389e-07]
+contouring error: -0.0007
+lag error:        -0.2838
+
+s min: -5.64237288394698e-37  s max: 9.403954806578299e-38
+mu: 299.0000
+
+step: 430
+x vector: [19.71220761  0.22935539 -0.68619766]
+control input: [ 1.48070876e-02 -1.17828110e-05]
+contouring error: -0.0007
+lag error:        -0.2823
+
+s min: -2.088097429759528e-53  s max: 6.264292289278584e-53
+mu: 299.0000
+
+step: 431
+x vector: [19.71364208  0.2281806  -0.68619664]
+control input: [1.85414275e-02 1.01887981e-05]
+contouring error: -0.0007
+lag error:        -0.2805
+
+s min: -3.2626522339992623e-52  s max: 1.7145237489666123e-51
+mu: 299.0000
+
+step: 432
+x vector: [19.71468678  0.22732504 -0.68619655]
+control input: [1.35032487e-02 9.94737891e-07]
+contouring error: -0.0007
+lag error:        -0.2791
+
+s min: -5.64237288394698e-37  s max: 9.403954806578302e-38
+mu: 299.0000
+
+step: 433
+x vector: [19.71583249  0.22638675 -0.68619772]
+control input: [ 1.48089233e-02 -1.17649069e-05]
+contouring error: -0.0007
+lag error:        -0.2777
+
+s min: -1.1754943508222708e-38  s max: 5.877471754111813e-39
+mu: 299.0000
+
+step: 434
+x vector: [19.7172678   0.22521128 -0.6861967 ]
+control input: [1.85522049e-02 1.02537415e-05]
+contouring error: -0.0008
+lag error:        -0.2758
+
+s min: -8.482895808398082e-53  s max: 1.853186468911581e-52
+mu: 299.0000
+
+step: 435
+x vector: [19.71831282  0.22435545 -0.6861966 ]
+control input: [1.35074434e-02 9.94352152e-07]
+contouring error: -0.0008
+lag error:        -0.2745
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 436
+x vector: [19.71945864  0.22341706 -0.68619777]
+control input: [ 1.48104407e-02 -1.17196229e-05]
+contouring error: -0.0008
+lag error:        -0.2730
+
+s min: -5.8774717541113964e-39  s max: 1.4693679385278667e-38
+mu: 299.0000
+
+step: 437
+x vector: [19.72089493  0.22224079 -0.68619674]
+control input: [1.85647901e-02 1.03257563e-05]
+contouring error: -0.0008
+lag error:        -0.2711
+
+s min: -8.809161031798008e-53  s max: 4.241447904199041e-53
+mu: 299.0000
+
+step: 438
+x vector: [19.72194044  0.22138456 -0.68619664]
+control input: [1.35138640e-02 9.95398582e-07]
+contouring error: -0.0008
+lag error:        -0.2698
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 439
+x vector: [19.72308639  0.22044607 -0.68619781]
+control input: [ 1.48119399e-02 -1.17174703e-05]
+contouring error: -0.0008
+lag error:        -0.2683
+
+s min: -5.87747175411151e-39  s max: 2.938735877055729e-39
+mu: 299.0000
+
+step: 440
+x vector: [19.72452345  0.21926917 -0.68619677]
+control input: [1.85748719e-02 1.03961538e-05]
+contouring error: -0.0009
+lag error:        -0.2664
+
+s min: 1.3833645472156872e-52  s max: 1.344212720407696e-51
+mu: 299.0000
+
+step: 441
+x vector: [19.72556922  0.21841273 -0.68619667]
+control input: [1.35171039e-02 9.99119659e-07]
+contouring error: -0.0009
+lag error:        -0.2651
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 442
+x vector: [19.72671521  0.2174742  -0.68619783]
+control input: [ 1.48125356e-02 -1.16060581e-05]
+contouring error: -0.0009
+lag error:        -0.2636
+
+s min: -2.9387358770557135e-39  s max: 1.0285575569695037e-38
+mu: 299.0000
+
+step: 443
+x vector: [19.72815247  0.21629714 -0.68619678]
+control input: [1.85774028e-02 1.04500227e-05]
+contouring error: -0.0009
+lag error:        -0.2617
+
+s min: -1.6704779438076223e-52  s max: 4.6721179990869436e-52
+mu: 299.0000
+
+step: 444
+x vector: [19.7291981   0.2154408  -0.68619668]
+control input: [1.35154381e-02 1.00307108e-06]
+contouring error: -0.0009
+lag error:        -0.2604
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 445
+x vector: [19.73034409  0.21450229 -0.68619783]
+control input: [ 1.48124488e-02 -1.14864779e-05]
+contouring error: -0.0010
+lag error:        -0.2589
+
+s min: -1.2006560221117285e-51  s max: 6.681911775230489e-52
+mu: 299.0000
+
+step: 446
+x vector: [19.73178148  0.21332512 -0.68619678]
+control input: [1.85790748e-02 1.04964677e-05]
+contouring error: -0.0010
+lag error:        -0.2570
+
+s min: 8.352389719038111e-53  s max: 3.3409558876152446e-52
+mu: 299.0000
+
+step: 447
+x vector: [19.73282681  0.21246903 -0.68619668]
+control input: [1.35115173e-02 1.00245665e-06]
+contouring error: -0.0010
+lag error:        -0.2557
+
+s min: -3.2887534518712564e-52  s max: 1.675371922158621e-52
+mu: 299.0000
+
+step: 448
+x vector: [19.73425663  0.21129806 -0.68619633]
+control input: [1.84812152e-02 3.55615043e-06]
+contouring error: -0.0010
+lag error:        -0.2538
+
+s min: -7.856466579470224e-52  s max: 4.959231395678879e-52
+mu: 299.0000
+
+step: 449
+x vector: [19.73576679  0.2100613  -0.68619585]
+control input: [1.95196301e-02 4.79408258e-06]
+contouring error: -0.0010
+lag error:        -0.2519
+
+s min: -1.0048968880717728e-51  s max: 3.1476437427507883e-52
+mu: 299.0000
+
+step: 450
+x vector: [19.73727814  0.20882356 -0.68619536]
+control input: [1.95350103e-02 4.83393295e-06]
+contouring error: -0.0011
+lag error:        -0.2499
+
+s min: -7.177834914798377e-53  s max: 5.742267931838702e-53
+mu: 299.0000
+
+step: 451
+x vector: [19.73879094  0.20758464 -0.68619488]
+control input: [1.95537535e-02 4.86496820e-06]
+contouring error: -0.0011
+lag error:        -0.2480
+
+s min: -3.374887470848837e-51  s max: 4.176194859519056e-53
+mu: 299.0000
+
+step: 452
+x vector: [19.74030481  0.20634484 -0.68619439]
+control input: [1.95676058e-02 4.89168497e-06]
+contouring error: -0.0011
+lag error:        -0.2460
+
+s min: -1.4955997840652618e-51  s max: 4.176194859519056e-52
+mu: 299.0000
+
+step: 453
+x vector: [19.74181974  0.20510418 -0.6861939 ]
+control input: [1.95812582e-02 4.91823764e-06]
+contouring error: -0.0011
+lag error:        -0.2441
+
+s min: -4.437207038238997e-53  s max: 1.0179474970077698e-52
+mu: 299.0000
+
+step: 454
+x vector: [19.74333489  0.20386334 -0.6861934 ]
+control input: [1.95840562e-02 4.93349554e-06]
+contouring error: -0.0011
+lag error:        -0.2421
+
+s min: -6.509643737275328e-51  s max: 1.561179093968647e-52
+mu: 299.0000
+
+step: 455
+x vector: [19.74485022  0.20262234 -0.68619291]
+control input: [1.95864666e-02 4.94812147e-06]
+contouring error: -0.0012
+lag error:        -0.2402
+
+s min: -8.391541545846103e-52  s max: 0.0
+mu: 299.0000
+
+step: 456
+x vector: [19.74636571  0.20138123 -0.68619241]
+control input: [1.95884437e-02 4.96218049e-06]
+contouring error: -0.0012
+lag error:        -0.2382
+
+s min: -1.879287686783575e-52  s max: 8.574250070950061e-52
+mu: 299.0000
+
+step: 457
+x vector: [19.74788131  0.20014001 -0.68619192]
+control input: [1.95899848e-02 4.97565149e-06]
+contouring error: -0.0012
+lag error:        -0.2362
+
+s min: -1.044048714879764e-53  s max: 4.502460082918982e-53
+mu: 299.0000
+
+step: 458
+x vector: [19.74939701  0.19889873 -0.68619142]
+control input: [1.95910869e-02 4.98851387e-06]
+contouring error: -0.0012
+lag error:        -0.2343
+
+s min: -2.6518837357946004e-51  s max: 4.176194859519056e-53
+mu: 299.0000
+
+step: 459
+x vector: [19.75091275  0.19765741 -0.68619092]
+control input: [1.95917478e-02 5.00074719e-06]
+contouring error: -0.0013
+lag error:        -0.2323
+
+s min: 0.0  s max: 9.970665227101745e-52
+mu: 299.0000
+
+step: 460
+x vector: [19.7524296   0.19641518 -0.68619042]
+control input: [1.96060821e-02 4.98096932e-06]
+contouring error: -0.0013
+lag error:        -0.2304
+
+s min: -3.367057105487239e-52  s max: 1.6704779438076223e-52
+mu: 299.0000
+
+step: 461
+x vector: [19.75394758  0.19517202 -0.68618992]
+control input: [1.96206203e-02 4.96266189e-06]
+contouring error: -0.0013
+lag error:        -0.2284
+
+s min: -4.9070289599348904e-52  s max: 3.132146144639292e-53
+mu: 299.0000
+
+step: 462
+x vector: [19.75546669  0.19392795 -0.68618943]
+control input: [1.96351746e-02 4.94573130e-06]
+contouring error: -0.0013
+lag error:        -0.2264
+
+s min: -1.7096297706156134e-52  s max: 1.99021786273955e-52
+mu: 299.0000
+
+step: 463
+x vector: [19.75698691  0.19268297 -0.68618893]
+control input: [1.96495490e-02 4.93011024e-06]
+contouring error: -0.0013
+lag error:        -0.2245
+
+s min: -2.5057169157114334e-52  s max: 0.0
+mu: 299.0000
+
+step: 464
+x vector: [19.75803364  0.19182575 -0.68618883]
+control input: [1.35295013e-02 9.97744471e-07]
+contouring error: -0.0014
+lag error:        -0.2231
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 465
+x vector: [19.75917917  0.19088762 -0.68618998]
+control input: [ 1.48064947e-02 -1.14912812e-05]
+contouring error: -0.0014
+lag error:        -0.2216
+
+s min: -4.698219216958938e-53  s max: 2.088097429759528e-53
+mu: 299.0000
+
+step: 466
+x vector: [19.76061297  0.18971341 -0.68618894]
+control input: [1.85325771e-02 1.04011290e-05]
+contouring error: -0.0014
+lag error:        -0.2198
+
+s min: -4.437207038238997e-53  s max: 1.2920102846637079e-52
+mu: 299.0000
+
+step: 467
+x vector: [19.76165779  0.18885775 -0.68618884]
+control input: [1.35048481e-02 9.91890636e-07]
+contouring error: -0.0014
+lag error:        -0.2184
+
+s min: -5.64237288394698e-37  s max: 9.403954806578299e-38
+mu: 299.0000
+
+step: 468
+x vector: [19.76280309  0.18791981 -0.68619001]
+control input: [ 1.48034611e-02 -1.16919547e-05]
+contouring error: -0.0014
+lag error:        -0.2170
+
+s min: -2.9387358770557397e-39  s max: 1.175494350822287e-38
+mu: 299.0000
+
+step: 469
+x vector: [19.76423504  0.18674711 -0.68618898]
+control input: [1.85087128e-02 1.02937273e-05]
+contouring error: -0.0015
+lag error:        -0.2151
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 470
+x vector: [19.76538051  0.18580903 -0.68619017]
+control input: [ 1.48057005e-02 -1.18177070e-05]
+contouring error: -0.0015
+lag error:        -0.2136
+
+s min: -2.61012178719941e-54  s max: 1.1754943508222917e-38
+mu: 299.0000
+
+step: 471
+x vector: [19.76681179  0.18463688 -0.68618914]
+control input: [1.84999675e-02 1.02661339e-05]
+contouring error: -0.0015
+lag error:        -0.2118
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 472
+x vector: [19.76795719  0.18369886 -0.68619033]
+control input: [ 1.48048211e-02 -1.19449611e-05]
+contouring error: -0.0015
+lag error:        -0.2103
+
+s min: -3.3409558876152446e-52  s max: 8.352389719038111e-53
+mu: 299.0000
+
+step: 473
+x vector: [19.76938784  0.18252723 -0.68618931]
+control input: [1.84917995e-02 1.02433178e-05]
+contouring error: -0.0015
+lag error:        -0.2084
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 474
+x vector: [19.77053317  0.18158925 -0.68619051]
+control input: [ 1.48040378e-02 -1.20023148e-05]
+contouring error: -0.0015
+lag error:        -0.2070
+
+s min: -5.877471754111354e-39  s max: 2.938735877055797e-39
+mu: 299.0000
+
+step: 475
+x vector: [19.77196327  0.18041808 -0.68618949]
+control input: [1.84846404e-02 1.02273225e-05]
+contouring error: -0.0016
+lag error:        -0.2051
+
+s min: -5.64237288394698e-37  s max: 9.403954806578299e-38
+mu: 299.0000
+
+step: 476
+x vector: [19.77310854  0.17948015 -0.68619069]
+control input: [ 1.48032638e-02 -1.20541664e-05]
+contouring error: -0.0016
+lag error:        -0.2036
+
+s min: -4.5917748078995606e-39  s max: 1.7632415262334313e-38
+mu: 299.0000
+
+step: 477
+x vector: [19.77453808  0.17830943 -0.68618967]
+control input: [1.84774305e-02 1.02115955e-05]
+contouring error: -0.0016
+lag error:        -0.2018
+
+s min: -5.64237288394698e-37  s max: 9.4039548065783e-38
+mu: 299.0000
+
+step: 478
+x vector: [19.7756833   0.17737156 -0.68619088]
+control input: [ 1.48024887e-02 -1.21065100e-05]
+contouring error: -0.0016
+lag error:        -0.2003
+
+s min: -2.5057169157114334e-52  s max: 8.340154773160614e-53
+mu: 299.0000
+
+step: 479
+x vector: [19.77711227  0.1762013  -0.68618986]
+control input: [1.84701631e-02 1.01961279e-05]
+contouring error: -0.0016
+lag error:        -0.1985
+
+s min: -5.64237288394698e-37  s max: 9.403954806578299e-38
+mu: 299.0000
+
+step: 480
+x vector: [19.77825733  0.17526354 -0.68619109]
+control input: [ 1.48005244e-02 -1.22414515e-05]
+contouring error: -0.0017
+lag error:        -0.1970
+
+s min: -1.1249848279355594e-39  s max: 7.346839692639715e-39
+mu: 299.0000
+
+step: 481
+x vector: [19.77968403  0.17409515 -0.68619008]
+control input: [1.84407662e-02 1.00919745e-05]
+contouring error: -0.0017
+lag error:        -0.1951
+
+s min: -5.64237288394698e-37  s max: 9.403954806578302e-38
+mu: 299.0000
+
+step: 482
+x vector: [19.78082886  0.17315758 -0.68619132]
+control input: [ 1.47974914e-02 -1.24525289e-05]
+contouring error: -0.0017
+lag error:        -0.1937
+
+s min: -2.5057169157114334e-52  s max: 8.352389719038111e-53
+mu: 299.0000
+
+step: 483
+x vector: [19.78225361  0.17199078 -0.68619032]
+control input: [1.84155905e-02 1.00162205e-05]
+contouring error: -0.0017
+lag error:        -0.1918
+
+s min: -4.1109418148390705e-53  s max: 1.044048714879764e-53
+mu: 299.0000
+
+step: 484
+x vector: [19.78367714  0.17082498 -0.68618932]
+control input: [1.83998222e-02 9.97795296e-06]
+contouring error: -0.0017
+lag error:        -0.1900
+
+s min: -1.273739432153312e-51  s max: 3.445360759103221e-52
+mu: 299.0000
+
+step: 485
+x vector: [19.78509977  0.16965992 -0.68618833]
+control input: [1.83880926e-02 9.94532321e-06]
+contouring error: -0.0018
+lag error:        -0.1881
+
+s min: -3.3409558876152446e-52  s max: 1.50343014942686e-51
+mu: 299.0000
+
+step: 486
+x vector: [19.7865215   0.1684956  -0.68618734]
+control input: [1.83765172e-02 9.91378755e-06]
+contouring error: -0.0018
+lag error:        -0.1863
+
+s min: -1.4616682008316695e-52  s max: 3.484512585911212e-52
+mu: 299.0000
+
+step: 487
+x vector: [19.78794246  0.1673319  -0.68618635]
+control input: [1.83666222e-02 9.88785272e-06]
+contouring error: -0.0018
+lag error:        -0.1845
+
+s min: -2.61012178719941e-53  s max: 1.044048714879764e-53
+mu: 299.0000
+
+step: 488
+x vector: [19.78936266  0.16616884 -0.68618536]
+control input: [1.83567239e-02 9.86231477e-06]
+contouring error: -0.0018
+lag error:        -0.1826
+
+s min: -3.393158323359233e-52  s max: 2.61012178719941e-54
+mu: 299.0000
+
+step: 489
+x vector: [19.79078209  0.16500641 -0.68618438]
+control input: [1.83466643e-02 9.83666402e-06]
+contouring error: -0.0018
+lag error:        -0.1808
+
+s min: -3.262652233999262e-54  s max: 3.6541705020791737e-53
+mu: 299.0000
+
+step: 490
+x vector: [19.79220073  0.16384463 -0.6861834 ]
+control input: [1.83365288e-02 9.81108685e-06]
+contouring error: -0.0019
+lag error:        -0.1790
+
+s min: -2.1925023012475042e-52  s max: 8.352389719038111e-53
+mu: 299.0000
+
+step: 491
+x vector: [19.79361858  0.16268349 -0.68618242]
+control input: [1.83263295e-02 9.78560965e-06]
+contouring error: -0.0019
+lag error:        -0.1771
+
+s min: -8.2545101520181335e-53  s max: 2.2708059548634865e-52
+mu: 299.0000
+
+step: 492
+x vector: [19.79503564  0.16152301 -0.68618144]
+control input: [1.83160784e-02 9.76025892e-06]
+contouring error: -0.0019
+lag error:        -0.1753
+
+s min: -8.352389719038111e-53  s max: 2.662324222943398e-52
+mu: 299.0000
+
+step: 493
+x vector: [19.79645191  0.16036317 -0.68618047]
+control input: [1.8305787e-02 9.7350608e-06]
+contouring error: -0.0019
+lag error:        -0.1735
+
+s min: -4.176194859519056e-53  s max: 7.3083410041583475e-53
+mu: 299.0000
+
+step: 494
+x vector: [19.79786741  0.15920397 -0.6861795 ]
+control input: [1.82958850e-02 9.71179475e-06]
+contouring error: -0.0020
+lag error:        -0.1716
+
+s min: -1.9836925582715515e-52  s max: 6.681911775230489e-52
+mu: 299.0000
+
+step: 495
+x vector: [19.79928218  0.15804537 -0.68617853]
+control input: [1.82864484e-02 9.69064585e-06]
+contouring error: -0.0020
+lag error:        -0.1698
+
+s min: -3.393158323359233e-52  s max: 6.36869716076656e-52
+mu: 299.0000
+
+step: 496
+x vector: [19.80069624  0.15688735 -0.68617756]
+control input: [1.82772480e-02 9.67034875e-06]
+contouring error: -0.0020
+lag error:        -0.1680
+
+s min: -1.7487815974236046e-52  s max: 1.6704779438076223e-52
+mu: 299.0000
+
+step: 497
+x vector: [19.8021097   0.15572982 -0.6861766 ]
+control input: [1.82694370e-02 9.65431353e-06]
+contouring error: -0.0020
+lag error:        -0.1661
+
+s min: -1.6704779438076223e-52  s max: 5.063636267166855e-52
+mu: 299.0000
+
+step: 498
+x vector: [19.80352256  0.15457279 -0.68617563]
+control input: [1.82616801e-02 9.63863704e-06]
+contouring error: -0.0020
+lag error:        -0.1643
+
+s min: -2.1468251699715146e-52  s max: 4.176194859519056e-53
+mu: 299.0000
+
+step: 499
+x vector: [19.80493482  0.15341625 -0.68617467]
+control input: [1.82539796e-02 9.62331691e-06]
+contouring error: -0.0021
+lag error:        -0.1625
+

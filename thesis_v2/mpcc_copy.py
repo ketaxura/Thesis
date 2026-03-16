@@ -1,0 +1,611 @@
+"""
+Title: Model Predictive Contouring Control Implementation
+Author: Usukhbayar Amgalanbat
+
+Comment:
+Inspired by LMPCC by Tu Delft
+"""
+
+
+
+
+from dataclasses import dataclass
+import casadi as ca
+import numpy as np
+import matplotlib.pyplot as plt
+import sys
+import time
+
+import obs
+from params import *
+from dynamics import unicycle_dynamics
+
+
+@dataclass
+class MPCCConfig:
+    q_cont: float = 10.0
+    q_lag: float = 0.5
+    q_theta: float = 5.0
+    q_goal: float = 100.0
+    rho_obs: float = 1e4
+    q_vs: float = 20.0
+    q_s_terminal: float = 3.0
+    r_v: float = 0.1
+    r_w: float = 0.5
+    r_dv: float = 2.0
+    r_dw: float = 4.0
+
+
+@dataclass
+class MPCCArtifacts:
+    solver: any
+    lbx: list
+    ubx: list
+    lbg: list
+    ubg: list
+    nX: int
+    nU: int
+    nProg: int
+    nSlack: int
+    ref_eval_fun: any
+    e_cont_horizon_fun: any
+    cont_cost_fun: any
+    lag_cost_fun: any
+    prog_cost_fun: any
+    ctrl_cost_fun: any
+    align_cost_fun: any
+
+
+
+
+# -----------------------------
+# Helper: soft reference r(s), tangent t(s), normal n(s)
+# Uses a smooth weight vector over indices 0..N centered at s.
+# -----------------------------
+def soft_ref_and_frames(R, s_scalar):
+    """
+    R: (2 x (N+1)) CasADi
+    s_scalar: scalar CasADi
+    Returns:
+      r (2x1), t (2x1 unit), n (2x1 unit)
+    """
+    idx = ca.DM(np.arange(N + 1)).reshape((N + 1, 1))
+
+    # w_j = exp(-kappa*(j - s)^2), normalized
+    diff = idx - s_scalar
+    w_unn = ca.exp(-kappa_w * ca.power(diff, 2))
+    w = w_unn / (ca.sum1(w_unn) + eps)         # (N+1,1)
+
+    r = ca.mtimes(R, w)                         # (2,1)
+
+    # Build a smooth tangent as weighted average of segment tangents
+    t_sum = ca.SX.zeros(2, 1)
+    for j in range(N):
+        dR = R[:, j + 1] - R[:, j]              # (2,1)
+        nrm = ca.sqrt(ca.dot(dR, dR) + eps)
+        t_j = dR / nrm
+
+        wseg = 0.5 * (w[j] + w[j + 1])          # scalar
+        t_sum += wseg * t_j
+
+    t_nrm = ca.sqrt(ca.dot(t_sum, t_sum) + eps)
+    t = t_sum / t_nrm
+
+    n = ca.vertcat(-t[1], t[0])
+    return r, t, n
+
+
+
+
+def build_mpcc_solver(ref_traj: np.ndarray, static_rects: list, config: MPCCConfig | None = None) -> MPCCArtifacts:
+    if config is None:
+        config = MPCCConfig()
+
+    if ref_traj.shape[0] != 2:
+        raise ValueError(f"ref_traj must have shape (2, M), got {ref_traj.shape}")
+
+    num_static_obs = len(static_rects)
+
+
+
+    # -----------------------------
+    # Symbols
+    # -----------------------------
+    X = ca.SX.sym("X", nx, N + 1)
+    U = ca.SX.sym("U", nu, N)
+    s = ca.SX.sym("s", N + 1, 1)            # progress
+    num_static_obs = len(STATIC_RECTS)
+
+    S_obs = ca.SX.sym("S_obs", num_static_obs, N)
+
+
+    v = U[0, :]
+    omega = U[1, :]
+
+    X0 = ca.SX.sym("X0", nx)
+    u_prev = ca.SX.sym("u_prev", nu)
+    s_prev = ca.SX.sym("s_prev", 1)
+
+
+    R = ca.SX.sym("R", nr, N + 1)               # horizon ref points
+
+
+    """
+    g_list is a long python that contains all the constraint expressions
+    lbg 
+    ubg 
+    """
+
+    # -----------------------------
+    # Constraints g(x,p)
+    # -----------------------------
+    g_list = []                     
+    lbg = []
+    ubg = []
+
+
+
+    """
+    This expression below, assigns the first predicted state to equal the real measured state
+    The actual expression is X-X0
+    But because the lower and upper bounds are exactly zero
+    This means that each component of X[:, 0] is being forced to be exactly the same as each component of X0
+
+    X is the state vector 
+    X = [x]
+        [y]
+        [theta]
+        
+    X0 is the initial state vector 
+    X0  =   [x0]
+            [y0]
+            [theta0]
+    """
+    # Initial state
+    g_list.append(X[:,0]-X0)
+    lbg += [0.0, 0.0, 0.0]
+    ubg += [0.0, 0.0, 0.0]
+
+
+
+    """
+    s is defined as a casadi variable that tracks the progress along the reference path
+    it is a N+1 dimensional column vector
+
+    s_prev is parameter that is passed from the previous MPC iteration, the previous progress
+
+    g_list.append(s[0] - s_prev) does this 
+    s0 - s_prev
+    and since the upper and lower bounds are 0
+
+    This means that the solver is forced to always pick s0 such that it equals s_prev
+    """
+    # Initial progress anchored to previous progress
+    g_list.append(s[0] - s_prev)
+    lbg.append(0.0)
+    ubg.append(0.0)
+
+
+
+    eps = 1e-9
+
+    dR0 = R[:, 1] - R[:, 0]                      # (2,)
+    ds_ref = ca.sqrt(ca.dot(dR0, dR0) + eps)     # meters per index step
+
+
+
+
+
+    """
+    There is a for loop here because the conditions within loop have to be met and satisfied throughout the entire horizon.
+    And the reason why the previous two conditions were outside of the loop is because they are initial boundary conditions.
+    So these conditions:
+        g_list.append(X[:,0]-X0)
+        g_list.append(s[0] - s_prev)
+        
+    Always have to come before the for loop conditions, they structure constraints such that one horizon leads into the next 
+    horizon smoothly and without error and while mainting progress.
+
+    """
+
+    # Dynamics + path constraints per step
+    for k in range(N):
+        
+        
+        """
+        This constraint is the dynamic constraint
+        At step k, the state vector values for k+1 must be from the dynamics equation. 
+        Essentially the robot is not allowed to instantly teleport, but follow the dynamics equation and make small movements.
+        
+        And because both bounds are zero, the state k+1 has to be equal to the output of dynamics equation
+        So it has to obey physics
+        """
+        # Robot dynamics
+        g_list.append(X[:, k + 1] - unicycle_dynamics(X[:, k], U[:, k]))
+        lbg += [0.0, 0.0, 0.0]
+        ubg += [0.0, 0.0, 0.0]
+        
+        
+        """
+        State transition progress hard constraint
+        
+        s is a symbolic variable that the solver chooses, because of this to keep choosing in a realistic manner
+        We are imbuing a state transtion progress, where future progress s[k+1] is a function of:
+        current progress s[k] and current rate of progress vs[k] 
+        """
+        # # Progress dynamics
+        # g_list.append(s[k + 1] - (s[k] + vs[k] * dt))
+        # lbg.append(0.0)
+        # ubg.append(0.0)
+
+
+        # Compute reference frames
+        r_k, t_k, n_k = soft_ref_and_frames(R, s[k])
+
+        theta_k = X[2, k]
+
+        # heading unit vector
+        heading_vec = ca.vertcat(ca.cos(theta_k), ca.sin(theta_k))
+
+
+
+        # Tangential velocity (progress rate along path)
+        v_par = U[0, k] * ca.dot(t_k, heading_vec)
+
+        # Progress dynamics: s_{k+1} = s_k + dt * v_par / ds_ref
+        g_list.append(s[k + 1] - (s[k] + dt * v_par / (ds_ref + 1e-9)))
+        lbg.append(0.0)
+        ubg.append(0.0)
+
+        # (Optional but recommended) monotonic progress (no backward progress)
+        g_list.append(s[k + 1] - s[k])
+        lbg.append(0.0)
+        ubg.append(ca.inf)
+
+        p_xy = X[0:2, k]
+
+
+        p_xy = X[0:2, k]
+
+        for i, (cx, cy, hw, hh) in enumerate(STATIC_RECTS):
+
+            dx = p_xy[0] - cx
+            dy = p_xy[1] - cy
+            p = 6
+            dist_p = (ca.fabs(dx)/(hw + obs_margin))**p + \
+                    (ca.fabs(dy)/(hh + obs_margin))**p
+            
+            slack = S_obs[i, k]
+
+            g_list.append(dist_p + slack)
+            lbg.append(1.0)
+            ubg.append(ca.inf)
+
+
+
+
+
+    """
+    Slew constraints on U
+
+    This is a soft constraint on how much one control input at k+1 be different from k
+
+    Remember U is a control input with two components in our system, v linear velocity and w(omega) angular velocity
+    g_list.append(U[0, k + 1] - U[0, k]), constraint on how much linear velocity can increase/decrease
+    g_list.append(U[1, k + 1] - U[1, k]), constraint on how much angular velocity can increase/decrease
+
+    dv_max = linear velocity slew limit
+    dw_max = angular velocity slew limit
+    """
+    # Slew constraints on U
+    for k in range(N - 1):
+        g_list.append(U[0, k + 1] - U[0, k])
+        lbg.append(-dv_max)
+        ubg.append(dv_max)
+
+        g_list.append(U[1, k + 1] - U[1, k])
+        lbg.append(-dw_max)
+        ubg.append(dw_max)
+        
+        
+    """
+    Slew constraints on initial boundary condition U
+
+    In a receding horizon method like MPC/MPCC we take the first input of the U vector and then apply it,
+    and then we solve the problem again. This constraint below is a soft constraint that makes sure that the 
+    first control input u that we are applying to the system doesnt jump too far away from the first control 
+    input that was applied last problem solve.
+
+    Remember U is a control input with two components in our system, v linear velocity and w(omega) angular velocity
+    g_list.append(U[0, k + 1] - U[0, k]), constraint on how much linear velocity can increase/decrease
+    g_list.append(U[1, k + 1] - U[1, k]), constraint on how much angular velocity can increase/decrease
+
+    dv_max = linear velocity slew limit
+    dw_max = angular velocity slew limit
+    """
+
+    # First-step slew vs previous applied input
+    g_list.append(U[:, 0] - ca.reshape(u_prev, 2, 1))
+    lbg += [-dv_max, -dw_max]
+    ubg += [ dv_max,  dw_max]
+
+
+
+    """
+    So the NLP problem that we are trying to solve here doesnt accept a python list of constraint conditions, it requires 
+    a single casadi object.  
+    """
+
+
+    #################
+    # COST FUNCTION #
+    #################
+    cost = 0
+
+    for k in range(N):
+
+        p_xy = X[0:2, k]
+
+        # Compute tangent and heading
+        r_k, t_k, n_k = soft_ref_and_frames(R, s[k])
+
+        theta_k = X[2, k]
+        heading_vec = ca.vertcat(ca.cos(theta_k), ca.sin(theta_k))
+        
+        # Tangential velocity
+        v_par = U[0, k] * ca.dot(t_k, heading_vec)
+
+        e = p_xy - r_k
+
+        e_cont = ca.dot(n_k, e)
+        cost += q_cont * (e_cont**2)
+
+        e_lag  = ca.dot(t_k, e)
+
+        # One-sided lag penalty (only penalize being behind)
+        # cost += q_lag * e_lag**2
+        cost += q_lag * ca.fmax(0, -e_lag)**2
+        
+        
+        
+        # # Heading–tangent alignment term
+        # align = ca.dot(t_k, heading_vec)          # ∈ [-1, 1]
+        # cost += q_theta * (1 - align)**2
+
+
+        
+        # Direct control input penalty
+        # Through this cost function definition, the robot wants to keep both v and w as small possible.
+        cost += r_v * U[0,k]**2 + r_w * U[1,k]**2
+        
+        
+        cost += -q_vs * v_par
+
+        for i in range(num_static_obs):
+            cost += rho_obs * S_obs[i, k]**2
+        
+
+        # # This slew cost function penalizes sudden input changes
+        # if k > 0:
+        #     cost += r_dv * (U[0,k] - U[0,k-1])**2
+        #     cost += r_dw * (U[1,k] - U[1,k-1])**2
+
+
+
+        
+
+    # ---- True contouring over full horizon ----
+    e_cont_list = []
+
+    for k in range(N):
+        r_k, t_k, n_k = soft_ref_and_frames(R, s[k])
+        e_k = X[0:2, k] - r_k
+        e_cont_k = ca.dot(n_k, e_k)
+        e_cont_list.append(e_cont_k)
+
+    e_cont_horizon = ca.vertcat(*e_cont_list)
+
+    e_cont_horizon_fun = ca.Function(
+        "e_cont_horizon_fun",
+        [X, s, R],
+        [e_cont_horizon]
+    )
+
+
+    e_cont_fun = ca.Function(
+        'e_cont_fun',
+        [X, s, R],   # inputs
+        [e_cont]     # output
+    )
+
+
+    # ---- Cost term breakdown over full horizon ----
+
+    cont_list = []
+    lag_list  = []
+    prog_list = []
+    ctrl_list = []
+    align_list = []
+
+    for k in range(N):
+
+        r_k, t_k, n_k = soft_ref_and_frames(R, s[k])
+        theta_k = X[2, k]
+        heading_vec = ca.vertcat(ca.cos(theta_k), ca.sin(theta_k))
+
+        p_xy = X[0:2, k]
+        e = p_xy - r_k
+
+        e_cont = ca.dot(n_k, e)
+        e_lag  = ca.dot(t_k, e)
+
+        v_par = U[0,k] * ca.dot(t_k, heading_vec)
+
+        align = ca.dot(t_k, heading_vec)
+
+        cont_list.append(q_cont * (e_cont**2))
+        lag_list.append(q_lag * (e_lag**2))
+        prog_list.append(-q_vs * v_par)
+        ctrl_list.append(r_v * U[0,k]**2 + r_w * U[1,k]**2)
+        align_list.append(q_theta * (1 - align)**2)
+
+    cont_cost_fun = ca.Function(
+        "cont_cost_fun",
+        [X, U, s, R],
+        [ca.vertcat(*cont_list)]
+    )
+
+    lag_cost_fun = ca.Function(
+        "lag_cost_fun",
+        [X, U, s, R],
+        [ca.vertcat(*lag_list)]
+    )
+
+    prog_cost_fun = ca.Function(
+        "prog_cost_fun",
+        [X, U, s, R],
+        [ca.vertcat(*prog_list)]
+    )
+
+    ctrl_cost_fun = ca.Function(
+        "ctrl_cost_fun",
+        [X, U, s, R],
+        [ca.vertcat(*ctrl_list)]
+    )
+
+    align_cost_fun = ca.Function(
+        "align_cost_fun",
+        [X, U, s, R],
+        [ca.vertcat(*align_list)]
+    )
+
+
+
+
+    cost += - q_s_terminal * s[N]
+
+
+    # Terminal pose penalty
+    pN = X[0:2, N]
+    p_goal = X_goal[0:2]
+    # cost += q_goal * ca.sumsqr(pN - p_goal)
+
+
+    g = ca.vertcat(*g_list)
+
+
+    # -----------------------------
+    # Bounds (lbx/ubx)
+    # Decision vector packing order:
+    #   vec(X), vec(U), vec(S), vec(s), vec(vs)
+    # -----------------------------
+    lbx = []
+    ubx = []
+
+    # X bounds
+    for _ in range(N + 1):
+        lbx += [-ca.inf, -ca.inf, -ca.inf]
+        ubx += [ ca.inf,  ca.inf,  ca.inf]
+
+    # U bounds
+    for _ in range(N):
+        lbx += [ 0.0, -omega_max]
+        # lbx += [ -v_max, -omega_max]
+        ubx += [ v_max,  omega_max]
+        # ubx += [ 0.25,  omega_max]
+
+    # # S bounds (>=0)
+    # for _ in range(num_dyn_obs * N):
+    #     lbx.append(0.0)
+    #     ubx.append(ca.inf)
+
+    # s bounds (LOCAL horizon index)
+    for _ in range(N + 1):
+        lbx.append(0.0)
+        # ubx.append(float(ref_traj.shape[1] - 1)) 
+        ubx.append(float(N))   # NOT ref_traj.shape[1]-1
+        # ubx.append(ca.inf)          # or N + 50
+
+
+    #Slack bounds
+    for _ in range(num_static_obs * N):
+        lbx.append(0.0)
+        ubx.append(ca.inf)
+
+    # for _ in range(N + 1):
+    #     lbx.append(0.0)
+    #     ubx.append(N)
+
+
+    # # vs bounds
+    # for _ in range(N):
+    #     lbx.append(0.0)
+    #     ubx.append(vs_max)
+
+
+
+    # -----------------------------
+    # Pack decision vars
+    # -----------------------------
+    OPT_vars = ca.vertcat(
+        ca.reshape(X, -1, 1),
+        ca.reshape(U, -1, 1),
+        ca.reshape(s, -1, 1),
+        ca.reshape(S_obs, -1, 1)
+    )
+
+    # -----------------------------
+    # NLP
+    # -----------------------------
+    p = ca.vertcat(
+        X0,
+        u_prev,
+        s_prev,
+        ca.reshape(R, -1, 1),
+        X_goal
+    )
+
+    nlp = {"x": OPT_vars, "f": cost, "g": g, "p": p}
+
+    solver = ca.nlpsol(
+        "solver_mpcc",
+        "ipopt",
+        nlp,
+        {
+            "ipopt.print_level": 0,
+            "ipopt.max_iter": 120,
+            "ipopt.tol": 1e-3,
+            "ipopt.acceptable_tol": 1e-2,
+            "ipopt.acceptable_iter": 5,
+            "ipopt.warm_start_init_point": "yes",
+            "print_time": 0,
+        },
+    )
+
+    # Export for main.py
+    # (same names your code expects)
+    # lbg/ubg already built above
+    # lbx/ubx already built above
+    # solver already built above
+
+    # Also export sizes so main.py can unpack cleanly
+    nX = nx * (N + 1)
+    nU = nu * N
+    nS = num_dyn_obs * N
+    nProg = (N + 1)          # s
+
+
+
+    r_sym, t_sym, n_sym = soft_ref_and_frames(R, s[0])
+
+    ref_eval_fun = ca.Function(
+        "ref_eval_fun",
+        [R, s[0]],
+        [r_sym, t_sym, n_sym]
+    )
+
+
+
+
+
+

@@ -2,71 +2,26 @@
 UNICYCLE MODEL PREDICTIVE CONTOURING CONTROL 
 Usukhbayar Amgalanbat
 """
+
+
+
+
+import params
+from mpcc import build_mpcc_solver
 import casadi as ca
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import time
-<<<<<<< HEAD
-=======
-
-# =============================================================
-# DEFINE YOUR PATH HERE — this is the only place you need to edit
-# to change the path the robot follows.
-# ref_traj must be a (2, M) numpy array of [x; y] waypoints.
-# =============================================================
 import numpy as np
 
-# # Straight Diagonal line
-# ref_x = np.linspace(0, -10, 100)
-# ref_y = np.linspace(0, 0, 100)
-# ref_traj = np.vstack((ref_x, ref_y))   # shape (2, 100)
-
-
-
-# # Sine wave from x=0 to x=20
-# t = np.linspace(0, 20, 300)
-# ref_x = t
-# ref_y = 2.0 * np.sin(0.5 * t)   # amplitude=2, frequency=0.5
-# ref_traj = np.vstack((ref_x, ref_y))
-
-
-# # Figure-8 (requires negative x, direction reversal at crossing)
-# t = np.linspace(0, 2*np.pi, 400)
-# ref_x = 10 * np.sin(t)
-# ref_y = 5 * np.sin(2*t)
-# ref_traj = np.vstack((ref_x, ref_y))
-
-
-# # Tight spiral (continuously increasing curvature)
-# t = np.linspace(0, 4*np.pi, 400)
-# ref_x = t * np.cos(t)
-# ref_y = t * np.sin(t)
-# ref_traj = np.vstack((ref_x, ref_y))
-
-
-
-
-# Sharp zigzag (tests corner handling)
-ref_x = np.array([0,5,10,15,20], dtype=float)
-ref_y = np.array([0,4,0,4,0], dtype=float)
-ref_x = np.interp(np.linspace(0,4,300), np.arange(5), ref_x)
-ref_y = np.interp(np.linspace(0,4,300), np.arange(5), ref_y)
-ref_traj = np.vstack((ref_x, ref_y))
-
-# =============================================================
-# NOW import everything else — params.py and mpcc.py will read
-# ref_traj from this module, so define it BEFORE importing them.
-# =============================================================
->>>>>>> 5900bca (Added static obstacles to my MPCC simulation. Had some ideas for geometric horizon bound for local obstacle detours.)
-import params
-import mpcc
-
+from obs import Obstacle
 from params import *
 from dynamics import *
 from visualization import visualize
 from subplots import subplots
-from dynamics import path_selector
+
+
 
 """
 Reference Path Generation:
@@ -78,17 +33,30 @@ Path 3 = Sharp zig zag
 Path 4 = Big spiral
 """
 
-ref_traj = path_selector(3)
+path_id = 3
+env = Obstacle(3)
+
+
+
+ref_traj = env.path_selector(path_id)
+STATIC_RECTS  = env.static_obs()
+dyn_obs = env.dynamic_obs()
+
+
+mpcc_data = build_mpcc_solver(ref_traj, STATIC_RECTS, dyn_obs)
+
+solver = mpcc_data.solver
+lbx = mpcc_data.lbx
+ubx = mpcc_data.ubx
+lbg = mpcc_data.lbg
+ubg = mpcc_data.ubg
+
+
 
 
 # =============================================================
 # Initial state — always derived from the path defined above
 # =============================================================
-solver = mpcc.solver
-lbx    = mpcc.lbx
-ubx    = mpcc.ubx
-lbg    = mpcc.lbg
-ubg    = mpcc.ubg
 
 log_file = open("mpcc_main_run_log.txt", "w")
 sys.stdout = log_file
@@ -108,6 +76,14 @@ X_goal_global = np.array(
 
 u_prev = np.zeros((nu,))
 prev_z = None
+dyn_obs_hist = []
+
+# Collision tracking
+# "body"      — robot centre inside raw obstacle (true physical contact)
+# "exclusion" — robot centre inside solver exclusion zone (a + r_robot + safety_buffer)
+dyn_body_log      = []   # (step, obs_index)
+dyn_exclusion_log = []   # (step, obs_index)
+static_body_log   = []   # (step, obs_index)
 
 
 # =============================================================
@@ -134,12 +110,23 @@ for k in range(500):
     # -------------------------------------------------
     # 2. Build parameter vector
     # -------------------------------------------------
+    # Pre-compute full horizon predictions for each dynamic obstacle
+    if dyn_obs:
+        horizon_preds = [obs.predict_horizon(N, dt) for obs in dyn_obs]
+        obs_x_h = np.array([pr[0] for pr in horizon_preds])  # (num_dyn_obs, N)
+        obs_y_h = np.array([pr[1] for pr in horizon_preds])  # (num_dyn_obs, N)
+    else:
+        obs_x_h = np.zeros((0, N))
+        obs_y_h = np.zeros((0, N))
+
     p = np.concatenate([
         x_current,
         u_prev,
         np.array([s_local]),
         R_horizon.flatten(order='F'),
-        X_goal
+        X_goal,
+        obs_x_h.flatten(order='F'),
+        obs_y_h.flatten(order='F'),
     ])
 
     # -------------------------------------------------
@@ -162,18 +149,23 @@ for k in range(500):
     # -------------------------------------------------
     # 4. Extract optimal control
     # -------------------------------------------------
-    z      = sol["x"].full().flatten()
+    z = sol["x"].full().flatten()
     offset = 0
 
+    X_opt = z[offset:offset + mpcc_data.nX].reshape((nx, N + 1), order="F")
+    offset += mpcc_data.nX
+
+    U_opt = z[offset:offset + mpcc_data.nU].reshape((nu, N), order="F")
+    offset += mpcc_data.nU
+
+    s_opt = z[offset:offset + mpcc_data.nProg].reshape((N + 1,), order="F")
+    offset += mpcc_data.nProg
 
 
-    X_opt  = z[offset : offset + mpcc.nX].reshape((nx, N + 1), order="F");  offset += mpcc.nX
-    U_opt  = z[offset : offset + mpcc.nU].reshape((nu, N),     order="F");  offset += mpcc.nU
-    s_opt  = z[offset : offset + mpcc.nProg].reshape((N + 1,), order="F");  offset += mpcc.nProg
+    S_obs_opt = z[offset:offset + mpcc_data.nSlack_static].reshape((len(STATIC_RECTS), N), order="F")
+    offset += mpcc_data.nSlack_static
 
-    nSlack = len(STATIC_RECTS) * N
-    S_obs_opt = z[offset : offset + nSlack].reshape((len(STATIC_RECTS), N), order="F")
-    offset += nSlack
+    # No S_dyn_opt — dynamic obstacles use hard constraints
 
 
     assert offset == z.size, (offset, z.size)
@@ -204,6 +196,14 @@ for k in range(500):
     # -------------------------------------------------
     # 7. Simulate robot forward one step
     # -------------------------------------------------
+
+    # Record robot and obstacles at time k (same snapshot the solver used)
+    x_history.append(x_current[0])
+    y_history.append(x_current[1])
+    theta_history.append(x_current[2])
+    dyn_obs_hist.append([(obs.x, obs.y) for obs in dyn_obs])
+
+    # Now advance both to k+1
     x_current = np.array([
         x_current[0] + dt * v * np.cos(x_current[2]),
         x_current[1] + dt * v * np.sin(x_current[2]),
@@ -213,9 +213,36 @@ for k in range(500):
     x_state_hist.append(x_current.copy())
     u_hist.append(U_opt[:, 0].copy())
 
-    x_history.append(x_current[0])
-    y_history.append(x_current[1])
-    theta_history.append(x_current[2])
+    for obs in dyn_obs:
+        obs.step(dt, STATIC_RECTS)
+
+    # -------------------------------------------------
+    # 7b. Collision detection
+    # -------------------------------------------------
+    for i, obs in enumerate(dyn_obs):
+        dx = x_current[0] - obs.x
+        dy = x_current[1] - obs.y
+
+        # Physical body: robot centre inside raw obstacle ellipse
+        if (dx / obs.a) ** 2 + (dy / obs.b) ** 2 <= 1.0:
+            dyn_body_log.append((k, i))
+            print(f"  [BODY COLLISION]      step {k}: dyn obs {i} "
+                  f"robot=({x_current[0]:.2f},{x_current[1]:.2f}) obs=({obs.x:.2f},{obs.y:.2f})")
+
+        # Exclusion zone: same margin the solver enforces
+        a_excl = obs.a + r_robot + safety_buffer
+        b_excl = obs.b + r_robot + safety_buffer
+        if (dx / a_excl) ** 2 + (dy / b_excl) ** 2 <= 1.0:
+            dyn_exclusion_log.append((k, i))
+            print(f"  [EXCLUSION VIOLATION] step {k}: dyn obs {i} "
+                  f"robot=({x_current[0]:.2f},{x_current[1]:.2f}) obs=({obs.x:.2f},{obs.y:.2f})")
+
+    for i, (cx, cy, hw, hh) in enumerate(STATIC_RECTS):
+        if (abs(x_current[0] - cx) < hw + r_robot and
+                abs(x_current[1] - cy) < hh + r_robot):
+            static_body_log.append((k, i))
+            print(f"  [BODY COLLISION]      step {k}: static obs {i} "
+                  f"robot=({x_current[0]:.2f},{x_current[1]:.2f}) rect=({cx},{cy})")
 
 
     
@@ -269,5 +296,20 @@ log_file.close()
 
 print("Simulation complete, producing visualization")
 
+print("\n========== COLLISION SUMMARY ==========")
+print(f"Dyn obs — body collisions      : {len(dyn_body_log)}")
+for step, idx in dyn_body_log:
+    print(f"    step {step:4d}  dyn obs {idx}")
+print(f"Dyn obs — exclusion violations : {len(dyn_exclusion_log)}")
+for step, idx in dyn_exclusion_log:
+    print(f"    step {step:4d}  dyn obs {idx}")
+print(f"Static obs — body collisions   : {len(static_body_log)}")
+for step, idx in static_body_log:   
+    print(f"    step {step:4d}  static obs {idx}")
+print(f"---")
+print(f"Total body collisions          : {len(dyn_body_log) + len(static_body_log)}")
+print(f"Total exclusion violations     : {len(dyn_exclusion_log)}")
+print("========================================\n")
+
 subplots(x_state_hist, u_hist, cont_err_hist, lag_err_hist, mu_hist)
-visualize(ref_traj, x_history, y_history, theta_history)
+visualize(ref_traj, x_history, y_history, theta_history, STATIC_RECTS, dyn_obs, dyn_obs_hist)
