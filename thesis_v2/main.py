@@ -77,6 +77,7 @@ X_goal_global = np.array(
 u_prev = np.zeros((nu,))
 prev_z = None
 dyn_obs_hist = []
+_at_end_count = 0   # consecutive steps at max path progress
 
 # Collision tracking
 # "body"      — robot centre inside raw obstacle (true physical contact)
@@ -113,11 +114,13 @@ for k in range(500):
     # Pre-compute full horizon predictions for each dynamic obstacle
     if dyn_obs:
         horizon_preds = [obs.predict_horizon(N, dt) for obs in dyn_obs]
-        obs_x_h = np.array([pr[0] for pr in horizon_preds])  # (num_dyn_obs, N)
-        obs_y_h = np.array([pr[1] for pr in horizon_preds])  # (num_dyn_obs, N)
+        obs_x_h     = np.array([pr[0] for pr in horizon_preds])  # (num_dyn_obs, N)
+        obs_y_h     = np.array([pr[1] for pr in horizon_preds])  # (num_dyn_obs, N)
+        obs_theta_h = np.array([pr[2] for pr in horizon_preds])  # (num_dyn_obs, N)
     else:
-        obs_x_h = np.zeros((0, N))
-        obs_y_h = np.zeros((0, N))
+        obs_x_h     = np.zeros((0, N))
+        obs_y_h     = np.zeros((0, N))
+        obs_theta_h = np.zeros((0, N))
 
     p = np.concatenate([
         x_current,
@@ -127,6 +130,7 @@ for k in range(500):
         X_goal,
         obs_x_h.flatten(order='F'),
         obs_y_h.flatten(order='F'),
+        obs_theta_h.flatten(order='F'),
     ])
 
     # -------------------------------------------------
@@ -201,7 +205,7 @@ for k in range(500):
     x_history.append(x_current[0])
     y_history.append(x_current[1])
     theta_history.append(x_current[2])
-    dyn_obs_hist.append([(obs.x, obs.y) for obs in dyn_obs])
+    dyn_obs_hist.append([(obs.x, obs.y, obs.theta) for obs in dyn_obs])
 
     # Now advance both to k+1
     x_current = np.array([
@@ -278,10 +282,23 @@ for k in range(500):
     # -------------------------------------------------
     # 10. Termination check
     # -------------------------------------------------
-    dist_to_goal = np.linalg.norm(x_current[0:2] - X_goal_global[0:2])
-    if dist_to_goal < 0.1 and mu >= ref_traj.shape[1] - 2:
+    dist_to_goal  = np.linalg.norm(x_current[0:2] - X_goal_global[0:2])
+    path_complete = mu >= ref_traj.shape[1] - 2
+
+    # Primary: close enough to goal AND path done
+    if dist_to_goal < 0.5 and path_complete:
         print(f"Goal reached at step {k}, distance={dist_to_goal:.4f}")
         break
+
+    # Fallback: path is 100% done but an obstacle is blocking the goal point.
+    # Declare success after 30 consecutive steps at max progress.
+    if path_complete:
+        _at_end_count += 1
+        if _at_end_count >= 30:
+            print(f"Path complete at step {k} (obstacle near goal, dist={dist_to_goal:.2f})")
+            break
+    else:
+        _at_end_count = 0
 
 
 # =============================================================

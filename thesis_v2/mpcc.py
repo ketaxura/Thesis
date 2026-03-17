@@ -88,8 +88,9 @@ def build_mpcc_solver(ref_traj: np.ndarray, static_rects: list, dyn_obs: list, c
     s_prev = ca.SX.sym("s_prev", 1)
     R = ca.SX.sym("R", nr, N + 1)
     X_goal = ca.SX.sym("X_goal", nx)
-    obs_x = ca.SX.sym("obs_x", num_dyn_obs, N)   # predicted x at horizon steps 1..N
-    obs_y = ca.SX.sym("obs_y", num_dyn_obs, N)   # predicted y at horizon steps 1..N
+    obs_x = ca.SX.sym("obs_x", num_dyn_obs, N)     # predicted x at horizon steps 1..N
+    obs_y = ca.SX.sym("obs_y", num_dyn_obs, N)     # predicted y at horizon steps 1..N
+    obs_theta = ca.SX.sym("obs_theta", num_dyn_obs, N)  # predicted heading at horizon steps 1..N
 
     g_list = []
     lbg = []
@@ -155,20 +156,24 @@ def build_mpcc_solver(ref_traj: np.ndarray, static_rects: list, dyn_obs: list, c
 
 
         # Dynamic obstacle avoidance — applied on X[:,k+1] (next state).
-        # obs_x[:,k] and obs_y[:,k] hold the pre-computed predicted position
-        # at step k+1, so no symbolic extrapolation needed inside the NLP.
+        # Ellipse is rotated by obs_theta so it aligns with the obstacle's
+        # heading direction (major axis = direction of travel).
         p_xy_next = X[0:2, k + 1]
         for i in range(num_dyn_obs):
             ox = obs_x[i, k]
             oy = obs_y[i, k]
+            oth = obs_theta[i, k]
 
-            dx = p_xy_next[0] - ox
-            dy = p_xy_next[1] - oy
+            # Rotate offset into obstacle's local frame
+            dx_w = p_xy_next[0] - ox
+            dy_w = p_xy_next[1] - oy
+            dx_local =  ca.cos(oth) * dx_w + ca.sin(oth) * dy_w
+            dy_local = -ca.sin(oth) * dx_w + ca.cos(oth) * dy_w
 
-            a = dyn_obs[i].a + r_robot + safety_buffer
-            b = dyn_obs[i].b + r_robot + safety_buffer
+            a = dyn_obs[i].a + r_robot + safety_buffer   # major (along heading)
+            b = dyn_obs[i].b + r_robot + safety_buffer   # minor (perpendicular)
 
-            dist = (dx / a) ** 2 + (dy / b) ** 2
+            dist = (dx_local / a) ** 2 + (dy_local / b) ** 2
 
             g_list.append(dist)
             lbg.append(1.0)
@@ -226,8 +231,9 @@ def build_mpcc_solver(ref_traj: np.ndarray, static_rects: list, dyn_obs: list, c
         s_prev,
         ca.reshape(R, -1, 1),
         X_goal,
-        ca.reshape(obs_x, -1, 1),   # predicted dyn obs x over horizon
-        ca.reshape(obs_y, -1, 1),   # predicted dyn obs y over horizon
+        ca.reshape(obs_x, -1, 1),
+        ca.reshape(obs_y, -1, 1),
+        ca.reshape(obs_theta, -1, 1),
     )
 
     nlp = {"x": OPT_vars, "f": cost, "g": g, "p": p_vec}
