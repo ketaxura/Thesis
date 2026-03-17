@@ -74,10 +74,12 @@ def run_batch(use_hard: bool):
                 all_results.append(result)
                 status = "✓" if result["goal_reached"] else "✗"
                 print(f"{status}  cont={result['mean_cont_err']:.3f}  "
-                      f"solve={result['mean_solve_ms']:.1f}ms  "
-                      f"near_miss={result['near_miss_count']}  "
-                      f"min_clear={result['min_clearance_m']:.2f}m  "
-                      f"collisions={result['total_body_collisions']}")
+                    f"solve={result['mean_solve_ms']:.1f}ms  "
+                    f"near_miss={result['near_miss_count']}  "
+                    f"min_clear={result['min_clearance_m']:.2f}m  "
+                    f"collisions={result['total_body_collisions']} "
+                    f"(dyn={result['dyn_body_collisions']}, "
+                    f"static={result['static_body_collisions']})")
             except Exception as e:
                 print(f"ERROR: {e}")
                 all_results.append({"scenario": label, "path_id": path_id,

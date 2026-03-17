@@ -42,6 +42,8 @@ R_u       = np.diag([0.1,  0.5])
 Q_term    = 50.0 * np.eye(2)
 rho_slack = 1e5
 
+REF_SLOWDOWN = 1   # try 2, 3, 5
+
 NEAR_MISS_MARGIN = 0.3
 
 
@@ -113,12 +115,20 @@ def build_mpc_solver(static_rects, dyn_obs, use_hard=False):
 
         # Static obstacles
         for (cx, cy, hw, hh) in static_rects:
-            hx_e = hw + r_robot + safety_buffer
-            hy_e = hh + r_robot + safety_buffer
-            dx   = p_next[0] - cx
-            dy   = p_next[1] - cy
-            g_list.append(dx**2/hx_e**2 + dy**2/hy_e**2 - 1.0)
-            lbg.append(0.0); ubg.append(ca.inf)
+            dx = p_next[0] - cx
+            dy = p_next[1] - cy
+
+            # p-norm rounded rectangle inflation
+            p_norm = 6
+            obs_margin = r_robot + safety_buffer
+
+            dist_p = (ca.fabs(dx) / (hw + obs_margin))**p_norm + \
+                    (ca.fabs(dy) / (hh + obs_margin))**p_norm
+
+            # stay outside the rounded rectangle
+            g_list.append(dist_p)
+            lbg.append(1.0)
+            ubg.append(ca.inf)
 
     # Slew between horizon steps
     for k in range(N - 1):
@@ -166,11 +176,12 @@ def build_mpc_solver(static_rects, dyn_obs, use_hard=False):
     solver = ca.nlpsol(solver_name, "ipopt",
         {"x": OPT_vars, "f": cost, "g": g, "p": p_vec},
         {
-            "ipopt.print_level": 0,
-            "ipopt.max_iter": 120,
-            "ipopt.tol": 1e-3,
-            "ipopt.acceptable_tol": 1e-2,
-            "ipopt.acceptable_iter": 5,
+            "ipopt.print_level": 1,   # important for debugging
+            "ipopt.max_iter": 200,
+            "ipopt.tol": 1e-6,
+            "ipopt.constr_viol_tol": 1e-6,
+            "ipopt.acceptable_tol": 1e-6,
+            "ipopt.acceptable_iter": 0,
             "ipopt.warm_start_init_point": "yes",
             "print_time": 0,
         }
@@ -263,6 +274,12 @@ def run_mpc(path_id: int, seed_offset: int,
             "Maximum_Iterations_Exceeded"
         }:
             solver_fails += 1
+            
+        # stats = solver.stats()
+
+        if stats["return_status"] not in ["Solve_Succeeded"]:
+            print(f"❌ Solver failed at step {k}: {stats['return_status']}")
+            break
 
         prev_z = sol["x"]
 
@@ -273,7 +290,9 @@ def run_mpc(path_id: int, seed_offset: int,
         v_hist.append(float(v))
         omega_hist.append(float(omega))
 
-        ref_k = min(ref_k + 1, ref_traj.shape[1] - 1)
+        # ref_k = min(ref_k + 1, ref_traj.shape[1] - 1)
+        if k % REF_SLOWDOWN == 0:
+            ref_k = min(ref_k + 1, ref_traj.shape[1] - 1)
 
         # Step robot
         x_current = np.array([

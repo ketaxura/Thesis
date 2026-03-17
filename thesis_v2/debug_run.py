@@ -59,6 +59,9 @@ dyn_body_log      = []
 dyn_exclusion_log = []
 static_body_log   = []
 
+dyn_collision_points = []     # (x, y)
+static_collision_points = []  # (x, y)
+
 for k in range(MAX_STEPS):
 
     # Reference window
@@ -142,10 +145,12 @@ for k in range(MAX_STEPS):
         b_e = obs.b + r_robot + safety_buffer
         if (dx / a_e)**2 + (dy / b_e)**2 <= 1.0:
             dyn_exclusion_log.append((k, i))
+            dyn_collision_points.append((x_current[0], x_current[1]))
 
     for i, (cx, cy, hw, hh) in enumerate(STATIC_RECTS):
         if abs(x_current[0]-cx) < hw+r_robot and abs(x_current[1]-cy) < hh+r_robot:
             static_body_log.append((k, i))
+            static_collision_points.append((x_current[0], x_current[1]))
 
     # Errors
     k2    = int(np.clip(np.floor(mu), 0, ref_traj.shape[1]-2))
@@ -202,3 +207,22 @@ subplots(x_state_hist_arr, u_hist_arr, cont_err_hist, lag_err_hist, mu_hist)
 T = min(len(x_history), len(dyn_obs_hist))
 visualize(ref_traj, x_history[:T], y_history[:T], theta_history[:T],
           STATIC_RECTS, dyn_obs, dyn_obs_hist)
+
+# 🔴 Overlay collision markers
+ax = plt.gca()
+
+# Dynamic collisions → RED
+for (x, y) in dyn_collision_points:
+    ax.plot(x, y, 'rx', markersize=10, markeredgewidth=2)
+
+# Static collisions → ORANGE
+for (x, y) in static_collision_points:
+    ax.plot(x, y, 'x', color='orange', markersize=10, markeredgewidth=2)
+
+# Update title
+ax.set_title(
+    f"MPCC Debug — dyn={len(dyn_collision_points)} | static={len(static_collision_points)}"
+)
+
+plt.draw()
+plt.show()
