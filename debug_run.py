@@ -84,15 +84,19 @@ for k in range(MAX_STEPS):
         preds = [obs.predict_horizon(N, dt) for obs in dyn_obs]
         obsx_h = np.array([p[0] for p in preds])
         obsy_h = np.array([p[1] for p in preds])
+        obs_th_h = np.array([pr[2] for pr in preds])  # <-- REQUIRED
     else:
         obsx_h = np.zeros((0, N))
         obsy_h = np.zeros((0, N))
+        obs_th_h = np.zeros((0, N))
 
     p = np.concatenate([
         x_current, u_prev,
         R_horizon.flatten(order='F'),
         obsx_h.flatten(order='F'),
         obsy_h.flatten(order='F'),
+        obs_th_h.flatten(order="F"),
+        
         X_goal_val,
     ])
 
@@ -100,7 +104,22 @@ for k in range(MAX_STEPS):
     if prev_z is not None:
         kwargs["x0"] = prev_z
 
-    sol    = solver(**kwargs)
+    sol = solver(**kwargs)
+
+    stats = solver.stats()
+
+
+    acceptable_statuses = {
+        "Solve_Succeeded",
+        "Solved_To_Acceptable_Level",
+        "Maximum_Iterations_Exceeded",
+    }
+
+    if stats["return_status"] not in acceptable_statuses:
+        print(f"❌ Solver failed at step {k}: {stats['return_status']}")
+        break
+
+    
     prev_z = sol["x"]
 
     z     = sol["x"].full().flatten()
@@ -121,10 +140,12 @@ for k in range(MAX_STEPS):
     for obs in dyn_obs:
         obs.step(dt, STATIC_RECTS)
 
-    obs_pos_now = np.array([[obs.x, obs.y] for obs in dyn_obs])
-        
+    obs_state_now = np.array([
+        [obs.x, obs.y, obs.theta] for obs in dyn_obs
+    ])
+            
     
-    obs_hist.append(obs_pos_now)
+    obs_hist.append(obs_state_now)
 
     x_hist.append(x_current[0])
     y_hist.append(x_current[1])
@@ -210,14 +231,28 @@ dyn_margins = []
 init_obs = obs_hist[0] if obs_hist else np.array([[obs.x, obs.y] for obs in dyn_obs])
 
 for i, obs in enumerate(dyn_obs):
-    ox, oy = init_obs[i]
-    body = Ellipse((ox, oy), 2*obs.a, 2*obs.b,
-                   edgecolor='red', facecolor='salmon', alpha=0.5, lw=2)
-    margin = Ellipse((ox, oy),
-                     2*(obs.a + r_robot + safety_buffer),
-                     2*(obs.b + r_robot + safety_buffer),
-                     edgecolor='red', facecolor='none', lw=1.5,
-                     linestyle='--', alpha=0.5)
+    ox, oy, th = init_obs[i]
+    body = Ellipse(
+        (ox, oy),
+        2*obs.a,
+        2*obs.b,
+        angle=np.degrees(obs.theta),   # 🔥 key line
+        edgecolor='red',
+        facecolor='salmon',
+        alpha=0.5,
+        lw=2
+    )
+    margin = Ellipse(
+        (ox, oy),
+        2*(obs.a + r_robot + safety_buffer),
+        2*(obs.b + r_robot + safety_buffer),
+        angle=np.degrees(obs.theta),   # 🔥
+        edgecolor='red',
+        facecolor='none',
+        lw=1.5,
+        linestyle='--',
+        alpha=0.5
+    )
     ax.add_patch(body);   dyn_bodies.append(body)
     ax.add_patch(margin); dyn_margins.append(margin)
 
@@ -253,9 +288,13 @@ for k in range(T):
     path_line.set_data(x_hist[:k+1], y_hist[:k+1])
 
     for i in range(num_dyn_obs):
-        ox, oy = obs_hist[k][i]
+        ox, oy, th = obs_hist[k][i]
+
         dyn_bodies[i].set_center((ox, oy))
+        dyn_bodies[i].angle = np.degrees(th)   # 🔥 rotate
+
         dyn_margins[i].set_center((ox, oy))
+        dyn_margins[i].angle = np.degrees(th)  # 🔥 rotate
 
     step_txt.set_text(f'step: {k}')
     plt.pause(0.04)
