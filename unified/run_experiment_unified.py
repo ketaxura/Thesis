@@ -486,6 +486,42 @@ class MPCCController:
             kwargs["x0"] = self.prev_z
 
         t0 = time.perf_counter()
+
+
+
+        # print("\nPre-solve parameter sanity check")
+        # print("x_current =", x_current)
+        # print("self.u_prev =", self.u_prev)
+        # print("s_local =", s_local)
+        # print("k_ref =", k_ref)
+        # print("mu =", self.mu)
+        # print("R_horizon shape =", R_horizon.shape)
+        # print("R_horizon first col =", R_horizon[:, 0])
+        # print("R_horizon last  col =", R_horizon[:, -1])
+
+        # # print("self.u_prev[0] type/value =", type(self.u_prev[0]), self.u_prev[0])
+        # # print("self.u_prev[1] type/value =", type(self.u_prev[1]), self.u_prev[1])
+        # print("s_local type/value        =", type(s_local), s_local)
+        # print("goal_global =", goal_global)
+
+
+
+        X_guess = np.tile(x_current.reshape(-1, 1), (1, N + 1))
+        U_guess = np.zeros((nu, N))
+        s_guess = np.zeros(N + 1)
+
+        z0 = np.concatenate([
+            X_guess.flatten(order="F"),
+            U_guess.flatten(order="F"),
+            s_guess.flatten(order="F"),
+        ])
+
+        if self.prev_z is None:
+            kwargs["x0"] = z0
+        else:
+            kwargs["x0"] = self.prev_z
+
+
         sol = self.solver(**kwargs)
         solve_time_s = time.perf_counter() - t0
 
@@ -559,6 +595,8 @@ def run_experiment(
     ref_traj = env.path_selector(path_id)
     static_rects = env.static_obs()
     dyn_obs = env.dynamic_obs_seeded(seed_offset)
+
+    
 
     straight_line_dist = float(np.linalg.norm(ref_traj[:, -1] - ref_traj[:, 0]))
 

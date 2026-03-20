@@ -1,6 +1,6 @@
 import numpy as np
 from pathlib import Path
-from map_inspired_with_astar import MAPS
+from map_inspired_with_astar import SCALED_MAPS
 
 def wrap_angle(angle: float) -> float:
     """Wrap angle to [-pi, pi]."""
@@ -38,7 +38,7 @@ class Obstacle:
 
     def static_obs(self):
         if self.path_id in ASTAR_MAP_KEYS:
-            return MAPS[ASTAR_MAP_KEYS[self.path_id]]["rects"]
+            return SCALED_MAPS[ASTAR_MAP_KEYS[self.path_id]]["rects"]
 
         STATIC_RECTS = []
 

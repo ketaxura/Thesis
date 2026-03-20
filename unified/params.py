@@ -65,7 +65,7 @@ omega_max = 2.0
 dv_max = 0.25
 dw_max = 0.6
 
-kappa_w = 1.5
+kappa_w = 4.0
 eps = 1e-8
 
 s_min = 0.0

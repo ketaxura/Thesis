@@ -5,6 +5,8 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
+from scipy.interpolate import CubicSpline
+from scipy.interpolate import splprep, splev
 
 # ============================================================
 # Two thesis map candidates with A* path generation.
@@ -44,12 +46,12 @@ MAPS = {
         "rects": [
             (5.0, 8.85, 5.0, 0.15),   # top wall
             (5.0, 0.15, 5.0, 0.15),   # bottom wall
-            (0.15, 4.5, 0.15, 4.5),   # left wall
-            (9.85, 4.5, 0.15, 4.5),   # right wall
+        (0.15, 4.5, 0.15, 4.5),   # left wall
+        (9.85, 4.5, 0.15, 4.5),   # right wall
 
-            (1.15, 5.2, 0.55, 3.2),
-            (3.3, 7.0, 1.0, 0.45),
-            (2.55, 6.05, 0.45, 0.95),
+(1.15, 5.2, 0.55, 3.2),
+(3.3, 7.0, 1.0, 0.45),
+(2.55, 6.05, 0.45, 0.95),
             (5.1, 7.45, 0.35, 0.65),
             (7.35, 6.9, 1.0, 0.45),
             (8.25, 6.1, 0.45, 0.8),
@@ -72,12 +74,37 @@ MAPS = {
 # A* settings
 # ============================================================
 
+MAP_SCALE = 4.0
 GRID_RES = 0.10
-INFLATION_RADIUS = 0.18
+INFLATION_RADIUS = 0.75   # = r_robot + safety_buffer
 ALLOW_DIAGONALS = True
-
 OUTPUT_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def scale_rect(rect, s: float):
+    cx, cy, hw, hh = rect
+    return (s * cx, s * cy, s * hw, s * hh)
+
+
+def scale_map_cfg(cfg: dict, s: float) -> dict:
+    xmin, xmax, ymin, ymax = cfg["bounds"]
+    sx, sy = cfg["start"]
+    gx, gy = cfg["goal"]
+
+    return {
+        "title": f'{cfg["title"]} (scale={s:.1f}x)',
+        "start": (s * sx, s * sy),
+        "goal": (s * gx, s * gy),
+        "bounds": (s * xmin, s * xmax, s * ymin, s * ymax),
+        "rects": [scale_rect(r, s) for r in cfg["rects"]],
+    }
+
+
+SCALED_MAPS = {
+    name: scale_map_cfg(cfg, MAP_SCALE)
+    for name, cfg in MAPS.items()
+}
 
 
 def world_to_grid(x: float, y: float, bounds, res: float) -> tuple[int, int]:
@@ -199,6 +226,84 @@ def prune_collinear(points: np.ndarray, eps: float = 1e-10) -> np.ndarray:
     return np.array(kept, dtype=float)
 
 
+def point_is_in_inflated_rect(px, py, rect, margin):
+    cx, cy, hw, hh = rect
+    return (abs(px - cx) <= hw + margin) and (abs(py - cy) <= hh + margin)
+
+
+def segment_is_collision_free(p0, p1, static_rects, margin, ds_check=0.02):
+    p0 = np.asarray(p0, dtype=float)
+    p1 = np.asarray(p1, dtype=float)
+
+    seg = p1 - p0
+    L = np.linalg.norm(seg)
+    if L < 1e-12:
+        return True
+
+    n = max(2, int(np.ceil(L / ds_check)) + 1)
+    for a in np.linspace(0.0, 1.0, n):
+        pt = (1.0 - a) * p0 + a * p1
+        px, py = float(pt[0]), float(pt[1])
+
+        for rect in static_rects:
+            if point_is_in_inflated_rect(px, py, rect, margin):
+                return False
+
+    return True
+
+
+def shortcut_prune_path(path_xy, static_rects, margin, ds_check=0.02):
+    path_xy = np.asarray(path_xy, dtype=float)
+    if len(path_xy) <= 2:
+        return path_xy.copy()
+
+    out = [path_xy[0]]
+    i = 0
+    n = len(path_xy)
+
+    while i < n - 1:
+        j_best = i + 1
+        for j in range(n - 1, i, -1):
+            if segment_is_collision_free(path_xy[i], path_xy[j], static_rects, margin, ds_check=ds_check):
+                j_best = j
+                break
+        out.append(path_xy[j_best])
+        i = j_best
+
+    return np.asarray(out, dtype=float)
+
+
+
+
+def path_min_clearance(path_xy: np.ndarray, rects, inflation: float) -> float:
+    """
+    Conservative clearance estimate from sampled path points to inflated axis-aligned rectangles.
+    Positive means outside, negative means inside.
+    """
+    min_clear = float("inf")
+
+    for px, py in path_xy:
+        for (cx, cy, hw, hh) in rects:
+            dx = abs(px - cx) - (hw + inflation)
+            dy = abs(py - cy) - (hh + inflation)
+
+            # outside distance to inflated rectangle
+            ox = max(dx, 0.0)
+            oy = max(dy, 0.0)
+            outside_dist = np.hypot(ox, oy)
+
+            # if inside inflated rectangle, use negative penetration-like measure
+            if dx <= 0.0 and dy <= 0.0:
+                inside_depth = -min(-dx, -dy)
+                clear = inside_depth
+            else:
+                clear = outside_dist
+
+            min_clear = min(min_clear, clear)
+
+    return float(min_clear)
+
+
 def densify_polyline(points: np.ndarray, ds: float = 0.05) -> np.ndarray:
     if len(points) <= 1:
         return points.copy()
@@ -266,7 +371,7 @@ def main():
     fig, axes = plt.subplots(1, 2, figsize=(15, 6))
     saved = []
 
-    for ax, (map_name, cfg) in zip(axes, MAPS.items()):
+    for ax, (map_name, cfg) in zip(axes, SCALED_MAPS.items()):
         occ, xs, ys = build_occupancy(cfg["bounds"], cfg["rects"], GRID_RES, INFLATION_RADIUS)
 
         start_rc = world_to_grid(cfg["start"][0], cfg["start"][1], cfg["bounds"], GRID_RES)
@@ -279,8 +384,28 @@ def main():
             dtype=float,
         )
 
+
+        print(f"{map_name}: raw_path start = {raw_path_xy[0]}")
+        print(f"{map_name}: raw_path end   = {raw_path_xy[-1]}")
+        print(f"{map_name}: raw_path points = {len(raw_path_xy)}")
+
         pruned_path_xy = prune_collinear(raw_path_xy)
-        ref_path_xy = densify_polyline(pruned_path_xy, ds=0.05)
+
+        shortcut_path_xy = shortcut_prune_path(
+            pruned_path_xy,
+            static_rects=cfg["rects"],
+            margin=INFLATION_RADIUS,
+            ds_check=0.02,
+        )
+
+        print(f"{map_name}: pruned points = {len(pruned_path_xy)}")
+        print(f"{map_name}: shortcut points = {len(shortcut_path_xy)}")
+
+        ref_path_xy = densify_polyline(shortcut_path_xy, ds=0.1)
+
+
+        raw_min_clear = path_min_clearance(ref_path_xy, cfg["rects"], INFLATION_RADIUS)
+        print(f"{map_name}: pruned+dense path min clearance to inflated rects = {raw_min_clear:.4f} m")
 
         raw_csv = OUTPUT_DIR / f"{map_name}_raw_astar_path.csv"
         ref_csv = OUTPUT_DIR / f"{map_name}_ref_path.csv"
@@ -290,7 +415,10 @@ def main():
         saved.append((raw_csv, ref_csv))
         draw_map_with_path(ax, cfg, occ, xs, ys, raw_path_xy, ref_path_xy)
 
-    fig.suptitle("Inspired Thesis Maps with A* and Saved Reference Paths", fontsize=14)
+    fig.suptitle(
+        f"Inspired Thesis Maps with A* and Saved Reference Paths | scale={MAP_SCALE:.1f}x | inflation={INFLATION_RADIUS:.2f}",
+        fontsize=14,
+    )
     plt.tight_layout()
 
     png_path = OUTPUT_DIR / "map_inspired_astar_preview.png"

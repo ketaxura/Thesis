@@ -8,16 +8,16 @@ from dynamics import unicycle_dynamics
 
 @dataclass
 class MPCCConfig:
-    q_cont: float = 6.0
+    q_cont: float = 3.0
     q_lag: float = 0.5
     q_theta: float = 5.0
     q_goal: float = 100.0
     rho_obs: float = 1e4
     rho_dyn: float = 1e5
-    q_vs: float = 20.0
-    q_s_terminal: float = 3.0
+    q_vs: float = 40.0
+    q_s_terminal: float = 10.0
     r_v: float = 0.1
-    r_w: float = 0.5
+    r_w: float = 0.2
     r_dv: float = 2.0
     r_dw: float = 4.0
 
@@ -47,7 +47,12 @@ def soft_ref_and_frames(R, s_scalar, N_local, kappa_w_local, eps_local):
     idx = ca.DM(np.arange(N_local + 1)).reshape((N_local + 1, 1))
 
     diff = idx - s_scalar
-    w_unn = ca.exp(-kappa_w_local * ca.power(diff, 2))
+
+    # Keep the frame local so it does not "look too far around the corner"
+    local_window = 3.0
+    local_mask = ca.exp(-ca.power(diff / local_window, 8))
+
+    w_unn = ca.exp(-kappa_w_local * ca.power(diff, 2)) * local_mask
     w = w_unn / (ca.sum1(w_unn) + eps_local)
 
     r = ca.mtimes(R, w)
@@ -202,9 +207,9 @@ def build_mpcc_solver(
         lbg.append(-dw_max)
         ubg.append(dw_max)
 
-    g_list.append(U[:, 0] - ca.reshape(u_prev, 2, 1))
-    lbg += [-dv_max, -dw_max]
-    ubg += [dv_max, dw_max]
+    # g_list.append(U[:, 0] - ca.reshape(u_prev, 2, 1))
+    # lbg += [-dv_max, -dw_max]
+    # ubg += [dv_max, dw_max]
 
     cost += -config.q_s_terminal * s[N]
 
@@ -260,6 +265,9 @@ def build_mpcc_solver(
 
     nlp = {"x": OPT_vars, "f": cost, "g": g, "p": p_vec}
 
+
+    
+
     solver_name = "solver_mpcc_hard" if use_hard else "solver_mpcc_soft"
 
     solver = ca.nlpsol(
@@ -272,7 +280,7 @@ def build_mpcc_solver(
             "ipopt.tol": 1e-3,
             "ipopt.acceptable_tol": 1e-2,
             "ipopt.acceptable_iter": 5,
-            "ipopt.warm_start_init_point": "yes",
+            "ipopt.warm_start_init_point": "no",
             "print_time": 0,
         },
     )
