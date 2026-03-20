@@ -1,10 +1,24 @@
 import numpy as np
-
+from pathlib import Path
+from map_inspired_with_astar import MAPS
 
 def wrap_angle(angle: float) -> float:
     """Wrap angle to [-pi, pi]."""
     return (angle + np.pi) % (2.0 * np.pi) - np.pi
 
+
+
+THIS_DIR = Path(__file__).resolve().parent
+
+ASTAR_PATH_FILES = {
+    10: "map_corridor_structured_ref_path.csv",
+    11: "map_open_clutter_ref_path.csv",
+}
+
+ASTAR_MAP_KEYS = {
+    10: "map_corridor_structured",
+    11: "map_open_clutter",
+}
 
 class Obstacle:
     """
@@ -23,6 +37,9 @@ class Obstacle:
         self.path_id = path_id_
 
     def static_obs(self):
+        if self.path_id in ASTAR_MAP_KEYS:
+            return MAPS[ASTAR_MAP_KEYS[self.path_id]]["rects"]
+
         STATIC_RECTS = []
 
         if self.path_id == 3:
@@ -49,12 +66,11 @@ class Obstacle:
     def dynamic_obs_seeded(self, seed_offset: int = 0):
         """
         Returns dynamic obstacles with seeds shifted by seed_offset.
-
-        Important:
-        We keep the same obstacle layout and seed convention for fair comparison,
-        but the actual obstacle motion model is now bounded-slew instead of
-        snap-turning.
+        For A*-map debug runs, return [] so we can test static map + ref path first.
         """
+        if self.path_id in ASTAR_MAP_KEYS:
+            return []
+
         dyn_obs = []
 
         if self.path_id == 3:
@@ -96,6 +112,15 @@ class Obstacle:
         return dyn_obs
 
     def path_selector(self, path_id):
+        if path_id in ASTAR_PATH_FILES:
+            csv_path = THIS_DIR / ASTAR_PATH_FILES[path_id]
+            path_xy = np.loadtxt(csv_path, delimiter=",", skiprows=1)
+
+            if path_xy.ndim != 2 or path_xy.shape[1] != 2:
+                raise ValueError(f"Expected Nx2 CSV in {csv_path}, got shape {path_xy.shape}")
+
+            return path_xy.T
+
         if path_id == 0:
             ref_x = np.linspace(0, -10, 100)
             ref_y = np.linspace(0, 0, 100)

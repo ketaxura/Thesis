@@ -13,7 +13,7 @@ class MPCCConfig:
     q_theta: float = 5.0
     q_goal: float = 100.0
     rho_obs: float = 1e4
-    rho_dyn: float = 1e9
+    rho_dyn: float = 1e5
     q_vs: float = 20.0
     q_s_terminal: float = 3.0
     r_v: float = 0.1
@@ -87,8 +87,7 @@ def build_mpcc_solver(
     U = ca.SX.sym("U", nu, N)
     s = ca.SX.sym("s", N + 1, 1)
     if not use_hard:
-        S_obs = ca.SX.sym("S_obs", num_static_obs, N)
-        # Dynamic obstacles remain hard in both modes for now
+        S_dyn = ca.SX.sym("S_dyn", num_dyn_obs, N)
 
     X0 = ca.SX.sym("X0", nx)
     u_prev = ca.SX.sym("u_prev", nu)
@@ -156,17 +155,10 @@ def build_mpcc_solver(
                 + (ca.fabs(dy) / (hh + obs_margin)) ** p_norm
             )
 
-            if use_hard:
-                g_list.append(dist_p)
-                lbg.append(1.0)
-                ubg.append(ca.inf)
-            else:
-                slack = S_obs[i, k]
-                g_list.append(dist_p + slack)
-                lbg.append(1.0)
-                ubg.append(ca.inf)
+            g_list.append(dist_p)
+            lbg.append(1.0)
+            ubg.append(ca.inf)
 
-                cost += config.rho_obs * slack ** 2
 
 
         # Dynamic obstacle avoidance — applied on X[:,k+1] (next state).
@@ -189,9 +181,17 @@ def build_mpcc_solver(
 
             dist = (dx_local / a) ** 2 + (dy_local / b) ** 2
 
-            g_list.append(dist)
-            lbg.append(1.0)
-            ubg.append(ca.inf)
+            if use_hard:
+                g_list.append(dist)
+                lbg.append(1.0)
+                ubg.append(ca.inf)
+            else:
+                slack = S_dyn[i, k]
+                g_list.append(dist + slack)
+                lbg.append(1.0)
+                ubg.append(ca.inf)
+
+                cost += config.rho_dyn * slack ** 2
 
     for k in range(N - 1):
         g_list.append(U[0, k + 1] - U[0, k])
@@ -226,11 +226,12 @@ def build_mpcc_solver(
         ubx.append(float(N))
 
     if not use_hard:
-        for _ in range(num_static_obs * N):
+        for _ in range(num_dyn_obs * N):
             lbx.append(0.0)
             ubx.append(1.0)
 
-    # No S_dyn bounds — hard constraint, no slack variable
+    # Static obstacles are always hard.
+    # Dynamic obstacles are softened only in soft mode via S_dyn.
 
     if use_hard:
         OPT_vars = ca.vertcat(
@@ -243,7 +244,7 @@ def build_mpcc_solver(
             ca.reshape(X, -1, 1),
             ca.reshape(U, -1, 1),
             ca.reshape(s, -1, 1),
-            ca.reshape(S_obs, -1, 1),
+            ca.reshape(S_dyn, -1, 1),
         )
 
     p_vec = ca.vertcat(
@@ -279,8 +280,8 @@ def build_mpcc_solver(
     nX = nx * (N + 1)
     nU = nu * N
     nProg = N + 1
-    nSlack_static = 0 if use_hard else num_static_obs * N
-    nSlack_dyn = 0
+    nSlack_static = 0
+    nSlack_dyn = 0 if use_hard else num_dyn_obs * N
 
     r_sym, t_sym, n_sym = soft_ref_and_frames(R, s[0], N, kappa_w, eps)
     ref_eval_fun = ca.Function("ref_eval_fun", [R, s[0]], [r_sym, t_sym, n_sym])
