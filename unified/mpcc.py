@@ -139,7 +139,7 @@ def build_mpcc_solver(
         lbg.append(0.0)
         ubg.append(ca.inf)
 
-        p_xy = X[0:2, k]
+        p_xy = X[0:2, k + 1]
         e = p_xy - r_k
         e_cont = ca.dot(n_k, e)
         e_lag = ca.dot(t_k, e)
@@ -276,11 +276,12 @@ def build_mpcc_solver(
         nlp,
         {
             "ipopt.print_level": 0,
-            "ipopt.max_iter": 120,
-            "ipopt.tol": 1e-3,
-            "ipopt.acceptable_tol": 1e-2,
-            "ipopt.acceptable_iter": 5,
-            "ipopt.warm_start_init_point": "no",
+            "ipopt.max_iter": 200,
+            "ipopt.tol": 1e-6,
+            "ipopt.constr_viol_tol": 1e-6,
+            "ipopt.acceptable_tol": 1e-6,
+            "ipopt.acceptable_iter": 0,
+            "ipopt.warm_start_init_point": "yes",
             "print_time": 0,
         },
     )
@@ -305,7 +306,7 @@ def build_mpcc_solver(
         r_k, t_k, n_k = soft_ref_and_frames(R, s[k], N, kappa_w, eps)
         theta_k = X[2, k]
         heading_vec = ca.vertcat(ca.cos(theta_k), ca.sin(theta_k))
-        p_xy = X[0:2, k]
+        p_xy = X[0:2, k + 1]
         e = p_xy - r_k
 
         e_cont = ca.dot(n_k, e)

@@ -13,7 +13,7 @@ y_ref_history = []
 # MPC Params
 # -----------------------------
 dt = 0.1
-N = 30
+N = 20
 
 nx = 3
 nu = 2
@@ -53,7 +53,7 @@ mu_hist = []
 # -----------------------------
 # Configurable Params
 # -----------------------------
-safety_buffer = 0.2
+safety_buffer = 0.20
 
 v_obs_max = 0.8
 a_obs_max = 0.5

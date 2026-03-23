@@ -14,7 +14,7 @@ from params import (
     dt, N, nx, nu, nr,
     r_robot, safety_buffer,
     v_max, omega_max, dv_max, dw_max,
-    kappa_w, eps,
+    kappa_w, eps, v_obs_max,
 )
 
 # ============================================================
@@ -23,6 +23,91 @@ from params import (
 
 REF_SLOWDOWN = 1
 NEAR_MISS_MARGIN = 0.3
+
+# Dynamic-obstacle relevance filtering for faster solves
+MAX_ACTIVE_DYN_OBS = 4
+OBS_HORIZON_EXTRA_MARGIN = 1.0
+DUMMY_OBS_FAR_AWAY = 1e6
+
+
+@dataclass
+class DynObsTemplate:
+    a: float
+    b: float
+
+
+def _default_observation_radius(dyn_obs: list) -> float:
+    if not dyn_obs:
+        return 0.0
+    max_obs_radius = max(max(float(obs.a), float(obs.b)) for obs in dyn_obs)
+    horizon_time = N * dt
+    return (
+        v_max * horizon_time
+        + v_obs_max * horizon_time
+        + (r_robot + safety_buffer)
+        + max_obs_radius
+        + OBS_HORIZON_EXTRA_MARGIN
+    )
+
+
+def _make_solver_dyn_templates(dyn_obs: list, max_active_dyn: int) -> list:
+    if max_active_dyn <= 0:
+        return []
+    if dyn_obs:
+        max_a = max(float(obs.a) for obs in dyn_obs)
+        max_b = max(float(obs.b) for obs in dyn_obs)
+    else:
+        max_a = 0.6
+        max_b = 0.4
+    return [DynObsTemplate(a=max_a, b=max_b) for _ in range(max_active_dyn)]
+
+
+def _select_active_dyn_obs(
+    x_current: np.ndarray,
+    dyn_obs: list,
+    max_active_dyn: int,
+    observation_radius: float,
+) -> list:
+    if max_active_dyn <= 0 or not dyn_obs:
+        return []
+
+    rx, ry = float(x_current[0]), float(x_current[1])
+    scored = []
+    for obs in dyn_obs:
+        dist = float(np.hypot(obs.x - rx, obs.y - ry))
+        if dist <= observation_radius:
+            scored.append((dist, obs))
+
+    if not scored:
+        return []
+
+    scored.sort(key=lambda item: item[0])
+    return [obs for _, obs in scored[:max_active_dyn]]
+
+
+def _predict_and_pad_dyn_obs(
+    active_dyn_obs: list,
+    solver_dyn_slots: int,
+    static_rects: list,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    if solver_dyn_slots <= 0:
+        return np.zeros((0, N)), np.zeros((0, N)), np.zeros((0, N))
+
+    obs_x_h = np.full((solver_dyn_slots, N), DUMMY_OBS_FAR_AWAY, dtype=float)
+    obs_y_h = np.full((solver_dyn_slots, N), DUMMY_OBS_FAR_AWAY, dtype=float)
+    obs_th_h = np.zeros((solver_dyn_slots, N), dtype=float)
+
+    for i, obs in enumerate(active_dyn_obs[:solver_dyn_slots]):
+        pred = (
+            obs.predict_horizon_with_rects(N, dt, static_rects)
+            if hasattr(obs, "predict_horizon_with_rects")
+            else obs.predict_horizon(N, dt)
+        )
+        obs_x_h[i, :] = np.asarray(pred[0], dtype=float)
+        obs_y_h[i, :] = np.asarray(pred[1], dtype=float)
+        obs_th_h[i, :] = np.asarray(pred[2], dtype=float)
+
+    return obs_x_h, obs_y_h, obs_th_h
 
 SCENARIOS = [
     {"path_id": 3, "label": "Zigzag"},
@@ -297,6 +382,16 @@ class SolveStep:
     solve_time_s: float
     u: np.ndarray
     progress_index: int
+    solver_next_state: Optional[np.ndarray] = None
+    rollout_next_state: Optional[np.ndarray] = None
+    state_mismatch_norm: float = 0.0
+
+
+    predict_time_s: float = 0.0
+    select_time_s: float = 0.0
+    pack_time_s: float = 0.0
+    post_time_s: float = 0.0
+    active_dyn_count: int = 0
 
 
 # ============================================================
@@ -308,9 +403,12 @@ class MPCController:
         self.ref_traj = ref_traj
         self.use_hard = use_hard
         self.static_rects = static_rects
+        self.max_active_dyn = min(MAX_ACTIVE_DYN_OBS, len(dyn_obs))
+        self.observation_radius = _default_observation_radius(dyn_obs)
+        self.solver_dyn_templates = _make_solver_dyn_templates(dyn_obs, self.max_active_dyn)
 
         self.solver, self.lbx, self.ubx, self.lbg, self.ubg, self.nX, self.nU = (
-            build_mpc_solver(static_rects, dyn_obs, use_hard=use_hard)
+            build_mpc_solver(static_rects, self.solver_dyn_templates, use_hard=use_hard)
         )
 
         self.u_prev = np.zeros(nu)
@@ -326,21 +424,19 @@ class MPCController:
 
         X_goal_val = np.array([R_horizon[0, -1], R_horizon[1, -1], 0.0])
 
-        if dyn_obs:
-            preds = [
-                obs.predict_horizon_with_rects(N, dt, self.static_rects)
-                if hasattr(obs, "predict_horizon_with_rects")
-                else obs.predict_horizon(N, dt)
-                for obs in dyn_obs
-            ]
-            obs_x_h = np.array([pr[0] for pr in preds])
-            obs_y_h = np.array([pr[1] for pr in preds])
-            obs_th_h = np.array([pr[2] for pr in preds])
-        else:
-            obs_x_h = np.zeros((0, N))
-            obs_y_h = np.zeros((0, N))
-            obs_th_h = np.zeros((0, N))
+        t_sel0 = time.perf_counter()
+        active_dyn_obs = _select_active_dyn_obs(
+            x_current, dyn_obs, self.max_active_dyn, self.observation_radius
+        )
+        select_time_s = time.perf_counter() - t_sel0
 
+        t_pred0 = time.perf_counter()
+        obs_x_h, obs_y_h, obs_th_h = _predict_and_pad_dyn_obs(
+            active_dyn_obs, self.max_active_dyn, self.static_rects
+        )
+        predict_time_s = time.perf_counter() - t_pred0
+
+        t_pack0 = time.perf_counter()
         p = np.concatenate([
             x_current,
             self.u_prev,
@@ -350,13 +446,36 @@ class MPCController:
             obs_th_h.flatten(order="F"),
             X_goal_val,
         ])
+        pack_time_s = time.perf_counter() - t_pack0
 
         kwargs = dict(
-            lbx=self.lbx, ubx=self.ubx,
-            lbg=self.lbg, ubg=self.ubg,
+            lbx=self.lbx,
+            ubx=self.ubx,
+            lbg=self.lbg,
+            ubg=self.ubg,
             p=p,
         )
-        if self.prev_z is not None:
+
+        X_guess = np.tile(x_current.reshape(-1, 1), (1, N + 1))
+        U_guess = np.zeros((nu, N))
+
+        parts = [
+            X_guess.flatten(order="F"),
+            U_guess.flatten(order="F"),
+        ]
+
+        if not self.use_hard:
+            n_dyn = self.max_active_dyn
+            S_guess = np.zeros(n_dyn * N)
+            parts.append(S_guess)
+
+        z0 = np.concatenate(parts)
+
+        expected_n = len(self.lbx)
+
+        if self.prev_z is None or self.prev_z.shape[0] != expected_n:
+            kwargs["x0"] = z0
+        else:
             kwargs["x0"] = self.prev_z
 
         t0 = time.perf_counter()
@@ -383,12 +502,25 @@ class MPCController:
 
         self.prev_z = sol["x"]
 
+        t_post0 = time.perf_counter()
+
         z = sol["x"].full().flatten()
+        X_opt = z[:self.nX].reshape((nx, N + 1), order="F")
         U_opt = z[self.nX:self.nX + self.nU].reshape((nu, N), order="F")
         v, omega = U_opt[:, 0]
         self.u_prev = np.array([v, omega])
 
+        solver_next_state = np.array(X_opt[:, 1], dtype=float)
+        rollout_next_state = np.array([
+            x_current[0] + dt * v * np.cos(x_current[2]),
+            x_current[1] + dt * v * np.sin(x_current[2]),
+            x_current[2] + dt * omega,
+        ], dtype=float)
+        state_mismatch_norm = float(np.linalg.norm(solver_next_state - rollout_next_state))
+
         self.ref_k = min(self.ref_k + REF_SLOWDOWN, self.ref_traj.shape[1] - 1)
+
+        post_time_s = time.perf_counter() - t_post0
 
         return SolveStep(
             ok=True,
@@ -396,7 +528,18 @@ class MPCController:
             solve_time_s=solve_time_s,
             u=np.array([v, omega]),
             progress_index=self.ref_k,
+            solver_next_state=solver_next_state,
+            rollout_next_state=rollout_next_state,
+            state_mismatch_norm=state_mismatch_norm,
+            select_time_s=select_time_s,
+            predict_time_s=predict_time_s,
+            pack_time_s=pack_time_s,
+            post_time_s=post_time_s,
+            active_dyn_count=len(active_dyn_obs),
         )
+
+
+
 
 
 class MPCCController:
@@ -406,13 +549,16 @@ class MPCCController:
         self.ref_traj = ref_traj
         self.use_hard = use_hard
         self.static_rects = static_rects
+        self.max_active_dyn = min(MAX_ACTIVE_DYN_OBS, len(dyn_obs))
+        self.observation_radius = _default_observation_radius(dyn_obs)
+        self.solver_dyn_templates = _make_solver_dyn_templates(dyn_obs, self.max_active_dyn)
 
         sig = inspect.signature(build_mpcc_solver)
         if "use_hard" in sig.parameters:
             self.mpcc_data = build_mpcc_solver(
                 ref_traj,
                 static_rects,
-                dyn_obs,
+                self.solver_dyn_templates,
                 use_hard=use_hard,
             )
         else:
@@ -428,7 +574,7 @@ class MPCCController:
             self.mpcc_data = build_mpcc_solver(
                 ref_traj,
                 static_rects,
-                dyn_obs,
+                self.solver_dyn_templates,
             )
 
         self.solver = self.mpcc_data.solver
@@ -451,20 +597,12 @@ class MPCCController:
             pad = np.repeat(last, N + 1 - R_horizon.shape[1], axis=1)
             R_horizon = np.hstack((R_horizon, pad))
 
-        if dyn_obs:
-            preds = [
-                obs.predict_horizon_with_rects(N, dt, self.static_rects)
-                if hasattr(obs, "predict_horizon_with_rects")
-                else obs.predict_horizon(N, dt)
-                for obs in dyn_obs
-            ]
-            obs_x_h = np.array([pr[0] for pr in preds])
-            obs_y_h = np.array([pr[1] for pr in preds])
-            obs_th_h = np.array([pr[2] for pr in preds])
-        else:
-            obs_x_h = np.zeros((0, N))
-            obs_y_h = np.zeros((0, N))
-            obs_th_h = np.zeros((0, N))
+        active_dyn_obs = _select_active_dyn_obs(
+            x_current, dyn_obs, self.max_active_dyn, self.observation_radius
+        )
+        obs_x_h, obs_y_h, obs_th_h = _predict_and_pad_dyn_obs(
+            active_dyn_obs, self.max_active_dyn, self.static_rects
+        )
 
         p = np.concatenate([
             x_current,
@@ -510,17 +648,25 @@ class MPCCController:
         U_guess = np.zeros((nu, N))
         s_guess = np.zeros(N + 1)
 
-        z0 = np.concatenate([
+        parts = [
             X_guess.flatten(order="F"),
             U_guess.flatten(order="F"),
             s_guess.flatten(order="F"),
-        ])
+        ]
 
-        if self.prev_z is None:
+        if not self.use_hard:
+            n_dyn = self.max_active_dyn
+            Sdyn_guess = np.zeros(n_dyn * N)
+            parts.append(Sdyn_guess)
+
+        z0 = np.concatenate(parts)
+
+        expected_n = len(self.lbx)
+
+        if self.prev_z is None or self.prev_z.shape[0] != expected_n:
             kwargs["x0"] = z0
         else:
             kwargs["x0"] = self.prev_z
-
 
         sol = self.solver(**kwargs)
         solve_time_s = time.perf_counter() - t0
@@ -556,6 +702,14 @@ class MPCCController:
         v, omega = U_opt[:, 0]
         self.u_prev = np.array([v, omega])
 
+        solver_next_state = np.array(_X_opt[:, 1], dtype=float)
+        rollout_next_state = np.array([
+            x_current[0] + dt * v * np.cos(x_current[2]),
+            x_current[1] + dt * v * np.sin(x_current[2]),
+            x_current[2] + dt * omega,
+        ], dtype=float)
+        state_mismatch_norm = float(np.linalg.norm(solver_next_state - rollout_next_state))
+
         delta_s = float(s_opt[1]) - float(s_opt[0])
         self.mu = float(np.clip(self.mu + delta_s, 0.0, self.ref_traj.shape[1] - 1))
 
@@ -565,6 +719,9 @@ class MPCCController:
             solve_time_s=solve_time_s,
             u=np.array([v, omega]),
             progress_index=int(np.floor(self.mu)),
+            solver_next_state=solver_next_state,
+            rollout_next_state=rollout_next_state,
+            state_mismatch_norm=state_mismatch_norm,
         )
 
 
