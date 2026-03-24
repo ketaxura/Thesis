@@ -35,9 +35,9 @@ from params import r_robot, safety_buffer
 # Run configuration
 # ============================================================
 PATH_ID             = 10        # 10 = corridor, 11 = open clutter
-SEED_OFFSET         = 4
+SEED_OFFSET         = 10
 USE_HARD            = False
-MAX_STEPS           = 2000
+MAX_STEPS           = 1000
 GOAL_TOL            = 0.35
 END_PROGRESS_TOL    = 1.0
 SHOW_PREDICTIONS    = False

@@ -135,9 +135,9 @@ def build_mpcc_solver(
         lbg.append(0.0)
         ubg.append(0.0)
 
-        g_list.append(s[k + 1] - s[k])
-        lbg.append(0.0)
-        ubg.append(ca.inf)
+        # g_list.append(s[k + 1] - s[k])
+        # lbg.append(0.0)
+        # ubg.append(ca.inf)
 
         p_xy = X[0:2, k + 1]
         e = p_xy - r_k
@@ -145,7 +145,7 @@ def build_mpcc_solver(
         e_lag = ca.dot(t_k, e)
 
         cost += config.q_cont * (e_cont ** 2)
-        cost += config.q_lag * ca.fmax(0, -e_lag) ** 2
+        cost += config.q_lag * (e_lag ** 2)
         cost += config.r_v * U[0, k] ** 2 + config.r_w * U[1, k] ** 2
         cost += -config.q_vs * v_par
 
@@ -211,6 +211,8 @@ def build_mpcc_solver(
     # lbg += [-dv_max, -dw_max]
     # ubg += [dv_max, dw_max]
 
+    e_goal = X[0:2, N] - X_goal[0:2]
+    cost += config.q_goal * ca.dot(e_goal, e_goal)
     cost += -config.q_s_terminal * s[N]
 
     g = ca.vertcat(*g_list)

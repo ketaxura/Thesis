@@ -44,7 +44,7 @@ from debug import (
 # ============================================================
 RESULTS_DIR = "results"
 N_SEEDS = 20
-MAX_WORKERS = 16
+MAX_WORKERS = 20
 MAX_STEPS = 800
 
 # Match the thesis-clean debug workflow by default.

@@ -604,12 +604,14 @@ class MPCCController:
             active_dyn_obs, self.max_active_dyn, self.static_rects
         )
 
+        X_goal_val = np.array([R_horizon[0, -1], R_horizon[1, -1], 0.0], dtype=float)
+
         p = np.concatenate([
             x_current,
             self.u_prev,
             np.array([s_local]),
             R_horizon.flatten(order="F"),
-            goal_global,
+            X_goal_val,
             obs_x_h.flatten(order="F"),
             obs_y_h.flatten(order="F"),
             obs_th_h.flatten(order="F"),
@@ -710,8 +712,16 @@ class MPCCController:
         ], dtype=float)
         state_mismatch_norm = float(np.linalg.norm(solver_next_state - rollout_next_state))
 
-        delta_s = float(s_opt[1]) - float(s_opt[0])
-        self.mu = float(np.clip(self.mu + delta_s, 0.0, self.ref_traj.shape[1] - 1))
+        search_radius = 25
+        k_center = int(np.clip(np.floor(self.mu), 0, self.ref_traj.shape[1] - 1))
+        k0 = max(0, k_center - search_radius)
+        k1 = min(self.ref_traj.shape[1], k_center + search_radius + 1)
+
+        ref_slice = self.ref_traj[:, k0:k1].T
+        dists = np.linalg.norm(ref_slice - rollout_next_state[:2], axis=1)
+        local_idx = int(np.argmin(dists))
+
+        self.mu = float(k0 + local_idx)
 
         
         return SolveStep(
