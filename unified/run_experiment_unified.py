@@ -713,6 +713,7 @@ class MPCCController:
         delta_s = float(s_opt[1]) - float(s_opt[0])
         self.mu = float(np.clip(self.mu + delta_s, 0.0, self.ref_traj.shape[1] - 1))
 
+        
         return SolveStep(
             ok=True,
             status=status,
@@ -722,8 +723,8 @@ class MPCCController:
             solver_next_state=solver_next_state,
             rollout_next_state=rollout_next_state,
             state_mismatch_norm=state_mismatch_norm,
+            active_dyn_count=len(active_dyn_obs),
         )
-
 
 # ============================================================
 # Shared experiment runner

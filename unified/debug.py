@@ -34,21 +34,55 @@ from params import r_robot, safety_buffer
 # ============================================================
 # Run configuration
 # ============================================================
-PATH_ID            = 11        # 10 = map_corridor_structured, 11 = map_open_clutter
-SEED_OFFSET        = 0
-USE_HARD           = False     # hard vs soft dynamic obstacle mode
-MAX_STEPS          = 2000
-GOAL_TOL           = 0.35      # metres
-END_PROGRESS_TOL   = 1.0       # steps from end of ref_traj
-SHOW_PREDICTIONS   = False
-PRED_MARKER_SIZE   = 12
+PATH_ID             = 10        # 10 = corridor, 11 = open clutter
+SEED_OFFSET         = 4
+USE_HARD            = False
+MAX_STEPS           = 2000
+GOAL_TOL            = 0.35
+END_PROGRESS_TOL    = 1.0
+SHOW_PREDICTIONS    = False
+PRED_MARKER_SIZE    = 12
 ROBOT_DOT_SIZE      = 12
 ROBOT_HEADING_LEN   = 0.22
 
-ALGO               = "mpc"    # "mpc" or "mpcc"
+ALGO                = "mpcc"    # "mpc" or "mpcc"
 
 ENABLE_DEBUG_DYN_OBS = True
-DEBUG_DYN_OBS_MODE   = "manual"   # "manual" or "env"
+DEBUG_DYN_OBS_MODE   = "path_tier"   # "manual", "env", or "path_tier"
+
+# Quantitative congestion tier for seeded path-conditioned spawning
+CONGESTION_TIER = "mid"   # "low", "mid", "high"
+
+# Path-conditioned spawn controls
+PATH_SPAWN_SETTINGS = {
+    10: {   # corridor structured
+        "band_radius": 1.75,
+        "longitudinal_jitter_scale": 0.75,
+        "trim_frac_start": 0.15,
+        "trim_frac_end": 0.85,
+    },
+    11: {   # open clutter
+        "band_radius": 2.50,
+        "longitudinal_jitter_scale": 0.75,
+        "trim_frac_start": 0.15,
+        "trim_frac_end": 0.85,
+    },
+}
+
+CONGESTION_COUNTS = {
+    "low": 4,
+    "mid": 8,
+    "high": 12,
+}
+
+SPAWN_MIN_START_CLEARANCE = 2.0
+SPAWN_MIN_GOAL_CLEARANCE  = 2.0
+SPAWN_MAX_ATTEMPTS_FACTOR = 200
+SPAWN_V_MAX = 0.30
+SPAWN_CHANGE_INTERVAL = 25
+SPAWN_A = 0.6
+SPAWN_B = 0.4
+SPAWN_P_NORM = 6
 
 # p-norm used for static-rectangle level-set evaluation (must match mpcc.py)
 P_NORM = 6
@@ -114,20 +148,16 @@ class StepRecord:
 # Collision checkers  (controller-agnostic, pure geometry)
 # ============================================================
 
-def _rect_level(px: float, py: float, cx: float, cy: float,
-                hw: float, hh: float, margin: float, p_norm: int = P_NORM) -> float:
-    """
-    Super-ellipse level value for point (px, py) w.r.t. rectangle (cx, cy, hw, hh)
-    inflated by *margin*.  value < 1.0  →  inside forbidden zone.
-    """
-    dx = px - cx
-    dy = py - cy
-    return (abs(dx) / (hw + margin)) ** p_norm + (abs(dy) / (hh + margin)) ** p_norm
+# ============================================================
+# Collision checkers  (controller-agnostic, pure geometry)
+# ============================================================
+
+SEGMENT_SUBSAMPLES = 9  # includes endpoints
 
 
 def _ellipse_level(px: float, py: float, ox: float, oy: float,
                    a: float, b: float, theta: float) -> float:
-    """Rotated-ellipse level value.  value <= 1.0  →  inside ellipse."""
+    """Rotated-ellipse level value. value <= 1.0 -> inside ellipse."""
     dx = px - ox
     dy = py - oy
     c, s = np.cos(theta), np.sin(theta)
@@ -136,20 +166,39 @@ def _ellipse_level(px: float, py: float, ox: float, oy: float,
     return (x_local / a) ** 2 + (y_local / b) ** 2
 
 
+def _point_in_rect(px: float, py: float, cx: float, cy: float, hw: float, hh: float) -> bool:
+    return (abs(px - cx) <= hw) and (abs(py - cy) <= hh)
+
+
+def _point_in_inflated_rect(
+    px: float,
+    py: float,
+    cx: float,
+    cy: float,
+    hw: float,
+    hh: float,
+    margin: float,
+) -> bool:
+    return (abs(px - cx) <= (hw + margin)) and (abs(py - cy) <= (hh + margin))
+
+
+def _segment_samples(p0: np.ndarray, p1: np.ndarray, num_subsamples: int = SEGMENT_SUBSAMPLES):
+    for alpha in np.linspace(0.0, 1.0, num_subsamples):
+        yield (1.0 - alpha) * p0 + alpha * p1
+
+
 def check_static_body_collision(
     xy: np.ndarray,
     static_rects: list,
-    p_norm: int = P_NORM,
 ) -> tuple[bool, list[int]]:
     """
-    True collision with the *actual* obstacle body (margin = 0).
+    True collision with the actual axis-aligned rectangular obstacle body.
     Returns (collided, list_of_obstacle_indices).
     """
     px, py = float(xy[0]), float(xy[1])
     ids = []
     for i, (cx, cy, hw, hh) in enumerate(static_rects):
-        level = _rect_level(px, py, cx, cy, hw, hh, margin=0.0, p_norm=p_norm)
-        if level < VIOLATION_THRESHOLD:
+        if _point_in_rect(px, py, cx, cy, hw, hh):
             ids.append(i)
     return (len(ids) > 0), ids
 
@@ -158,22 +207,60 @@ def check_static_zone_violation(
     xy: np.ndarray,
     static_rects: list,
     margin: float | None = None,
-    p_norm: int = P_NORM,
 ) -> tuple[bool, list[int]]:
     """
-    Penetration of the inflated forbidden zone used by the controller
-    (margin = r_robot + safety_buffer).  For MPCC hard-mode this must be 0.
+    Penetration of the inflated rectangular forbidden zone used by the controller
+    diagnostics, with margin = r_robot + safety_buffer by default.
     Returns (violated, list_of_obstacle_indices).
     """
     if margin is None:
         margin = r_robot + safety_buffer
+
     px, py = float(xy[0]), float(xy[1])
     ids = []
     for i, (cx, cy, hw, hh) in enumerate(static_rects):
-        level = _rect_level(px, py, cx, cy, hw, hh, margin=margin, p_norm=p_norm)
-        if level < VIOLATION_THRESHOLD:
+        if _point_in_inflated_rect(px, py, cx, cy, hw, hh, margin):
             ids.append(i)
     return (len(ids) > 0), ids
+
+
+def check_static_body_collision_segment(
+    p0: np.ndarray,
+    p1: np.ndarray,
+    static_rects: list,
+    num_subsamples: int = SEGMENT_SUBSAMPLES,
+) -> tuple[bool, list[int]]:
+    """
+    Segment-based body collision check for statics to prevent tunneling
+    between discrete-time samples.
+    """
+    hit_ids = set()
+    for p in _segment_samples(p0, p1, num_subsamples):
+        hit, ids = check_static_body_collision(p, static_rects)
+        if hit:
+            hit_ids.update(ids)
+    return (len(hit_ids) > 0), sorted(hit_ids)
+
+
+def check_static_zone_violation_segment(
+    p0: np.ndarray,
+    p1: np.ndarray,
+    static_rects: list,
+    margin: float | None = None,
+    num_subsamples: int = SEGMENT_SUBSAMPLES,
+) -> tuple[bool, list[int]]:
+    """
+    Segment-based static-zone check for the inflated rectangular forbidden set.
+    """
+    if margin is None:
+        margin = r_robot + safety_buffer
+
+    hit_ids = set()
+    for p in _segment_samples(p0, p1, num_subsamples):
+        hit, ids = check_static_zone_violation(p, static_rects, margin=margin)
+        if hit:
+            hit_ids.update(ids)
+    return (len(hit_ids) > 0), sorted(hit_ids)
 
 
 def check_dyn_body_collision(
@@ -181,14 +268,14 @@ def check_dyn_body_collision(
     dyn_obs: list,
 ) -> tuple[bool, list[int]]:
     """
-    True collision with the *actual* dynamic obstacle body (margin = 0).
+    True collision with the actual dynamic obstacle body (margin = 0).
     Returns (collided, list_of_obstacle_indices).
     """
     px, py = float(xy[0]), float(xy[1])
     ids = []
     for i, obs in enumerate(dyn_obs):
         level = _ellipse_level(px, py, obs.x, obs.y, obs.a, obs.b, obs.theta)
-        if level < VIOLATION_THRESHOLD:
+        if level <= 1.0:
             ids.append(i)
     return (len(ids) > 0), ids
 
@@ -197,54 +284,152 @@ def check_dyn_exclusion_violation(
     xy: np.ndarray,
     dyn_obs: list,
     margin: float | None = None,
-) -> tuple[bool, list[int]]:
+) -> tuple[bool, list[int], list[float], list[float]]:
+    """
+    Dynamic exclusion-zone penetration (inflated dynamic ellipse).
+    Returns:
+        violated, ids, levels, depths
+    where depth = max(0, 1 - level), so larger means deeper penetration.
+    """
     if margin is None:
         margin = r_robot + safety_buffer
+
     px, py = float(xy[0]), float(xy[1])
     ids = []
+    levels = []
+    depths = []
+
     for i, obs in enumerate(dyn_obs):
-        a_eff = obs.a + margin
-        b_eff = obs.b + margin
-        level = _ellipse_level(px, py, obs.x, obs.y, a_eff, b_eff, obs.theta)
+        level = _ellipse_level(px, py, obs.x, obs.y, obs.a + margin, obs.b + margin, obs.theta)
+        levels.append(level)
+        depth = max(0.0, 1.0 - level)
+        depths.append(depth)
         if level < VIOLATION_THRESHOLD:
             ids.append(i)
-    return (len(ids) > 0), ids
 
-def check_collisions(record: StepRecord, static_rects: list, dyn_obs_live: list) -> None:
+    return (len(ids) > 0), ids, levels, depths
+
+
+def check_dyn_body_proximity(
+    xy: np.ndarray,
+    dyn_obs: list,
+) -> tuple[list[float], list[float]]:
     """
-    Fill all four collision fields on *record* in-place.
-    dyn_obs_live should be the obstacles *after* their step() call for this step.
+    Returns:
+      body_levels      : ellipse level wrt actual body
+      body_clearances  : positive outside, zero on boundary, negative inside
+    """
+    px, py = float(xy[0]), float(xy[1])
+    levels = []
+    clearances = []
+
+    for obs in dyn_obs:
+        level = _ellipse_level(px, py, obs.x, obs.y, obs.a, obs.b, obs.theta)
+        clearance = (np.sqrt(level) - 1.0) * np.sqrt(obs.a * obs.b)
+        levels.append(level)
+        clearances.append(clearance)
+
+    return levels, clearances
+
+
+def check_collisions(
+    record: StepRecord,
+    static_rects: list,
+    dyn_obs: list,
+    prev_xy: np.ndarray | None = None,
+) -> None:
+    """
+    Populate collision / zone-diagnostic fields of StepRecord in-place.
+
+    For static obstacles:
+      - use exact rectangle / inflated-rectangle membership
+      - use segment-based checking from prev_xy to current xy if prev_xy is given
+
+    For dynamic obstacles:
+      - keep current point-sampled ellipse logic for now
     """
     xy = record.state[:2]
 
-    record.static_body_collision, record.static_body_ids = \
-        check_static_body_collision(xy, static_rects)
+    # --- static geometry ---
+    if prev_xy is not None:
+        body_hit, body_ids = check_static_body_collision_segment(prev_xy, xy, static_rects)
+        zone_hit, zone_ids = check_static_zone_violation_segment(
+            prev_xy, xy, static_rects, margin=r_robot + safety_buffer
+        )
+    else:
+        body_hit, body_ids = check_static_body_collision(xy, static_rects)
+        zone_hit, zone_ids = check_static_zone_violation(xy, static_rects, margin=r_robot + safety_buffer)
 
-    record.static_zone_violation, record.static_zone_ids = \
-        check_static_zone_violation(xy, static_rects)
+    record.static_body_collision = body_hit
+    record.static_body_ids = body_ids
+    record.static_zone_violation = zone_hit
+    record.static_zone_ids = zone_ids
 
-    record.dyn_body_collision, record.dyn_body_ids = \
-        check_dyn_body_collision(xy, dyn_obs_live)
+    # --- dynamic geometry (point-sampled, current step) ---
+    dyn_body_hit, dyn_body_ids = check_dyn_body_collision(xy, dyn_obs)
+    record.dyn_body_collision = dyn_body_hit
+    record.dyn_body_ids = dyn_body_ids
 
-    record.dyn_exclusion_violation, record.dyn_exclusion_ids = \
-        check_dyn_exclusion_violation(xy, dyn_obs_live)
+    dyn_excl_hit, dyn_excl_ids, dyn_levels, dyn_depths = check_dyn_exclusion_violation(
+        xy, dyn_obs, margin=r_robot + safety_buffer
+    )
+    record.dyn_exclusion_violation = dyn_excl_hit
+    record.dyn_exclusion_ids = dyn_excl_ids
+    record.dyn_exclusion_levels = dyn_levels
+    record.dyn_exclusion_depths = dyn_depths
+
+    if dyn_depths:
+        worst_idx = int(np.argmax(dyn_depths))
+        record.worst_dyn_excl_id = worst_idx
+        record.worst_dyn_excl_level = float(dyn_levels[worst_idx])
+        record.worst_dyn_excl_depth = float(dyn_depths[worst_idx])
+
+    dyn_body_levels, dyn_body_clearances = check_dyn_body_proximity(xy, dyn_obs)
+    record.dyn_body_levels = dyn_body_levels
+    record.dyn_body_clearances = dyn_body_clearances
+
+    if dyn_body_clearances:
+        worst_idx = int(np.argmin(dyn_body_clearances))  # most negative = worst
+        record.worst_dyn_body_id = worst_idx
+        record.worst_dyn_body_level = float(dyn_body_levels[worst_idx])
+        record.worst_dyn_body_clearance = float(dyn_body_clearances[worst_idx])
+
+
+# def check_collisions(record: StepRecord, static_rects: list, dyn_obs_live: list) -> None:
+#     """
+#     Fill all four collision fields on *record* in-place.
+#     dyn_obs_live should be the obstacles *after* their step() call for this step.
+#     """
+#     xy = record.state[:2]
+
+#     record.static_body_collision, record.static_body_ids = \
+#         check_static_body_collision(xy, static_rects)
+
+#     record.static_zone_violation, record.static_zone_ids = \
+#         check_static_zone_violation(xy, static_rects)
+
+#     record.dyn_body_collision, record.dyn_body_ids = \
+#         check_dyn_body_collision(xy, dyn_obs_live)
+
+#     record.dyn_exclusion_violation, record.dyn_exclusion_ids = \
+#         check_dyn_exclusion_violation(xy, dyn_obs_live)
     
-    (
-        record.dyn_exclusion_levels,
-        record.dyn_exclusion_depths,
-        record.worst_dyn_excl_id,
-        record.worst_dyn_excl_level,
-        record.worst_dyn_excl_depth,
-    ) = evaluate_dyn_exclusion_depths(xy, dyn_obs_live)
+#     (
+#         record.dyn_exclusion_levels,
+#         record.dyn_exclusion_depths,
+#         record.worst_dyn_excl_id,
+#         record.worst_dyn_excl_level,
+#         record.worst_dyn_excl_depth,
+#     ) = evaluate_dyn_exclusion_depths(xy, dyn_obs_live)
 
 
-    (
-        record.dyn_body_levels,
-        record.dyn_body_clearances,
-        record.worst_dyn_body_id,
-        record.worst_dyn_body_level,
-        record.worst_dyn_body_clearance,
-    ) = evaluate_dyn_body_proximity(xy, dyn_obs_live)
+#     (
+#         record.dyn_body_levels,
+#         record.dyn_body_clearances,
+#         record.worst_dyn_body_id,
+#         record.worst_dyn_body_level,
+#         record.worst_dyn_body_clearance,
+#     ) = evaluate_dyn_body_proximity(xy, dyn_obs_live)
         
 
 
@@ -456,7 +641,7 @@ def run_rollout(
         )
 
         # ── Collision diagnostics (against live dyn_obs after step) ─────
-        check_collisions(record, static_rects, dyn_obs)
+        check_collisions(record, static_rects, dyn_obs, prev_xy=x_current[:2].copy())
 
         records.append(record)
 
@@ -466,13 +651,28 @@ def run_rollout(
 
         x_current = x_next
 
-        # ── Termination ──────────────────────────────────────────────────
-        goal_dist = float(np.linalg.norm(x_current[:2] - x_goal[:2]))
-        at_end = progress_value >= (ref_traj.shape[1] - END_PROGRESS_TOL)
+        # ── Terminal collision logic ─────────────────────────────────────
+        if record.static_body_collision:
+            print(
+                f"  ✗  TERMINAL STATIC BODY COLLISION at step {k} "
+                f"obs={record.static_body_ids}"
+            )
+            break
 
-        if goal_dist <= GOAL_TOL or at_end:
-            print(f"  ✓  Reached goal/end at step {k}  "
-                  f"goal_dist={goal_dist:.4f}  {progress_label}")
+        if record.dyn_body_collision:
+            print(
+                f"  ✗  TERMINAL DYNAMIC BODY COLLISION at step {k} "
+                f"obs={record.dyn_body_ids}"
+            )
+            break
+
+        # ── Goal termination: physical robot center only ────────────────
+        goal_dist = float(np.linalg.norm(x_current[:2] - x_goal[:2]))
+        if goal_dist <= GOAL_TOL:
+            print(
+                f"  ✓  Reached physical goal at step {k}  "
+                f"goal_dist={goal_dist:.4f}  {progress_label}"
+            )
             break
 
     return records
@@ -798,38 +998,268 @@ def run_playback(
 # ============================================================
 # Dynamic obstacle factory
 # ============================================================
+def _tier_to_count(tier: str) -> int:
+    key = str(tier).strip().lower()
+    if key not in CONGESTION_COUNTS:
+        raise ValueError(f"Unknown congestion tier: {tier!r}")
+    return int(CONGESTION_COUNTS[key])
 
-def make_debug_dyn_obs(path_id: int, seed_offset: int = 0) -> list:
+
+def _path_spawn_config(path_id: int) -> dict:
+    if path_id in PATH_SPAWN_SETTINGS:
+        return PATH_SPAWN_SETTINGS[path_id]
+    # sensible fallback
+    return {
+        "band_radius": 2.0,
+        "longitudinal_jitter_scale": 0.75,
+        "trim_frac_start": 0.15,
+        "trim_frac_end": 0.85,
+    }
+
+
+def _point_in_inflated_static_zone_for_spawn(
+    px: float,
+    py: float,
+    static_rects: list,
+    dyn_a: float,
+    dyn_b: float,
+    p_norm: int = SPAWN_P_NORM,
+) -> bool:
+    """
+    Reject candidate dynamic-obstacle CENTERS that would place the dynamic
+    obstacle body/exclusion region inside the inflated static forbidden set.
+
+    We inflate static rectangles by:
+        r_robot + safety_buffer + dynamic half-axis
+    so the spawned dynamic obstacle itself does not begin overlapped with
+    static geometry in a meaningful way.
+    """
+    margin_x = r_robot + safety_buffer + dyn_a
+    margin_y = r_robot + safety_buffer + dyn_b
+
+    for (cx, cy, hw, hh) in static_rects:
+        level = (
+            (abs(px - cx) / (hw + margin_x)) ** p_norm
+            + (abs(py - cy) / (hh + margin_y)) ** p_norm
+        )
+        if level < VIOLATION_THRESHOLD:
+            return True
+    return False
+
+
+def _too_close_to_existing_dyn_spawn(
+    px: float,
+    py: float,
+    placed_dyn_obs: list,
+    dyn_a: float,
+    dyn_b: float,
+) -> bool:
+    """
+    Basic center-spacing rule to avoid absurdly clustered initial spawns.
+    """
+    min_sep = 2.0 * max(dyn_a, dyn_b) + 2.0 * (r_robot + safety_buffer)
+    for obs in placed_dyn_obs:
+        if np.hypot(px - obs.x, py - obs.y) < min_sep:
+            return True
+    return False
+
+
+def make_path_tier_dyn_obs(
+    path_id: int,
+    ref_traj: np.ndarray,
+    static_rects: list,
+    x_start: np.ndarray,
+    x_goal: np.ndarray,
+    seed_offset: int = 0,
+    tier: str = "mid",
+) -> list:
+    """
+    Seeded, path-conditioned dynamic-obstacle spawner.
+
+    Obstacles are sampled in a tube around the reference path, rejected if:
+      - inside inflated static forbidden regions
+      - too close to start
+      - too close to goal
+      - too close to already placed dynamic obstacles
+    """
+    cfg = _path_spawn_config(path_id)
+    n_obs = _tier_to_count(tier)
+
+    band_radius = float(cfg["band_radius"])
+    long_jitter_scale = float(cfg["longitudinal_jitter_scale"])
+    trim_frac_start = float(cfg["trim_frac_start"])
+    trim_frac_end = float(cfg["trim_frac_end"])
+
+    dyn_a = float(SPAWN_A)
+    dyn_b = float(SPAWN_B)
+
+    rng = np.random.default_rng(1000 + 37 * path_id + 10000 * seed_offset + n_obs)
+
+    M = int(ref_traj.shape[1])
+    if M < 3:
+        raise ValueError(f"ref_traj too short for spawning, shape={ref_traj.shape}")
+
+    k_min = max(1, int(trim_frac_start * M))
+    k_max = min(M - 2, int(trim_frac_end * M))
+
+    if k_max <= k_min:
+        k_min = 1
+        k_max = M - 2
+
     dyn_obs = []
+    max_attempts = int(SPAWN_MAX_ATTEMPTS_FACTOR * n_obs)
+    attempts = 0
 
-    if path_id == 10:
-        pts = [
-            (11, 33), (16, 24), (21, 23), (18, 19), (28, 16),
-            (32, 15), (33, 13), (35, 10), (35, 8),  (25, 21),
-        ]
-        for i, (x, y) in enumerate(pts):
-            dyn_obs.append(DynamicObstacle(
-                x=float(x), y=float(y), a=0.6, b=0.4,
-                seed=100 + seed_offset * 100 + i,
-                v_max=0.30, change_interval=25,
-            ))
+    while len(dyn_obs) < n_obs and attempts < max_attempts:
+        attempts += 1
 
-    elif path_id == 11:
-        pts = [
-            (9, 2), (11, 4), (13, 7), (15, 8), (19, 9), 
-            (20, 13), (17, 15), (20, 19), (25, 22),  (23, 26), (28, 30), (32, 32),
-        ]
-        for i, (x, y) in enumerate(pts):
-            dyn_obs.append(DynamicObstacle(
-                x=float(x), y=float(y), a=0.6, b=0.4,
-                seed=100 + seed_offset * 100 + i,
-                v_max=0.30, change_interval=25,
-            ))
+        k = int(rng.integers(k_min, k_max + 1))
 
-    else:
-        dyn_obs = Obstacle(path_id).dynamic_obs_seeded(seed_offset)
+        p0 = ref_traj[:, k]
+        p1 = ref_traj[:, k + 1]
+
+        tangent = p1 - p0
+        tangent_norm = np.linalg.norm(tangent)
+        if tangent_norm < 1e-12:
+            continue
+        tangent = tangent / tangent_norm
+        normal = np.array([-tangent[1], tangent[0]], dtype=float)
+
+        lateral_offset = float(rng.uniform(-band_radius, band_radius))
+        longitudinal_jitter = float(
+            rng.uniform(
+                -long_jitter_scale * band_radius,
+                long_jitter_scale * band_radius,
+            )
+        )
+
+        p_candidate = p0 + lateral_offset * normal + longitudinal_jitter * tangent
+        px = float(p_candidate[0])
+        py = float(p_candidate[1])
+
+        if _point_in_inflated_static_zone_for_spawn(px, py, static_rects, dyn_a, dyn_b):
+            continue
+
+        if np.hypot(px - float(x_start[0]), py - float(x_start[1])) < SPAWN_MIN_START_CLEARANCE:
+            continue
+
+        if np.hypot(px - float(x_goal[0]), py - float(x_goal[1])) < SPAWN_MIN_GOAL_CLEARANCE:
+            continue
+
+        if _too_close_to_existing_dyn_spawn(px, py, dyn_obs, dyn_a, dyn_b):
+            continue
+
+        obs = DynamicObstacle(
+            x=px,
+            y=py,
+            a=dyn_a,
+            b=dyn_b,
+            seed=100 + seed_offset * 100 + len(dyn_obs),
+            v_max=SPAWN_V_MAX,
+            change_interval=SPAWN_CHANGE_INTERVAL,
+        )
+        dyn_obs.append(obs)
+
+    if len(dyn_obs) < n_obs:
+        raise RuntimeError(
+            f"Could only place {len(dyn_obs)}/{n_obs} dynamic obstacles "
+            f"for path_id={path_id}, tier={tier!r}. "
+            "Relax spacing / clearances / band radius."
+        )
 
     return dyn_obs
+
+
+def print_spawn_summary(
+    dyn_obs: list,
+    static_rects: list,
+    x_start: np.ndarray,
+    x_goal: np.ndarray,
+) -> None:
+    print("\n── Spawn summary ──")
+    print(f"spawned dynamic obstacles: {len(dyn_obs)}")
+
+    for i, obs in enumerate(dyn_obs):
+        in_static = _point_in_inflated_static_zone_for_spawn(
+            obs.x, obs.y, static_rects, obs.a, obs.b
+        )
+        d_start = float(np.hypot(obs.x - x_start[0], obs.y - x_start[1]))
+        d_goal = float(np.hypot(obs.x - x_goal[0], obs.y - x_goal[1]))
+
+        print(
+            f"  D{i:02d}: x={obs.x:7.3f}  y={obs.y:7.3f}  "
+            f"d_start={d_start:6.3f}  d_goal={d_goal:6.3f}  "
+            f"in_static_zone={in_static}"
+        )
+
+
+
+
+def make_debug_dyn_obs(
+    path_id: int,
+    seed_offset: int = 0,
+    *,
+    mode: str = "manual",
+    ref_traj: np.ndarray | None = None,
+    static_rects: list | None = None,
+    x_start: np.ndarray | None = None,
+    x_goal: np.ndarray | None = None,
+    tier: str = "mid",
+) -> list:
+    mode = str(mode).strip().lower()
+
+    if mode == "path_tier":
+        if ref_traj is None or static_rects is None or x_start is None or x_goal is None:
+            raise ValueError(
+                "path_tier mode requires ref_traj, static_rects, x_start, and x_goal"
+            )
+        return make_path_tier_dyn_obs(
+            path_id=path_id,
+            ref_traj=ref_traj,
+            static_rects=static_rects,
+            x_start=x_start,
+            x_goal=x_goal,
+            seed_offset=seed_offset,
+            tier=tier,
+        )
+
+    dyn_obs = []
+
+    if mode == "manual":
+        if path_id == 10:
+            pts = [
+                (11, 33), (16, 24), (21, 23), (18, 19), (28, 16),
+                (32, 15), (33, 13), (35, 10), (35, 8),  (25, 21),
+            ]
+            for i, (x, y) in enumerate(pts):
+                dyn_obs.append(DynamicObstacle(
+                    x=float(x), y=float(y), a=0.6, b=0.4,
+                    seed=100 + seed_offset * 100 + i,
+                    v_max=0.30, change_interval=25,
+                ))
+
+        elif path_id == 11:
+            pts = [
+                (9, 2), (11, 4), (13, 7), (15, 8), (19, 9),
+                (20, 13), (17, 15), (20, 19), (25, 22), (23, 26), (28, 30), (32, 32),
+            ]
+            for i, (x, y) in enumerate(pts):
+                dyn_obs.append(DynamicObstacle(
+                    x=float(x), y=float(y), a=0.6, b=0.4,
+                    seed=100 + seed_offset * 100 + i,
+                    v_max=0.30, change_interval=25,
+                ))
+        else:
+            dyn_obs = Obstacle(path_id).dynamic_obs_seeded(seed_offset)
+
+        return dyn_obs
+
+    if mode == "env":
+        return Obstacle(path_id).dynamic_obs_seeded(seed_offset)
+
+    raise ValueError(f"Unknown dynamic-obstacle mode: {mode!r}")
+
+
 
 
 def maximize_figure_window(fig):
@@ -866,12 +1296,40 @@ def main() -> None:
 
     static_rects = env.static_obs()
 
+    print("=" * 60)
+    print(f"ALGO={ALGO.upper()}  USE_HARD={USE_HARD}  path_id={PATH_ID}")
+    print(f"ref_traj shape: {ref_traj.shape}")
+    print(f"static rects  : {len(static_rects)}")
+    print(f"r_robot={r_robot}  safety_buffer={safety_buffer}"
+        f"  total_margin={r_robot+safety_buffer:.3f}")
+
+    # ── Initial state ────────────────────────────────────────────────
+    p0      = ref_traj[:, 0]
+    look_k  = min(10, ref_traj.shape[1] - 1)
+    th0     = float(np.arctan2(ref_traj[1, look_k] - p0[1],
+                            ref_traj[0, look_k] - p0[0]))
+    x_start = np.array([p0[0], p0[1], th0], dtype=float)
+    x_goal  = np.array([ref_traj[0, -1], ref_traj[1, -1], 0.0], dtype=float)
+    print(f"x_start={x_start}  x_goal={x_goal[:2]}")
+
     if ENABLE_DEBUG_DYN_OBS:
-        dyn_obs = (env.dynamic_obs_seeded(SEED_OFFSET)
-                   if DEBUG_DYN_OBS_MODE == "env"
-                   else make_debug_dyn_obs(PATH_ID, SEED_OFFSET))
+        dyn_obs = make_debug_dyn_obs(
+            PATH_ID,
+            SEED_OFFSET,
+            mode=DEBUG_DYN_OBS_MODE,
+            ref_traj=ref_traj,
+            static_rects=static_rects,
+            x_start=x_start,
+            x_goal=x_goal,
+            tier=CONGESTION_TIER,
+        )
     else:
         dyn_obs = []
+
+    print(f"dynamic obs   : {len(dyn_obs)}")
+    if ENABLE_DEBUG_DYN_OBS and DEBUG_DYN_OBS_MODE == "path_tier":
+        print(f"congestion tier: {CONGESTION_TIER}")
+        print_spawn_summary(dyn_obs, static_rects, x_start, x_goal)
 
     print("=" * 60)
     print(f"ALGO={ALGO.upper()}  USE_HARD={USE_HARD}  path_id={PATH_ID}")

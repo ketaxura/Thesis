@@ -21,11 +21,14 @@ import numpy as np
 
 from obs import Obstacle
 from params import dt, r_robot, safety_buffer
+
 from run_experiment_unified import (
     MPCCController,
     MPCController,
     _compute_common_tracking_errors,
 )
+
+
 from debug import (
     GOAL_TOL,
     END_PROGRESS_TOL,
@@ -40,8 +43,8 @@ from debug import (
 # Batch configuration
 # ============================================================
 RESULTS_DIR = "results"
-N_SEEDS = 10
-MAX_WORKERS = 14
+N_SEEDS = 20
+MAX_WORKERS = 16
 MAX_STEPS = 800
 
 # Match the thesis-clean debug workflow by default.
@@ -51,15 +54,21 @@ SCENARIOS = [
 ]
 
 USE_DEBUG_DYN_OBS = True
-DEBUG_DYN_OBS_MODE = "manual"  # "manual" or "env"
 START_TRIM = 8
 INITIAL_HEADING_LOOKAHEAD = 10
+
+
+DYN_OBS_MODE = "path_tier"   # "manual", "env", or "path_tier"
+CONGESTION_TIERS = ["low", "mid", "high"]
 
 RAW_FIELDS = [
     "scenario",
     "controller",
     "path_id",
     "seed_offset",
+    "termination_reason",
+    "congestion_tier",
+    "spawned_dyn_obs_count",
     "goal_reached",
     "steps_taken",
     "completion_time_s",
@@ -127,29 +136,55 @@ SUMMARY_METRICS = [
 # ============================================================
 # Environment / rollout helpers
 # ============================================================
-def make_dyn_obs(path_id: int, seed_offset: int) -> list:
+def make_dyn_obs(
+    path_id: int,
+    seed_offset: int,
+    ref_traj: np.ndarray,
+    static_rects: list,
+    x_start: np.ndarray,
+    x_goal: np.ndarray,
+    congestion_tier: str,
+) -> list:
     env = Obstacle(path_id)
+
     if USE_DEBUG_DYN_OBS:
-        if DEBUG_DYN_OBS_MODE == "env":
-            return env.dynamic_obs_seeded(seed_offset)
-        return make_debug_dyn_obs(path_id, seed_offset)
+        return make_debug_dyn_obs(
+            path_id,
+            seed_offset,
+            mode=DYN_OBS_MODE,
+            ref_traj=ref_traj,
+            static_rects=static_rects,
+            x_start=x_start,
+            x_goal=x_goal,
+            tier=congestion_tier,
+        )
+
     return env.dynamic_obs_seeded(seed_offset)
 
-
-def build_env(path_id: int, seed_offset: int) -> tuple[np.ndarray, list, list, np.ndarray, np.ndarray]:
+def build_env(path_id: int, seed_offset: int, congestion_tier: str):
     env = Obstacle(path_id)
     ref_traj = env.path_selector(path_id)
     if START_TRIM > 0:
         ref_traj = ref_traj[:, START_TRIM:]
 
     static_rects = env.static_obs()
-    dyn_obs = make_dyn_obs(path_id, seed_offset)
 
     p0 = ref_traj[:, 0]
     look_k = min(INITIAL_HEADING_LOOKAHEAD, ref_traj.shape[1] - 1)
     th0 = float(np.arctan2(ref_traj[1, look_k] - p0[1], ref_traj[0, look_k] - p0[0]))
     x_start = np.array([p0[0], p0[1], th0], dtype=float)
     x_goal = np.array([ref_traj[0, -1], ref_traj[1, -1], 0.0], dtype=float)
+
+    dyn_obs = make_dyn_obs(
+        path_id=path_id,
+        seed_offset=seed_offset,
+        ref_traj=ref_traj,
+        static_rects=static_rects,
+        x_start=x_start,
+        x_goal=x_goal,
+        congestion_tier=congestion_tier,
+    )
+
     return ref_traj, static_rects, dyn_obs, x_start, x_goal
 
 
@@ -174,14 +209,24 @@ def _safe_std(xs: list[float]) -> float:
 
 
 def run_single_experiment(
-    controller_type: str,
     path_id: int,
-    seed_offset: int,
+    algo: str,
     use_hard: bool,
-    max_steps: int = MAX_STEPS,
+    seed_offset: int,
+    congestion_tier: str,
 ) -> dict[str, Any]:
-    ref_traj, static_rects, dyn_obs, x_start, x_goal = build_env(path_id, seed_offset)
-    controller = build_controller(controller_type, static_rects, dyn_obs, ref_traj, use_hard)
+    ref_traj, static_rects, dyn_obs, x_start, x_goal = build_env(
+        path_id, seed_offset, congestion_tier
+    )
+
+
+    controller = build_controller(
+        controller_type=algo,
+        static_rects=static_rects,
+        dyn_obs=dyn_obs,
+        ref_traj=ref_traj,
+        use_hard=use_hard,
+    )
 
     x_current = x_start.copy()
     prev_pos = x_current[:2].copy()
@@ -215,7 +260,9 @@ def run_single_experiment(
     min_clearance_m = math.inf
     goal_reached = False
 
-    for k in range(max_steps):
+    termination_reason = "max_steps"
+
+    for k in range(MAX_STEPS):
         step_result = controller.solve(x_current, dyn_obs, x_goal)
         progress_value, _ = extract_progress(controller, step_result)
 
@@ -226,8 +273,7 @@ def run_single_experiment(
         if step_result.status != "Solve_Succeeded":
             solver_fail_count += 1
 
-        if not step_result.ok:
-            break
+
 
         v, omega = float(step_result.u[0]), float(step_result.u[1])
         speeds.append(v)
@@ -258,7 +304,7 @@ def run_single_experiment(
             post_time_s=float(getattr(step_result, "post_time_s", 0.0)),
             active_dyn_count=int(getattr(step_result, "active_dyn_count", 0)),
         )
-        check_collisions(record, static_rects, dyn_obs)
+        check_collisions(record, static_rects, dyn_obs, prev_xy=x_current[:2].copy())
 
         static_body_collision_steps += int(record.static_body_collision)
         static_zone_violation_steps += int(record.static_zone_violation)
@@ -301,9 +347,27 @@ def run_single_experiment(
         prev_pos = x_next[:2].copy()
         x_current = x_next
 
+
+
+        if not step_result.ok:
+            termination_reason = f"solver_fail:{step_result.status}"
+            break
+
+        if record.static_body_collision:
+            termination_reason = "static_body_collision"
+            goal_reached = False
+            break
+
+        if record.dyn_body_collision:
+            termination_reason = "dyn_body_collision"
+            goal_reached = False
+            break
+
+
+        # Success only when the physical robot center reaches the goal
         goal_dist = float(np.linalg.norm(x_current[:2] - x_goal[:2]))
-        at_end = float(progress_value) >= (ref_traj.shape[1] - END_PROGRESS_TOL)
-        if goal_dist <= GOAL_TOL or at_end:
+        if goal_dist <= GOAL_TOL:
+            termination_reason = "goal_reached"
             goal_reached = True
             break
 
@@ -313,7 +377,7 @@ def run_single_experiment(
     speed_arr = np.asarray(speeds, dtype=float) if speeds else np.zeros(1)
     omega_arr = np.asarray(omegas, dtype=float) if omegas else np.zeros(1)
 
-    controller_label = f"{controller_type.lower()}_{'hard' if use_hard else 'soft'}"
+    controller_label = f"{algo.lower()}_{'hard' if use_hard else 'soft'}"
     total_body_collision_steps = static_body_collision_steps + dyn_body_collision_steps
     path_efficiency = float(straight_line_dist / path_length) if path_length > 1e-12 else 0.0
 
@@ -321,6 +385,9 @@ def run_single_experiment(
         "controller": controller_label,
         "path_id": path_id,
         "seed_offset": seed_offset,
+        "termination_reason": termination_reason,
+        "congestion_tier": congestion_tier if DYN_OBS_MODE == "path_tier" else DYN_OBS_MODE,
+        "spawned_dyn_obs_count": int(len(dyn_obs)),
         "goal_reached": int(goal_reached),
         "steps_taken": int(steps_taken),
         "completion_time_s": round(float(steps_taken * dt), 4),
@@ -395,18 +462,18 @@ def _summarize_rows(rows: list[dict[str, Any]], controller_label: str) -> list[d
     return summary_rows
 
 
-def _run_job(job: tuple[str, bool, dict[str, Any], int]) -> dict[str, Any]:
-    controller_type, use_hard, scenario, seed = job
+def _run_job(job: tuple[str, bool, dict[str, Any], int, str]) -> dict[str, Any]:
+    controller_type, use_hard, scenario, seed, congestion_tier = job
     path_id = int(scenario["path_id"])
     label = str(scenario["label"])
 
     try:
         result = run_single_experiment(
-            controller_type=controller_type,
             path_id=path_id,
-            seed_offset=seed,
+            algo=controller_type,
             use_hard=use_hard,
-            max_steps=MAX_STEPS,
+            seed_offset=seed,
+            congestion_tier=congestion_tier,
         )
         result["scenario"] = label
         return result
@@ -416,6 +483,45 @@ def _run_job(job: tuple[str, bool, dict[str, Any], int]) -> dict[str, Any]:
             "controller": f"{controller_type}_{'hard' if use_hard else 'soft'}",
             "path_id": path_id,
             "seed_offset": seed,
+            "termination_reason": "error",
+            "congestion_tier": congestion_tier,
+            "spawned_dyn_obs_count": None,
+            "goal_reached": 0,
+            "steps_taken": 0,
+            "completion_time_s": None,
+            "path_length": None,
+            "path_efficiency": None,
+            "mean_speed": None,
+            "std_speed": None,
+            "smoothness": None,
+            "mean_cont_err": None,
+            "rms_cont_err": None,
+            "max_cont_err": None,
+            "std_cont_err": None,
+            "mean_lag_err": None,
+            "rms_lag_err": None,
+            "max_lag_err": None,
+            "std_lag_err": None,
+            "mean_solve_ms": None,
+            "max_solve_ms": None,
+            "std_solve_ms": None,
+            "solver_fail_count": None,
+            "static_body_collision_steps": None,
+            "static_zone_violation_steps": None,
+            "dyn_body_collision_steps": None,
+            "dyn_exclusion_violation_steps": None,
+            "total_body_collision_steps": None,
+            "worst_dyn_excl_depth": None,
+            "worst_dyn_excl_step": None,
+            "worst_dyn_excl_obs": None,
+            "min_dyn_body_clearance": None,
+            "min_dyn_body_clearance_step": None,
+            "min_dyn_body_clearance_obs": None,
+            "mean_active_dyn_obs": None,
+            "max_active_dyn_obs": None,
+            "mean_state_mismatch": None,
+            "max_state_mismatch": None,
+            "min_clearance_m": None,
             "error": str(exc),
         }
 
@@ -430,10 +536,11 @@ def run_batch(controller_type: str, use_hard: bool) -> tuple[str, str]:
     raw_csv = os.path.join(RESULTS_DIR, f"{controller_label}_results.csv")
     summary_csv = os.path.join(RESULTS_DIR, f"{controller_label}_summary.csv")
 
-    jobs: list[tuple[str, bool, dict[str, Any], int]] = []
+    jobs: list[tuple[str, bool, dict[str, Any], int, str]] = []
     for scenario in SCENARIOS:
-        for seed in range(N_SEEDS):
-            jobs.append((controller_type, use_hard, scenario, seed))
+        for congestion_tier in CONGESTION_TIERS:
+            for seed in range(N_SEEDS):
+                jobs.append((controller_type, use_hard, scenario, seed, congestion_tier))
 
     print("\n" + "=" * 68)
     print(f"  {controller_label.upper()}   launching {len(jobs)} runs with {MAX_WORKERS} workers")
@@ -459,7 +566,7 @@ def run_batch(controller_type: str, use_hard: bool) -> tuple[str, str]:
             else:
                 print(
                     f"[{completed:3d}/{len(jobs):3d}] "
-                    f"{result['scenario']} seed={result['seed_offset']} "
+                    f"{result['scenario']} tier={result['congestion_tier']} seed={result['seed_offset']} "
                     f"goal={result['goal_reached']} steps={result['steps_taken']} "
                     f"solve={result['mean_solve_ms']:.1f}ms "
                     f"static_zone={result['static_zone_violation_steps']} "
