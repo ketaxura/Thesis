@@ -1,5 +1,6 @@
 import time
 import inspect
+import copy
 from dataclasses import dataclass
 from typing import Optional, Dict, Any, Tuple
 
@@ -29,6 +30,18 @@ MAX_ACTIVE_DYN_OBS = 4
 OBS_HORIZON_EXTRA_MARGIN = 1.0
 DUMMY_OBS_FAR_AWAY = 1e6
 
+# Controller-side sensing realism knobs.
+# These affect only what the controller sees, not ground-truth simulation.
+CONTROLLER_EXPERIMENT_CONFIG: Dict[str, Any] = {
+    "observation_radius": None,
+    "observation_noise_std": 0.0,
+}
+
+
+def set_controller_experiment_config(*, observation_radius: float | None = None, observation_noise_std: float = 0.0) -> None:
+    CONTROLLER_EXPERIMENT_CONFIG["observation_radius"] = None if observation_radius is None else float(observation_radius)
+    CONTROLLER_EXPERIMENT_CONFIG["observation_noise_std"] = max(0.0, float(observation_noise_std))
+
 
 @dataclass
 class DynObsTemplate:
@@ -48,6 +61,28 @@ def _default_observation_radius(dyn_obs: list) -> float:
         + max_obs_radius
         + OBS_HORIZON_EXTRA_MARGIN
     )
+
+
+def _effective_observation_radius(dyn_obs: list) -> float:
+    forced_radius = CONTROLLER_EXPERIMENT_CONFIG.get("observation_radius")
+    if forced_radius is not None:
+        return float(forced_radius)
+    return _default_observation_radius(dyn_obs)
+
+
+def _make_observed_dyn_obs(active_dyn_obs: list, rng: np.random.Generator, noise_std: float) -> list:
+    if not active_dyn_obs:
+        return []
+    if noise_std <= 0.0:
+        return active_dyn_obs
+
+    observed = []
+    for obs in active_dyn_obs:
+        obs_copy = copy.copy(obs)
+        obs_copy.x = float(obs.x) + float(rng.normal(0.0, noise_std))
+        obs_copy.y = float(obs.y) + float(rng.normal(0.0, noise_std))
+        observed.append(obs_copy)
+    return observed
 
 
 def _make_solver_dyn_templates(dyn_obs: list, max_active_dyn: int) -> list:
@@ -399,12 +434,14 @@ class SolveStep:
 # ============================================================
 
 class MPCController:
-    def __init__(self, static_rects, dyn_obs, ref_traj, use_hard: bool):
+    def __init__(self, static_rects, dyn_obs, ref_traj, use_hard: bool, controller_seed: int = 0):
         self.ref_traj = ref_traj
         self.use_hard = use_hard
         self.static_rects = static_rects
         self.max_active_dyn = min(MAX_ACTIVE_DYN_OBS, len(dyn_obs))
-        self.observation_radius = _default_observation_radius(dyn_obs)
+        self.observation_radius = _effective_observation_radius(dyn_obs)
+        self.observation_noise_std = float(CONTROLLER_EXPERIMENT_CONFIG.get("observation_noise_std", 0.0))
+        self.obs_rng = np.random.default_rng(7000 + int(controller_seed))
         self.solver_dyn_templates = _make_solver_dyn_templates(dyn_obs, self.max_active_dyn)
 
         self.solver, self.lbx, self.ubx, self.lbg, self.ubg, self.nX, self.nU = (
@@ -431,8 +468,9 @@ class MPCController:
         select_time_s = time.perf_counter() - t_sel0
 
         t_pred0 = time.perf_counter()
+        observed_dyn_obs = _make_observed_dyn_obs(active_dyn_obs, self.obs_rng, self.observation_noise_std)
         obs_x_h, obs_y_h, obs_th_h = _predict_and_pad_dyn_obs(
-            active_dyn_obs, self.max_active_dyn, self.static_rects
+            observed_dyn_obs, self.max_active_dyn, self.static_rects
         )
         predict_time_s = time.perf_counter() - t_pred0
 
@@ -545,12 +583,14 @@ class MPCController:
 class MPCCController:
     _warned_no_true_hard_soft = False
 
-    def __init__(self, static_rects, dyn_obs, ref_traj, use_hard: bool):
+    def __init__(self, static_rects, dyn_obs, ref_traj, use_hard: bool, controller_seed: int = 0):
         self.ref_traj = ref_traj
         self.use_hard = use_hard
         self.static_rects = static_rects
         self.max_active_dyn = min(MAX_ACTIVE_DYN_OBS, len(dyn_obs))
-        self.observation_radius = _default_observation_radius(dyn_obs)
+        self.observation_radius = _effective_observation_radius(dyn_obs)
+        self.observation_noise_std = float(CONTROLLER_EXPERIMENT_CONFIG.get("observation_noise_std", 0.0))
+        self.obs_rng = np.random.default_rng(7000 + int(controller_seed))
         self.solver_dyn_templates = _make_solver_dyn_templates(dyn_obs, self.max_active_dyn)
 
         sig = inspect.signature(build_mpcc_solver)
@@ -600,8 +640,9 @@ class MPCCController:
         active_dyn_obs = _select_active_dyn_obs(
             x_current, dyn_obs, self.max_active_dyn, self.observation_radius
         )
+        observed_dyn_obs = _make_observed_dyn_obs(active_dyn_obs, self.obs_rng, self.observation_noise_std)
         obs_x_h, obs_y_h, obs_th_h = _predict_and_pad_dyn_obs(
-            active_dyn_obs, self.max_active_dyn, self.static_rects
+            observed_dyn_obs, self.max_active_dyn, self.static_rects
         )
 
         X_goal_val = np.array([R_horizon[0, -1], R_horizon[1, -1], 0.0], dtype=float)

@@ -20,6 +20,7 @@ Collision taxonomy
 from __future__ import annotations
 
 import copy
+import math
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -28,16 +29,16 @@ from matplotlib.patches import Rectangle, Ellipse
 
 from dynamics import unicycle_dynamics  # noqa: F401  (kept for caller convenience)
 from obs import Obstacle, DynamicObstacle
-from run_experiment_unified import MPCCController, MPCController, dt, N
+from run_experiment_unified import MPCCController, MPCController, dt, N, set_controller_experiment_config
 from params import r_robot, safety_buffer
 
 # ============================================================
 # Run configuration
 # ============================================================
 PATH_ID             = 10        # 10 = corridor, 11 = open clutter
-SEED_OFFSET         = 10
+SEED_OFFSET         = 13
 USE_HARD            = False
-MAX_STEPS           = 1000
+MAX_STEPS           = 1200
 GOAL_TOL            = 0.35
 END_PROGRESS_TOL    = 1.0
 SHOW_PREDICTIONS    = False
@@ -45,13 +46,13 @@ PRED_MARKER_SIZE    = 12
 ROBOT_DOT_SIZE      = 12
 ROBOT_HEADING_LEN   = 0.22
 
-ALGO                = "mpcc"    # "mpc" or "mpcc"
+ALGO                = "mpc"    # "mpc" or "mpcc"
 
 ENABLE_DEBUG_DYN_OBS = True
 DEBUG_DYN_OBS_MODE   = "path_tier"   # "manual", "env", or "path_tier"
 
 # Quantitative congestion tier for seeded path-conditioned spawning
-CONGESTION_TIER = "mid"   # "low", "mid", "high"
+CONGESTION_TIER = "high"   # "low", "mid", "high"
 
 # Path-conditioned spawn controls
 PATH_SPAWN_SETTINGS = {
@@ -82,6 +83,14 @@ SPAWN_V_MAX = 0.30
 SPAWN_CHANGE_INTERVAL = 25
 SPAWN_A = 0.6
 SPAWN_B = 0.4
+
+# Experiment realism knobs
+DYN_OBS_SPEED_RATIO = 1.0              # v_obs_max / v_robot_max
+DYN_OBS_TIMER_RANGE = (15, 35)         # per-obstacle heading-change interval range [steps]
+DYN_OBS_ENABLE_WALL_BOUNCE = True
+
+CONTROLLER_OBSERVATION_RADIUS = None   # None = horizon-derived auto radius
+CONTROLLER_OBS_POS_NOISE_STD = 0.0     # metres
 SPAWN_P_NORM = 6
 
 # p-norm used for static-rectangle level-set evaluation (must match mpcc.py)
@@ -142,6 +151,197 @@ class StepRecord:
     active_dyn_count: int = 0
 
         
+
+
+# ============================================================
+# Dynamic-obstacle realism wrapper
+# ============================================================
+
+
+def _compute_world_bounds(ref_traj: np.ndarray, static_rects: list, margin: float = 1.0) -> tuple[float, float, float, float]:
+    xs = [float(np.min(ref_traj[0, :])), float(np.max(ref_traj[0, :]))]
+    ys = [float(np.min(ref_traj[1, :])), float(np.max(ref_traj[1, :]))]
+    for (cx, cy, hw, hh) in static_rects:
+        xs += [float(cx - hw), float(cx + hw)]
+        ys += [float(cy - hh), float(cy + hh)]
+    return (min(xs) - margin, max(xs) + margin, min(ys) - margin, max(ys) + margin)
+
+
+def _center_hits_inflated_rect(px: float, py: float, rect: tuple[float, float, float, float], a: float, b: float) -> bool:
+    cx, cy, hw, hh = rect
+    return (abs(px - cx) <= (hw + a)) and (abs(py - cy) <= (hh + b))
+
+
+class ExperimentDynamicObstacle:
+    """
+    Dynamic obstacle with per-obstacle timer, optional wall bounce, and
+    deterministic prediction using the same motion model as the rollout.
+    """
+
+    def __init__(
+        self,
+        *,
+        x: float,
+        y: float,
+        a: float,
+        b: float,
+        seed: int,
+        v_max: float,
+        change_interval: int,
+        world_bounds: tuple[float, float, float, float] | None = None,
+        wall_bounce: bool = True,
+        theta: float | None = None,
+        speed: float | None = None,
+        steps_until_change: int | None = None,
+        rng_state: dict | None = None,
+    ):
+        self.x = float(x)
+        self.y = float(y)
+        self.a = float(a)
+        self.b = float(b)
+        self.seed = int(seed)
+        self.v_max = float(v_max)
+        self.change_interval = max(1, int(change_interval))
+        self.world_bounds = world_bounds
+        self.wall_bounce = bool(wall_bounce)
+
+        self.rng = np.random.default_rng(self.seed)
+        if rng_state is not None:
+            self.rng.bit_generator.state = copy.deepcopy(rng_state)
+
+
+
+        #Dynamic-obstacle realism parameters
+        self.theta = float(theta) if theta is not None else float(self.rng.uniform(-np.pi, np.pi))
+        self.speed = float(speed) if speed is not None else float(self.rng.uniform(0.55, 1.0) * self.v_max)
+
+        self.theta_des = float(self.theta)
+        self.speed_des = float(self.speed)
+
+        self.omega_max = 0.45   # rad/s
+        self.accel_max = 0.35   # m/s^2
+        self.theta_jump_max = np.deg2rad(12.0)
+        self.speed_jitter_frac = 0.08
+
+        self.theta = float(theta) if theta is not None else float(self.rng.uniform(-np.pi, np.pi))
+        self.speed = float(speed) if speed is not None else float(self.rng.uniform(0.55, 1.0) * self.v_max)
+        self.steps_until_change = int(steps_until_change) if steps_until_change is not None else int(self.rng.integers(1, self.change_interval + 1))
+
+    def _copy(self) -> 'ExperimentDynamicObstacle':
+        return ExperimentDynamicObstacle(
+            x=self.x, y=self.y, a=self.a, b=self.b, seed=self.seed,
+            v_max=self.v_max, change_interval=self.change_interval,
+            world_bounds=self.world_bounds, wall_bounce=self.wall_bounce,
+            theta=self.theta, speed=self.speed,
+            steps_until_change=self.steps_until_change,
+            rng_state=self.rng.bit_generator.state,
+        )
+
+    def _refresh_targets(self) -> None:
+        dtheta = float(self.rng.uniform(-self.theta_jump_max, self.theta_jump_max))
+        self.theta_des = float((self.theta + dtheta + np.pi) % (2.0 * np.pi) - np.pi)
+
+        speed_scale = 1.0 + float(self.rng.uniform(-self.speed_jitter_frac, self.speed_jitter_frac))
+        self.speed_des = float(np.clip(self.speed * speed_scale, 0.0, self.v_max))
+
+        self.steps_until_change = int(self.rng.integers(1, self.change_interval + 1))
+
+
+
+    def _wrap_angle(self, angle: float) -> float:
+        return (angle + np.pi) % (2.0 * np.pi) - np.pi
+
+    def _slew_angle(self, current: float, target: float, max_delta: float) -> float:
+        err = self._wrap_angle(target - current)
+        err = float(np.clip(err, -max_delta, max_delta))
+        return self._wrap_angle(current + err)
+
+    def _slew_scalar(self, current: float, target: float, max_delta: float) -> float:
+        delta = float(np.clip(target - current, -max_delta, max_delta))
+        return current + delta
+
+    def _apply_bounce(self, x_next: float, y_next: float, static_rects: list) -> tuple[float, float, bool, bool]:
+        vx = self.speed * math.cos(self.theta)
+        vy = self.speed * math.sin(self.theta)
+        hit_x = False
+        hit_y = False
+
+        x_only_hits = False
+        y_only_hits = False
+        both_hits = False
+        for rect in static_rects:
+            if _center_hits_inflated_rect(x_next, self.y, rect, self.a, self.b):
+                x_only_hits = True
+            if _center_hits_inflated_rect(self.x, y_next, rect, self.a, self.b):
+                y_only_hits = True
+            if _center_hits_inflated_rect(x_next, y_next, rect, self.a, self.b):
+                both_hits = True
+
+        if self.world_bounds is not None:
+            xmin, xmax, ymin, ymax = self.world_bounds
+            if x_next - self.a < xmin or x_next + self.a > xmax:
+                x_only_hits = True
+            if y_next - self.b < ymin or y_next + self.b > ymax:
+                y_only_hits = True
+
+        if x_only_hits or both_hits:
+            vx *= -1.0
+            hit_x = True
+        if y_only_hits or both_hits:
+            vy *= -1.0
+            hit_y = True
+
+        new_theta = math.atan2(vy, vx)
+        self.theta = float(new_theta)
+        self.theta_des = float(self.theta)
+        x_next = self.x + vx * dt
+        y_next = self.y + vy * dt
+
+        if self.world_bounds is not None:
+            xmin, xmax, ymin, ymax = self.world_bounds
+            x_next = float(np.clip(x_next, xmin + self.a, xmax - self.a))
+            y_next = float(np.clip(y_next, ymin + self.b, ymax - self.b))
+
+        return x_next, y_next, hit_x, hit_y
+
+    def step(self, dt_local: float, static_rects: list | None = None) -> None:
+        if static_rects is None:
+            static_rects = []
+
+        self.steps_until_change -= 1
+        if self.steps_until_change <= 0:
+            self._refresh_targets()
+
+        max_dtheta = self.omega_max * dt_local
+        max_dv = self.accel_max * dt_local
+
+        self.theta = self._slew_angle(self.theta, self.theta_des, max_dtheta)
+        self.speed = self._slew_scalar(self.speed, self.speed_des, max_dv)
+        self.speed = float(np.clip(self.speed, 0.0, self.v_max))
+
+        x_next = self.x + self.speed * math.cos(self.theta) * dt_local
+        y_next = self.y + self.speed * math.sin(self.theta) * dt_local
+
+        if self.wall_bounce:
+            x_next, y_next, _, _ = self._apply_bounce(x_next, y_next, static_rects)
+
+        self.x = float(x_next)
+        self.y = float(y_next)
+
+    def predict_horizon_with_rects(self, horizon_steps: int, dt_local: float, static_rects: list) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        ghost = self._copy()
+        xs = np.zeros(horizon_steps, dtype=float)
+        ys = np.zeros(horizon_steps, dtype=float)
+        ths = np.zeros(horizon_steps, dtype=float)
+        for k in range(horizon_steps):
+            ghost.step(dt_local, static_rects)
+            xs[k] = ghost.x
+            ys[k] = ghost.y
+            ths[k] = ghost.theta
+        return xs, ys, ths
+
+    def predict_horizon(self, horizon_steps: int, dt_local: float) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        return self.predict_horizon_with_rects(horizon_steps, dt_local, [])
 
 
 # ============================================================
@@ -937,7 +1137,7 @@ def draw_frame(
     status_text = _make_status_text(record)
     box_color   = _annotation_color(record)
     ax.text(0.01, 0.99, status_text,
-            transform=ax.transAxes, ha="left", va="top", fontsize=8.5,
+            transform=ax.transAxes, ha="right", va="top", fontsize=8.5,
             bbox=dict(boxstyle="round", facecolor=box_color, alpha=0.88))
 
     ax.set_title(
@@ -1047,6 +1247,36 @@ def _point_in_inflated_static_zone_for_spawn(
     return False
 
 
+def _spawn_obs_v_max() -> float:
+    return float(SPAWN_V_MAX * DYN_OBS_SPEED_RATIO)
+
+
+def _sample_change_interval(rng: np.random.Generator) -> int:
+    lo, hi = DYN_OBS_TIMER_RANGE
+    lo = max(1, int(lo))
+    hi = max(lo, int(hi))
+    return int(rng.integers(lo, hi + 1))
+
+
+def _make_experiment_dyn_obstacle(
+    *,
+    x: float,
+    y: float,
+    a: float,
+    b: float,
+    seed: int,
+    rng: np.random.Generator,
+    world_bounds: tuple[float, float, float, float] | None,
+) -> ExperimentDynamicObstacle:
+    return ExperimentDynamicObstacle(
+        x=x, y=y, a=a, b=b, seed=seed,
+        v_max=_spawn_obs_v_max(),
+        change_interval=_sample_change_interval(rng),
+        world_bounds=world_bounds,
+        wall_bounce=DYN_OBS_ENABLE_WALL_BOUNCE,
+    )
+
+
 def _too_close_to_existing_dyn_spawn(
     px: float,
     py: float,
@@ -1106,6 +1336,8 @@ def make_path_tier_dyn_obs(
         k_min = 1
         k_max = M - 2
 
+    world_bounds = _compute_world_bounds(ref_traj, static_rects, margin=1.0)
+
     dyn_obs = []
     max_attempts = int(SPAWN_MAX_ATTEMPTS_FACTOR * n_obs)
     attempts = 0
@@ -1149,14 +1381,14 @@ def make_path_tier_dyn_obs(
         if _too_close_to_existing_dyn_spawn(px, py, dyn_obs, dyn_a, dyn_b):
             continue
 
-        obs = DynamicObstacle(
+        obs = _make_experiment_dyn_obstacle(
             x=px,
             y=py,
             a=dyn_a,
             b=dyn_b,
             seed=100 + seed_offset * 100 + len(dyn_obs),
-            v_max=SPAWN_V_MAX,
-            change_interval=SPAWN_CHANGE_INTERVAL,
+            rng=rng,
+            world_bounds=world_bounds,
         )
         dyn_obs.append(obs)
 
@@ -1188,6 +1420,8 @@ def print_spawn_summary(
 
         print(
             f"  D{i:02d}: x={obs.x:7.3f}  y={obs.y:7.3f}  "
+            f"v_max={getattr(obs, "v_max", float("nan")):5.3f}  "
+            f"timer={getattr(obs, "change_interval", -1):3d}  "
             f"d_start={d_start:6.3f}  d_goal={d_goal:6.3f}  "
             f"in_static_zone={in_static}"
         )
@@ -1225,6 +1459,18 @@ def make_debug_dyn_obs(
 
     dyn_obs = []
 
+    env = Obstacle(path_id)
+    world_bounds = None
+    if ref_traj is not None and static_rects is not None:
+        world_bounds = _compute_world_bounds(ref_traj, static_rects, margin=1.0)
+    else:
+        try:
+            world_bounds = _compute_world_bounds(env.path_selector(path_id), env.static_obs(), margin=1.0)
+        except Exception:
+            world_bounds = None
+
+    rng = np.random.default_rng(5000 + 37 * path_id + 10000 * seed_offset)
+
     if mode == "manual":
         if path_id == 10:
             pts = [
@@ -1232,10 +1478,11 @@ def make_debug_dyn_obs(
                 (32, 15), (33, 13), (35, 10), (35, 8),  (25, 21),
             ]
             for i, (x, y) in enumerate(pts):
-                dyn_obs.append(DynamicObstacle(
+                dyn_obs.append(_make_experiment_dyn_obstacle(
                     x=float(x), y=float(y), a=0.6, b=0.4,
                     seed=100 + seed_offset * 100 + i,
-                    v_max=0.30, change_interval=25,
+                    rng=rng,
+                    world_bounds=world_bounds,
                 ))
 
         elif path_id == 11:
@@ -1244,10 +1491,11 @@ def make_debug_dyn_obs(
                 (20, 13), (17, 15), (20, 19), (25, 22), (23, 26), (28, 30), (32, 32),
             ]
             for i, (x, y) in enumerate(pts):
-                dyn_obs.append(DynamicObstacle(
+                dyn_obs.append(_make_experiment_dyn_obstacle(
                     x=float(x), y=float(y), a=0.6, b=0.4,
                     seed=100 + seed_offset * 100 + i,
-                    v_max=0.30, change_interval=25,
+                    rng=rng,
+                    world_bounds=world_bounds,
                 ))
         else:
             dyn_obs = Obstacle(path_id).dynamic_obs_seeded(seed_offset)

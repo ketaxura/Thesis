@@ -230,9 +230,13 @@ class DynamicObstacle:
         self.v_max = float(v_max)
         self.a_obs = float(a_obs)
         self.omega_obs = float(omega_obs)
+        self.theta_jump_max = float(np.deg2rad(10.0))
+        self.v_jitter_frac = 0.10
 
         self.v_des = float(self.v_nominal)
         self.theta_des = float(self.theta)
+        # De-synchronize refreshes so obstacles do not all retarget at t=0.
+        self._refresh_phase = int(self.rng.integers(0, max(1, self.change_interval))) if self.change_interval > 0 else 0
 
     # --------------------------------------------------------
     # Internal helpers
@@ -240,16 +244,26 @@ class DynamicObstacle:
 
     def _maybe_refresh_targets(self):
         """
-        Randomly refresh desired heading at intervals.
-        Speed target stays at v_nominal unless v_max == 0.
+        Refresh desired heading/speed smoothly at intervals.
+        Heading changes are *local perturbations* around the current heading,
+        not full random resets over [-pi, pi].
         """
         if self.v_max <= 1e-12:
             self.v_des = 0.0
+            self.theta_des = float(self.theta)
             return
 
-        if self.change_interval > 0 and (self.step_count % self.change_interval == 0):
-            self.theta_des = float(self.rng.uniform(-np.pi, np.pi))
-            self.v_des = float(self.v_nominal)
+        if self.change_interval <= 0:
+            return
+
+        if ((self.step_count + self._refresh_phase) % self.change_interval) != 0:
+            return
+
+        dtheta = float(self.rng.uniform(-self.theta_jump_max, self.theta_jump_max))
+        self.theta_des = wrap_angle(self.theta + dtheta)
+
+        speed_scale = 1.0 + float(self.rng.uniform(-self.v_jitter_frac, self.v_jitter_frac))
+        self.v_des = float(np.clip(self.v_nominal * speed_scale, 0.0, self.v_max))
 
     def _slew_scalar(self, current: float, target: float, max_delta: float) -> float:
         delta = target - current

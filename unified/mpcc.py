@@ -11,11 +11,11 @@ class MPCCConfig:
     q_cont: float = 3.0
     q_lag: float = 0.5
     q_theta: float = 5.0
-    q_goal: float = 100.0
+    q_goal: float = 20.0
     rho_obs: float = 1e4
     rho_dyn: float = 1e5
-    q_vs: float = 40.0
-    q_s_terminal: float = 10.0
+    q_vs: float = 10.0
+    q_s_terminal: float = 2.0
     r_v: float = 0.1
     r_w: float = 0.2
     r_dv: float = 2.0
