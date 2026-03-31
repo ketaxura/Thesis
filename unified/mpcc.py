@@ -152,16 +152,15 @@ def build_mpcc_solver(
         for i, (cx, cy, hw, hh) in enumerate(static_rects):
             dx = p_xy[0] - cx
             dy = p_xy[1] - cy
-            p_norm = 6
             obs_margin = r_robot + safety_buffer
 
-            dist_p = (
-                (ca.fabs(dx) / (hw + obs_margin)) ** p_norm
-                + (ca.fabs(dy) / (hh + obs_margin)) ** p_norm
-            )
+            qx = ca.fmax(ca.fabs(dx) - hw, 0.0)
+            qy = ca.fmax(ca.fabs(dy) - hh, 0.0)
 
-            g_list.append(dist_p)
-            lbg.append(1.0)
+            dist_sq = qx**2 + qy**2
+
+            g_list.append(dist_sq)
+            lbg.append(obs_margin**2)
             ubg.append(ca.inf)
 
 
@@ -225,7 +224,8 @@ def build_mpcc_solver(
         ubx += [ca.inf, ca.inf, ca.inf]
 
     for _ in range(N):
-        lbx += [0.0, -omega_max]
+        # lbx += [0.0, -omega_max]
+        lbx += [-v_max, -omega_max]
         ubx += [v_max, omega_max]
 
     for _ in range(N + 1):

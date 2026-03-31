@@ -8,10 +8,10 @@ Architecture
 
 Collision taxonomy
 ------------------
-  static_body_collision      : robot centre overlaps the *actual* obstacle (margin = 0)
-  static_zone_violation      : robot centre enters the inflated forbidden zone
-                               (margin = r_robot + safety_buffer).
-                               For MPCC hard-mode this *should* never happen.
+  static_body_collision      : robot centre enters the solver-style static contact set
+                               using margin = r_robot
+  static_zone_violation      : robot centre enters the solver-style static safety set
+                               using margin = r_robot + safety_buffer
   dyn_body_collision         : robot centre overlaps the *actual* dynamic ellipse (margin = 0)
   dyn_exclusion_violation    : robot centre enters the inflated dynamic exclusion zone
                                (margin = r_robot + safety_buffer)
@@ -35,8 +35,8 @@ from params import r_robot, safety_buffer
 # ============================================================
 # Run configuration
 # ============================================================
-PATH_ID             = 10        # 10 = corridor, 11 = open clutter
-SEED_OFFSET         = 13
+PATH_ID             = 11        # 10 = corridor, 11 = open clutter
+SEED_OFFSET         = 0
 USE_HARD            = False
 MAX_STEPS           = 1200
 GOAL_TOL            = 0.35
@@ -348,9 +348,6 @@ class ExperimentDynamicObstacle:
 # Collision checkers  (controller-agnostic, pure geometry)
 # ============================================================
 
-# ============================================================
-# Collision checkers  (controller-agnostic, pure geometry)
-# ============================================================
 
 SEGMENT_SUBSAMPLES = 9  # includes endpoints
 
@@ -370,58 +367,13 @@ def _point_in_rect(px: float, py: float, cx: float, cy: float, hw: float, hh: fl
     return (abs(px - cx) <= hw) and (abs(py - cy) <= hh)
 
 
-def _point_in_inflated_rect(
-    px: float,
-    py: float,
-    cx: float,
-    cy: float,
-    hw: float,
-    hh: float,
-    margin: float,
-) -> bool:
-    return (abs(px - cx) <= (hw + margin)) and (abs(py - cy) <= (hh + margin))
-
 
 def _segment_samples(p0: np.ndarray, p1: np.ndarray, num_subsamples: int = SEGMENT_SUBSAMPLES):
     for alpha in np.linspace(0.0, 1.0, num_subsamples):
         yield (1.0 - alpha) * p0 + alpha * p1
+        
+        
 
-
-def check_static_body_collision(
-    xy: np.ndarray,
-    static_rects: list,
-) -> tuple[bool, list[int]]:
-    """
-    True collision with the actual axis-aligned rectangular obstacle body.
-    Returns (collided, list_of_obstacle_indices).
-    """
-    px, py = float(xy[0]), float(xy[1])
-    ids = []
-    for i, (cx, cy, hw, hh) in enumerate(static_rects):
-        if _point_in_rect(px, py, cx, cy, hw, hh):
-            ids.append(i)
-    return (len(ids) > 0), ids
-
-
-def check_static_zone_violation(
-    xy: np.ndarray,
-    static_rects: list,
-    margin: float | None = None,
-) -> tuple[bool, list[int]]:
-    """
-    Penetration of the inflated rectangular forbidden zone used by the controller
-    diagnostics, with margin = r_robot + safety_buffer by default.
-    Returns (violated, list_of_obstacle_indices).
-    """
-    if margin is None:
-        margin = r_robot + safety_buffer
-
-    px, py = float(xy[0]), float(xy[1])
-    ids = []
-    for i, (cx, cy, hw, hh) in enumerate(static_rects):
-        if _point_in_inflated_rect(px, py, cx, cy, hw, hh, margin):
-            ids.append(i)
-    return (len(ids) > 0), ids
 
 
 def check_static_body_collision_segment(
@@ -450,7 +402,7 @@ def check_static_zone_violation_segment(
     num_subsamples: int = SEGMENT_SUBSAMPLES,
 ) -> tuple[bool, list[int]]:
     """
-    Segment-based static-zone check for the inflated rectangular forbidden set.
+    Segment-based static-zone check for the solver-style p-norm safety set.
     """
     if margin is None:
         margin = r_robot + safety_buffer
@@ -530,6 +482,120 @@ def check_dyn_body_proximity(
         clearances.append(clearance)
 
     return levels, clearances
+
+
+def print_static_violation_debug(
+    *,
+    step_idx: int,
+    step_result,
+    x_current: np.ndarray,
+    static_rects: list,
+    obs_ids: list[int],
+) -> None:
+    if step_result.solver_next_state is None or step_result.rollout_next_state is None:
+        return
+
+    print("\n" + "=" * 72)
+    print(f"STATIC VIOLATION DEBUG  step={step_idx}  status={step_result.status}")
+    print("=" * 72)
+    print(f"x_current           = {np.array2string(x_current, precision=6)}")
+    print(f"solver_next_state   = {np.array2string(step_result.solver_next_state, precision=6)}")
+    print(f"rollout_next_state  = {np.array2string(step_result.rollout_next_state, precision=6)}")
+    print(f"state_mismatch_norm = {step_result.state_mismatch_norm:.6e}")
+
+    margins = [
+        ("raw", 0.0),
+        ("r_only", r_robot),
+        ("r_plus_buffer", r_robot + safety_buffer),
+    ]
+
+    for obs_id in obs_ids:
+        rect = static_rects[obs_id]
+        print(f"\nObstacle {obs_id}: rect={rect}")
+
+        for label, margin in margins:
+            dist_solver = static_rect_distance(step_result.solver_next_state[:2], rect)
+            dist_roll   = static_rect_distance(step_result.rollout_next_state[:2], rect)
+
+            viol_solver = dist_solver < margin
+            viol_roll   = dist_roll < margin
+
+            print(
+                f"  margin={label:13s} ({margin:.3f}) | "
+                f"solver: dist={dist_solver:.6f} violates={viol_solver} | "
+                f"rollout: dist={dist_roll:.6f} violates={viol_roll}"
+            )
+
+
+        dist_solver_keepout = static_rect_distance(
+            step_result.solver_next_state[:2], rect
+        )
+        dist_roll_keepout = static_rect_distance(
+            step_result.rollout_next_state[:2], rect
+        )
+
+        print(
+            "  hard-static-check (should be >= margin for feasible solver state): "
+            f"solver={dist_solver_keepout:.6f}, rollout={dist_roll_keepout:.6f}, "
+            f"margin={r_robot + safety_buffer:.6f}"
+        )
+
+def static_rect_distance_sq(
+    xy: np.ndarray,
+    rect: tuple[float, float, float, float],
+) -> float:
+    px, py = float(xy[0]), float(xy[1])
+    cx, cy, hw, hh = rect
+
+    qx = max(abs(px - cx) - hw, 0.0)
+    qy = max(abs(py - cy) - hh, 0.0)
+
+    return qx * qx + qy * qy
+
+
+def static_rect_distance(
+    xy: np.ndarray,
+    rect: tuple[float, float, float, float],
+) -> float:
+    return float(np.sqrt(static_rect_distance_sq(xy, rect)))
+
+
+def point_violates_static_margin(
+    xy: np.ndarray,
+    rect: tuple[float, float, float, float],
+    margin: float,
+) -> bool:
+    return static_rect_distance_sq(xy, rect) < margin**2
+
+
+def check_static_body_collision(
+    xy: np.ndarray,
+    static_rects: list,
+    margin: float | None = None,
+) -> tuple[bool, list[int]]:
+    if margin is None:
+        margin = r_robot
+
+    ids = []
+    for i, rect in enumerate(static_rects):
+        if point_violates_static_margin(xy, rect, margin):
+            ids.append(i)
+    return (len(ids) > 0), ids
+
+
+def check_static_zone_violation(
+    xy: np.ndarray,
+    static_rects: list,
+    margin: float | None = None,
+) -> tuple[bool, list[int]]:
+    if margin is None:
+        margin = r_robot + safety_buffer
+
+    ids = []
+    for i, rect in enumerate(static_rects):
+        if point_violates_static_margin(xy, rect, margin):
+            ids.append(i)
+    return (len(ids) > 0), ids
 
 
 def check_collisions(
@@ -842,6 +908,26 @@ def run_rollout(
 
         # ── Collision diagnostics (against live dyn_obs after step) ─────
         check_collisions(record, static_rects, dyn_obs, prev_xy=x_current[:2].copy())
+        
+        if record.static_zone_violation:
+            should_print = False
+
+            # first static-zone entry
+            if k == 0 or not records or not records[-1].static_zone_violation:
+                should_print = True
+
+            # always print on actual terminal static body collision too
+            if record.static_body_collision:
+                should_print = True
+
+            if should_print:
+                print_static_violation_debug(
+                    step_idx=k,
+                    step_result=step_result,
+                    x_current=x_current,
+                    static_rects=static_rects,
+                    obs_ids=record.static_zone_ids if record.static_zone_ids else record.static_body_ids,
+                )
 
         records.append(record)
 
@@ -1046,6 +1132,41 @@ def compute_plot_limits(ref_traj, static_rects, dyn_obs, margin=1.5):
         ys += [obs.y - obs.b, obs.y + obs.b]
     return min(xs) - margin, max(xs) + margin, min(ys) - margin, max(ys) + margin
 
+def draw_static_inflated_boundary(
+    ax,
+    rect: tuple[float, float, float, float],
+    margin: float,
+    *,
+    color: str,
+    linestyle: str = ":",
+    linewidth: float = 1.0,
+    alpha: float = 0.8,
+    ngrid: int = 220,
+):
+    cx, cy, hw, hh = rect
+
+    x_min = cx - hw - margin - 0.1
+    x_max = cx + hw + margin + 0.1
+    y_min = cy - hh - margin - 0.1
+    y_max = cy + hh + margin + 0.1
+
+    xs = np.linspace(x_min, x_max, ngrid)
+    ys = np.linspace(y_min, y_max, ngrid)
+    X, Y = np.meshgrid(xs, ys)
+
+    QX = np.maximum(np.abs(X - cx) - hw, 0.0)
+    QY = np.maximum(np.abs(Y - cy) - hh, 0.0)
+    Z = QX**2 + QY**2
+
+    ax.contour(
+        X, Y, Z,
+        levels=[margin**2],
+        colors=[color],
+        linestyles=[linestyle],
+        linewidths=[linewidth],
+        alpha=alpha,
+        zorder=3,
+    )
 
 def draw_frame(
     ax,
@@ -1081,35 +1202,62 @@ def draw_frame(
         label="progress anchor",
     )
 
-    # ── Static obstacles (body + inflated zone) ──────────────────────
+    # ── Static obstacles (raw body + p-norm contact/safety contours) ──
     zone_margin = r_robot + safety_buffer
     for i, (cx, cy, hw, hh) in enumerate(static_rects):
         body_color = "red" if i in record.static_body_ids else "black"
-        zone_color = "orange" if i in record.static_zone_ids else "gray"
+        safety_color = "orange" if i in record.static_zone_ids else "gray"
+        contact_color = "goldenrod"
 
+        # raw obstacle body
         ax.add_patch(Rectangle(
             (cx - hw, cy - hh), 2 * hw, 2 * hh,
             fill=True, facecolor="#e0e0e0", edgecolor=body_color, lw=2.0))
         ax.text(cx, cy, f"S{i}", ha="center", va="center", fontsize=8)
 
-        ax.add_patch(Rectangle(
-            (cx - hw - zone_margin, cy - hh - zone_margin),
-            2 * (hw + zone_margin), 2 * (hh + zone_margin),
-            fill=False, edgecolor=zone_color, lw=1.0, ls=":", alpha=0.6))
+        draw_static_inflated_boundary(
+            ax,
+            (cx, cy, hw, hh),
+            margin=r_robot,
+            color=contact_color,
+            linestyle="--",
+            linewidth=1.2,
+            alpha=0.95,
+        )
+
+        draw_static_inflated_boundary(
+            ax,
+            (cx, cy, hw, hh),
+            margin=zone_margin,
+            color=safety_color,
+            linestyle=":",
+            linewidth=1.0,
+            alpha=0.75,
+        )
 
     # ── Dynamic obstacles (body + exclusion zone) ────────────────────
     for i, (ox, oy, oth, oa, ob_) in enumerate(record.dyn_obs_snapshot):
         body_color = "red" if i in record.dyn_body_ids else "tab:blue"
         excl_color = "orange" if i in record.dyn_exclusion_ids else "cornflowerblue"
-
+        
+        # actual dynamic obstacle body
         ax.add_patch(Ellipse(
             (ox, oy), 2 * oa, 2 * ob_,
             angle=np.degrees(oth),
             fill=True, facecolor="#cce5ff", edgecolor=body_color, lw=2.0))
 
+        # physical-contact boundary: obstacle + robot radius
         ax.add_patch(Ellipse(
             (ox, oy),
-            2 * (oa + zone_margin), 2 * (ob_ + zone_margin),
+            2 * (oa + r_robot), 2 * (ob_ + r_robot),
+            angle=np.degrees(oth),
+            fill=False, edgecolor="goldenrod", lw=1.2, ls="--", alpha=0.9))
+
+        # safety exclusion boundary: obstacle + robot radius + safety buffer
+        ax.add_patch(Ellipse(
+            (ox, oy),
+            2 * (oa + r_robot + safety_buffer),
+            2 * (ob_ + r_robot + safety_buffer),
             angle=np.degrees(oth),
             fill=False, edgecolor=excl_color, lw=1.0, ls=":", alpha=0.6))
 
@@ -1420,8 +1568,8 @@ def print_spawn_summary(
 
         print(
             f"  D{i:02d}: x={obs.x:7.3f}  y={obs.y:7.3f}  "
-            f"v_max={getattr(obs, "v_max", float("nan")):5.3f}  "
-            f"timer={getattr(obs, "change_interval", -1):3d}  "
+            f"v_max={getattr(obs, 'v_max', float('nan')):5.3f}  "
+            f"timer={getattr(obs, 'change_interval', -1):3d}  "
             f"d_start={d_start:6.3f}  d_goal={d_goal:6.3f}  "
             f"in_static_zone={in_static}"
         )
