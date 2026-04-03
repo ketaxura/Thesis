@@ -55,7 +55,8 @@ mu_hist = []
 # -----------------------------
 safety_buffer = 0.20
 
-v_obs_max = 0.8
+v_obs_max = 1.5
+# v_obs_max = 0.8
 a_obs_max = 0.5
 omega_obs_max = 0.6
 

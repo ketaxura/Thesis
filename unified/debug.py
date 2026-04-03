@@ -30,7 +30,7 @@ from matplotlib.patches import Rectangle, Ellipse
 from dynamics import unicycle_dynamics  # noqa: F401  (kept for caller convenience)
 from obs import Obstacle, DynamicObstacle
 from run_experiment_unified import MPCCController, MPCController, dt, N, set_controller_experiment_config
-from params import r_robot, safety_buffer
+from params import r_robot, safety_buffer, v_obs_max
 
 # ============================================================
 # Run configuration
@@ -85,7 +85,7 @@ SPAWN_A = 0.6
 SPAWN_B = 0.4
 
 # Experiment realism knobs
-DYN_OBS_SPEED_RATIO = 1.0              # v_obs_max / v_robot_max
+DYN_OBS_SPEED_RATIO = 3.0              # v_obs_max / v_robot_max
 DYN_OBS_TIMER_RANGE = (15, 35)         # per-obstacle heading-change interval range [steps]
 DYN_OBS_ENABLE_WALL_BOUNCE = True
 
@@ -1131,7 +1131,7 @@ def compute_plot_limits(ref_traj, static_rects, dyn_obs, margin=1.5):
         xs += [obs.x - obs.a, obs.x + obs.a]
         ys += [obs.y - obs.b, obs.y + obs.b]
     return min(xs) - margin, max(xs) + margin, min(ys) - margin, max(ys) + margin
-
+    
 def draw_static_inflated_boundary(
     ax,
     rect: tuple[float, float, float, float],
@@ -1141,32 +1141,20 @@ def draw_static_inflated_boundary(
     linestyle: str = ":",
     linewidth: float = 1.0,
     alpha: float = 0.8,
-    ngrid: int = 220,
 ):
     cx, cy, hw, hh = rect
 
-    x_min = cx - hw - margin - 0.1
-    x_max = cx + hw + margin + 0.1
-    y_min = cy - hh - margin - 0.1
-    y_max = cy + hh + margin + 0.1
-
-    xs = np.linspace(x_min, x_max, ngrid)
-    ys = np.linspace(y_min, y_max, ngrid)
-    X, Y = np.meshgrid(xs, ys)
-
-    QX = np.maximum(np.abs(X - cx) - hw, 0.0)
-    QY = np.maximum(np.abs(Y - cy) - hh, 0.0)
-    Z = QX**2 + QY**2
-
-    ax.contour(
-        X, Y, Z,
-        levels=[margin**2],
-        colors=[color],
-        linestyles=[linestyle],
-        linewidths=[linewidth],
+    ax.add_patch(Rectangle(
+        (cx - hw - margin, cy - hh - margin),
+        2.0 * (hw + margin),
+        2.0 * (hh + margin),
+        fill=False,
+        edgecolor=color,
+        linestyle=linestyle,
+        linewidth=linewidth,
         alpha=alpha,
         zorder=3,
-    )
+    ))
 
 def draw_frame(
     ax,
@@ -1395,9 +1383,10 @@ def _point_in_inflated_static_zone_for_spawn(
     return False
 
 
-def _spawn_obs_v_max() -> float:
-    return float(SPAWN_V_MAX * DYN_OBS_SPEED_RATIO)
 
+
+def _spawn_obs_v_max() -> float:
+    return float(v_obs_max)
 
 def _sample_change_interval(rng: np.random.Generator) -> int:
     lo, hi = DYN_OBS_TIMER_RANGE
